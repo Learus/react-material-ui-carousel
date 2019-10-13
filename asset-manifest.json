@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-material-ui-carousel/static/css/main.7ae0dd6e.chunk.css",
+    "main.js": "/react-material-ui-carousel/static/js/main.8a4ebed4.chunk.js",
+    "main.js.map": "/react-material-ui-carousel/static/js/main.8a4ebed4.chunk.js.map",
+    "runtime-main.js": "/react-material-ui-carousel/static/js/runtime-main.464c6120.js",
+    "runtime-main.js.map": "/react-material-ui-carousel/static/js/runtime-main.464c6120.js.map",
+    "static/js/2.4a7ff272.chunk.js": "/react-material-ui-carousel/static/js/2.4a7ff272.chunk.js",
+    "static/js/2.4a7ff272.chunk.js.map": "/react-material-ui-carousel/static/js/2.4a7ff272.chunk.js.map",
+    "index.html": "/react-material-ui-carousel/index.html",
+    "precache-manifest.9cbaf1c2094c8551b5bef491400cadff.js": "/react-material-ui-carousel/precache-manifest.9cbaf1c2094c8551b5bef491400cadff.js",
+    "service-worker.js": "/react-material-ui-carousel/service-worker.js",
+    "static/css/main.7ae0dd6e.chunk.css.map": "/react-material-ui-carousel/static/css/main.7ae0dd6e.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.464c6120.js",
+    "static/js/2.4a7ff272.chunk.js",
+    "static/css/main.7ae0dd6e.chunk.css",
+    "static/js/main.8a4ebed4.chunk.js"
+  ]
+}
