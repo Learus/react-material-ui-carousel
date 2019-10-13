@@ -94,13 +94,16 @@ export default class Carousel extends Component
 
     render()
     {
+        const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
+        const animation = this.props.animation !== undefined ? this.props.animation: "fade"
+
         return (
             <div className={`Carousel ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
                 {   
                     Array.isArray(this.props.children) ? 
                         this.props.children.map( (child, index) => {
                             return (
-                                <CarouselItem key={index} active={index === this.state.active ? true : false} child={child} animation={this.animation}/>
+                                <CarouselItem key={index} active={index === this.state.active ? true : false} child={child} animation={animation}/>
                             )
                         })
                         :
@@ -119,7 +122,7 @@ export default class Carousel extends Component
                     </IconButton>
                 </div>
                 
-                {this.indicators ? <Indicators length={this.props.children.length} active={this.state.active} press={this.pressIndicator}/> : null}
+                {indicators ? <Indicators length={this.props.children.length} active={this.state.active} press={this.pressIndicator}/> : null}
             </div>
         )
     }

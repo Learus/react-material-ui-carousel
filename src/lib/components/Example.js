@@ -1,8 +1,9 @@
 import React from 'react';
 import Carousel from "./Carousel"
+import autoBind from "auto-bind"
 import './Example.css';
 
-import { Card, CardContent, CardMedia, Typography, Grid, Button } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel } from '@material-ui/core';
 
 function Banner(props)
 {
@@ -125,14 +126,69 @@ const items = [
   }
 ]
 
-const BannerExample = () => (
-    <Carousel className="Example" autoPlay={false}>
-        {
-            items.map( (item, index) => {
-                return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
-            })
+class BannerExample extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {
+            autoPlay: true,
+            timer: 500,
+            animation: "fade",
+            indicators: true
         }
-    </Carousel>
-);
+
+        autoBind(this);
+    }
+
+    toggleAutoPlay()
+    {
+        this.setState({
+            autoPlay: !this.state.autoPlay
+        })
+    }
+
+    toggleIndicators()
+    {
+        this.setState({
+            indicators: !this.state.indicators
+        })
+    }
+
+    render()
+    {
+        return (
+            <div>
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay"/>
+                    }
+                    label="Auto-play"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators"/>
+                    }
+                    label="Indicators"
+                />
+                <Carousel 
+                    className="Example"
+                    autoPlay={this.state.autoPlay}
+                    timer={this.state.timer}
+                    animation={this.state.animation}
+                    indicators={this.state.indicators}
+                >
+                {
+                    items.map( (item, index) => {
+                        return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
+                    })
+                }
+                </Carousel>
+            </div>
+            
+        )
+    }
+}
 
 export default BannerExample;
