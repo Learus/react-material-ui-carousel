@@ -6,10 +6,18 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "demo": "node scripts/demo.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "predeploy": "npm run demo",
+    "deploy": "gh-pages -d demo"
   },
   "license": "MIT",
-  "dependencies": {},
+  "homepage": "https://learus.github.io/react-material-ui-carousel",
+  "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "auto-bind": "^2.1.1",
+    "gh-pages": "^2.1.1"
+  },
   "devDependencies": {
     "@babel/core": "7.6.0",
     "@svgr/webpack": "4.3.2",

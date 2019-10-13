@@ -1,8 +1,3 @@
-import Example from './components/Example';
-import SecondExample from './components/SecondExample';
+import Carousel from './components/Carousel';
 
-export default Example;
-
-export {
-  SecondExample,
-};
+export default Carousel;

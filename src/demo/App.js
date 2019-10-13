@@ -1,12 +1,10 @@
 import React from 'react';
-import Example from '../lib';
-import { SecondExample } from '../lib';
+import Example from '../lib/components/Example'
 
 const App = () => (
-  <div>
-    <Example />
-    <SecondExample />
-  </div>
+    <div style={{padding: "200px", backgroundColor: "#ebebeb", height: "100vh"}}>
+        <Example/>
+    </div>
 );
 
 export default App;
