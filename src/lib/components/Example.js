@@ -3,7 +3,7 @@ import Carousel from "./Carousel"
 import autoBind from "auto-bind"
 import './Example.css';
 
-import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel, FormControl } from '@material-ui/core';
 
 function Banner(props)
 {
@@ -156,22 +156,45 @@ class BannerExample extends React.Component
         })
     }
 
+    changeAnimation(event)
+    {
+        this.setState({
+            animation: event.target.value
+        })
+    }
+
     render()
     {
         return (
             <div>
+                <FormLabel component="legend">Options</FormLabel>
                 <FormControlLabel
                     control={
                         <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay"/>
                     }
                     label="Auto-play"
+                    // labelPlacement="start"
                 />
                 <FormControlLabel
                     control={
                         <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators"/>
                     }
                     label="Indicators"
+                    // labelPlacement="start"
                 />
+
+                
+                <FormLabel component="legend">Animation</FormLabel>
+                <FormControlLabel
+                    control={
+                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation}>
+                            <FormControlLabel value="fade" control={<Radio/>} label="Fade"/>
+                            <FormControlLabel value="slide" control={<Radio/>} label="Slide"/>
+                        </RadioGroup>
+                    }
+                />
+                
+                
                 <Carousel 
                     className="Example"
                     autoPlay={this.state.autoPlay}

@@ -131,11 +131,11 @@ export default class Carousel extends Component
 function CarouselItem(props)
 {
     return (
-        props.active ? 
-        (
-            <div className="CarouselItem">
+        // props.active ? 
+        // (
+            <div className="CarouselItem" hidden={!props.active}>
                 {props.animation === "slide" ?
-                    <Slide direction="left" in={props.active}  timeout={200}>
+                    <Slide direction="left" in={props.active} timeout={200}>
                         <div>
                             {props.child}
                         </div>
@@ -148,7 +148,7 @@ function CarouselItem(props)
                     </Fade>
                 }
             </div>
-        ) : null
+        // ) : null
     )
 }
 
