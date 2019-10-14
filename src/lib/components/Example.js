@@ -1,9 +1,9 @@
 import React from 'react';
 import Carousel from "./Carousel"
 import autoBind from "auto-bind"
-import './Example.css';
+import '../style/Example.scss';
 
-import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel, FormControl } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel } from '@material-ui/core';
 
 function Banner(props)
 {
@@ -166,35 +166,9 @@ class BannerExample extends React.Component
     render()
     {
         return (
-            <div>
-                <FormLabel component="legend">Options</FormLabel>
-                <FormControlLabel
-                    control={
-                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay"/>
-                    }
-                    label="Auto-play"
-                    // labelPlacement="start"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators"/>
-                    }
-                    label="Indicators"
-                    // labelPlacement="start"
-                />
+            <div style={{marginTop: "50px", color: "#494949"}}>
+                <h2>Example: eBay&trade; style</h2>
 
-                
-                <FormLabel component="legend">Animation</FormLabel>
-                <FormControlLabel
-                    control={
-                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation}>
-                            <FormControlLabel value="fade" control={<Radio/>} label="Fade"/>
-                            <FormControlLabel value="slide" control={<Radio/>} label="Slide"/>
-                        </RadioGroup>
-                    }
-                />
-                
-                
                 <Carousel 
                     className="Example"
                     autoPlay={this.state.autoPlay}
@@ -202,12 +176,39 @@ class BannerExample extends React.Component
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                 >
-                {
-                    items.map( (item, index) => {
-                        return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
-                    })
-                }
+                    {
+                        items.map( (item, index) => {
+                            return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
+                        })
+                    }
                 </Carousel>
+
+
+                <FormLabel component="legend">Options</FormLabel>
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay" color="primary"/>
+                    }
+                    label="Auto-play"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators" color="primary"/>
+                    }
+                    label="Indicators"
+                />
+
+                
+                {/* <FormLabel component="legend">Animation</FormLabel> */}
+                <FormControlLabel
+                    control={
+                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{marginLeft: "10px"}}>
+                            <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
+                            <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
+                        </RadioGroup>
+                    }
+                />
+                
             </div>
             
         )

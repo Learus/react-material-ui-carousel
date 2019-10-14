@@ -5,7 +5,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import './Carousel.css';
+import '../style/Carousel.scss';
 
 export default class Carousel extends Component
 {
