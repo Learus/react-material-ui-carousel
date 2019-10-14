@@ -7,6 +7,7 @@ import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormC
 
 function Banner(props)
 {
+    if (props.newProp) console.log(props.newProp)
     const contentPosition = props.contentPosition ? props.contentPosition : "left"
     const totalItems = props.length ? props.length : 3;
     const mediaLength = totalItems - 1;
@@ -39,7 +40,6 @@ function Banner(props)
             <Grid item xs={12 / totalItems} key={item.Name}>
                 {/* <Link href={`/item/${item.Id}`} className="Link"> */}
                     <CardMedia
-                        onClick={() => {props.pressImage(item);}}
                         className="Media"
                         image={item.Image}
                         title={item.Name}

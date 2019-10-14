@@ -13,14 +13,12 @@ export default class Carousel extends Component
     {
         super(props);
         this.state = {
-            active: 0
+            active: 0,
+            autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
+            interval: this.props.interval !== undefined ? this.props.interval : 4000
         }
 
         this.timer = null;
-        this.interval = this.props.interval !== undefined ? this.props.interval : 4000;
-        this.autoPlay = this.props.autoPlay !== undefined ? this.props.autoPlay : true;
-        this.indicators = this.props.indicators !== undefined ? this.props.indicators: true;
-        this.animation = this.props.animation !== undefined ? this.props.animation: "fade"
 
         autoBind(this);
     }
@@ -35,28 +33,50 @@ export default class Carousel extends Component
         this.stop();
     }
 
+    static getDerivedStateFromProps(nextProps, prevState)
+    {
+        if (nextProps.autoPlay !== prevState.autoPlay || nextProps.interval !== prevState.interval)
+        {
+            return {
+                autoPlay: nextProps.autoPlay !== undefined ? nextProps.autoPlay : true,
+                interval: nextProps.interval !== undefined ? nextProps.interval : 4000
+            }
+        }
+
+        else return null;
+    }
+
+    componentDidUpdate(prevProps, prevState)
+    {
+        if (prevProps.autoPlay !== prevState.autoPlay || prevProps.interval !== prevState.interval)
+        {
+            this.reset();
+        }
+    }
+
     stop()
     {
-        if (this.autoPlay)
+        if (this.timer)
         {
-            if (this.timer)
-                clearInterval(this.timer);
+            clearInterval(this.timer)
+            this.timer = null;
         }
     }
 
     start()
     {
-        if (this.autoPlay)
+        if (this.state.autoPlay)
         {
-            this.timer = setInterval(this.next, this.interval);
+            this.timer = setInterval(this.next, this.state.interval);
         }
     }
 
     reset()
     {
-        if (this.autoPlay)
+        this.stop();
+
+        if (this.state.autoPlay)
         {
-            this.stop();
             this.start();
         }
     }

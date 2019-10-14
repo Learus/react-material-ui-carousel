@@ -16,11 +16,17 @@ import "../style/SecondExample.scss"
 function Project(props)
 {
     return (
-        <Paper className="Project" style={{backgroundColor: `${props.item.color}`}}>
+        <Paper 
+            className="Project"
+            style={{
+                backgroundColor: props.item.color, 
+            }}
+            elevation={10}
+        >
             <h2>{props.item.name}</h2>
             <p>{props.item.description}</p>
 
-            <Button variant="outlined">
+            <Button className="CheckButton">
                 Check it out!
             </Button>
         </Paper>
@@ -106,7 +112,7 @@ export default class MyProjectsExample extends React.Component
                 <h2>Example: Learus Projects (random)</h2>
 
                 <Carousel 
-                    className="Example"
+                    className="SecondExample"
                     autoPlay={this.state.autoPlay}
                     timer={this.state.timer}
                     animation={this.state.animation}
