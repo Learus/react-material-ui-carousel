@@ -1,38 +1,80 @@
+# React Material UI Carousel
+
 This project was bootstrapped with [Create React Library](https://github.com/udilia/create-react-library).
 
-All library files are located inside **src/lib** folder.
+## Description
 
-Inside **src/demo** folder, you can test your library while developing.
+A Generic, extendible Carousel UI component for React using [Material UI](https://material-ui.com/)  
+It switches between given children using a smooth animation.  
+Provides next and previous buttons.
+Also provides interactible bullet indicators.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+```shell
+npm install react-material-ui-carousel --save
+```
 
-### `npm start` or `yarn start`
+## Usage Example
 
-Runs the library in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```jsx
+import React from 'react';
+import Carousel from 'react-material-ui-carousel'
+import Paper from '@material-ui/core'
 
-### `npm run test` or `yarn run test`
+function Example(props)
+{
+    var items = [
+        {
+            name: "Random Name #1"
+            description: "Probably the most random thing you have ever seen!"
+        },
+        {
+            name: "Random Name #2",
+            description: "Hello World!"
+        }
+    ]
 
-Runs the test watcher in an interactive mode.
+    return (
+        <Carousel>
+            {
+                items.map( item => {
+                    <Item item={item}>
+                })
+            }
+        <Carousel/>
+    )
+}
 
-### `npm run build` or `yarn build`
+function Item(props)
+{
+    return (
+        <Paper>
+            <h2>{props.item.name}</h2>
+            <p>{props.item.description}</p>
 
-Builds the library for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+            <Button className="CheckButton">
+                Check it out!
+            </Button>
+        <Paper/>
+    )
+}
+```
 
-### `npm publish`
+## Props
 
-Publishes the library to NPM.
+| Prop name  | Type              | Default | Description                                                              |
+| ---------- | ----------------- | ------- | ------------------------------------------------------------------------ |
+| className  | string            | ""      | Defines custom class name(s), that will be **added** to Carousel element |
+| autoPlay   | boolean           | true    | Defines if the component will auto scroll between children               |
+| interval   | number            | 4000    | Defines the interval in **ms** between active child changes (autoPlay)   |
+| indicators | boolean           | true    | Defines the existence of bullet indicators                               |
+| animation  | {"fade", "slide"} | "fade"  | Defines the animation style of the Carousel                              |
 
-## Typescript
+## License
 
-[Adding Typescript support](https://gist.github.com/DimiMikadze/f25e1c5c70fa003953afd40fa9042517)
+The MIT License.
 
-## Troubleshooting
+## Author
 
-### Usage of other libraries within your library
-
-- Add the library as a peer dependency in package.json (effectively requiring the calling project to provide this dependency)
-- Add the library as a dev dependency in package.json (effectively allowing this library to successfully build without complaining about not having this dependency)
-- Add the library to the externals config in your webpack.config file(s). By default, only react and react-dom are there, meaning that those are the only two libraries that you can use within your new shared library.
+[Learus](learus.github.io)

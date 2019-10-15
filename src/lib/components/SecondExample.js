@@ -37,33 +37,21 @@ const items = [
     {
         name: "Lear Music Reader",
         description: "A PDF Reader specially designed for musicians.",
-        fullDescription: "A PDF Reader specially designed for musicians. A project currently in development, Lear Music Reader aspires to provide musicians with everything they could need from a music sheet reader",
-        link: "https://github.com/Learus/Lear-Music-Reader",
-        image: "images/musicreader.jpg",
         color: "#64ACC8"
     },
     {
         name: "Hash Code 2019",
         description: "My Solution on the 2019 Hash Code by Google Slideshow problem.",
-        fullDescription: "My Solution on the 2019 Hash Code by Google Slideshow problem.",
-        link: "https://github.com/Learus/HashCode2019",
-        image: "images/hashcode.png",
         color: "#7D85B1"
     },
     {
         name: "Terrio",
         description: "A exciting mobile game game made in the Unity Engine.",
-        fullDescription: "A exciting mobile game game made in the Unity Engine. A game currently in development, Terrio is a different take on the popular Paper.io game. Extend your territory, avoid or kill enemies, while using strong powerups and cool visuals.",
-        link: "https://play.google.com/store/apps/details?id=com.Brewery.Terrio",
-        image: "images/terrio.webp",
         color: "#CE7E78"
     },
     {
         name: "React Carousel",
         description: "A Generic carousel UI component for React using material ui.",
-        fullDescription: "A Generic carousel UI component for React using material ui.",
-        link: "https://learus.github.io/react-material-ui-carousel",
-        image: "images/carousel.png",
         color: "#C9A27E"
     }
 ]
