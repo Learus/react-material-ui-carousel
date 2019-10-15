@@ -12,7 +12,8 @@
   },
   "license": "MIT",
   "description": "A Generic, extendible Carousel UI component for React using Material UI",
-  "homepage": "https://github.com/Learus/react-material-ui-carousel",
+  "homepage": "https://learus.github.io",
+  "repository": {"type": "git", "url": "https://github.com/Learus/react-material-ui-carousel"},
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.6.0",
