@@ -684,6 +684,10 @@ module.exports = function(webpackEnv) {
       ? {
         react: 'react',
         'react-dom': 'react-dom',
+        '@material-ui/core': '@material-ui/core',
+        '@material-ui/icons': '@material-ui/icons',
+        'node-sass': 'node-sass',
+        'auto-bind': 'auto-bind'
       }
       : {},
     // Some libraries import Node modules but don't use them in the browser.
