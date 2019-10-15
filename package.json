@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-carousel",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "build/index.js",
   "scripts": {
     "start": "node scripts/start.js",
@@ -14,6 +14,7 @@
   "description": "A Generic, extendible Carousel UI component for React using Material UI",
   "homepage": "https://learus.github.io",
   "repository": {"type": "git", "url": "https://github.com/Learus/react-material-ui-carousel"},
+  "keywords": ["react", "material", "material ui", "carousel", "gallery"],
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.6.0",

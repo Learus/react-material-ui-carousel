@@ -9,6 +9,10 @@ It switches between given children using a smooth animation.
 Provides next and previous buttons.
 Also provides interactible bullet indicators.
 
+## Demo
+
+Take a look at this interactible [Demo](https://learus.github.io/react-material-ui-carousel)
+
 ## Installation
 
 ```shell
