@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-material-ui-carousel/static/css/main.526dccef.chunk.css",
-    "main.js": "/react-material-ui-carousel/static/js/main.07a71718.chunk.js",
-    "main.js.map": "/react-material-ui-carousel/static/js/main.07a71718.chunk.js.map",
-    "runtime-main.js": "/react-material-ui-carousel/static/js/runtime-main.464c6120.js",
-    "runtime-main.js.map": "/react-material-ui-carousel/static/js/runtime-main.464c6120.js.map",
-    "static/js/2.4cd6be7f.chunk.js": "/react-material-ui-carousel/static/js/2.4cd6be7f.chunk.js",
-    "static/js/2.4cd6be7f.chunk.js.map": "/react-material-ui-carousel/static/js/2.4cd6be7f.chunk.js.map",
-    "index.html": "/react-material-ui-carousel/index.html",
-    "precache-manifest.9e09a8384eaa12f4596887863bbcbcf3.js": "/react-material-ui-carousel/precache-manifest.9e09a8384eaa12f4596887863bbcbcf3.js",
-    "service-worker.js": "/react-material-ui-carousel/service-worker.js",
-    "static/css/main.526dccef.chunk.css.map": "/react-material-ui-carousel/static/css/main.526dccef.chunk.css.map"
+    "main.css": "/static/css/main.526dccef.chunk.css",
+    "main.js": "/static/js/main.ceea990a.chunk.js",
+    "main.js.map": "/static/js/main.ceea990a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.61de37ac.js",
+    "runtime-main.js.map": "/static/js/runtime-main.61de37ac.js.map",
+    "static/js/2.4cd6be7f.chunk.js": "/static/js/2.4cd6be7f.chunk.js",
+    "static/js/2.4cd6be7f.chunk.js.map": "/static/js/2.4cd6be7f.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.6a69f3be07a5d1a0b93415a7cacf7a3b.js": "/precache-manifest.6a69f3be07a5d1a0b93415a7cacf7a3b.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.526dccef.chunk.css.map": "/static/css/main.526dccef.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.464c6120.js",
+    "static/js/runtime-main.61de37ac.js",
     "static/js/2.4cd6be7f.chunk.js",
     "static/css/main.526dccef.chunk.css",
-    "static/js/main.07a71718.chunk.js"
+    "static/js/main.ceea990a.chunk.js"
   ]
 }
