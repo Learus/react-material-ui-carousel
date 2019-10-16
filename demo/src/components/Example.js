@@ -1,7 +1,7 @@
 import React from 'react';
-import Carousel from "../src/components/Carousel"
+import Carousel from "react-material-ui-carousel"
 import autoBind from "auto-bind"
-import './Example.scss';
+import '../style//Example.scss';
 
 import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel } from '@material-ui/core';
 
