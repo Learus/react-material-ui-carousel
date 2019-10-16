@@ -1,7 +1,5 @@
 # React Material UI Carousel
 
-This project was bootstrapped with [Create React Library](https://github.com/udilia/create-react-library).
-
 ## Description
 
 A Generic, extendible Carousel UI component for React using [Material UI](https://material-ui.com/)  
@@ -9,9 +7,9 @@ It switches between given children using a smooth animation.
 Provides next and previous buttons.
 Also provides interactible bullet indicators.
 
-## Demo
+## Live Demo
 
-Take a look at this interactible [Demo](https://learus.github.io/react-material-ui-carousel)
+Take a look at this interactible [Live Demo](https://learus.github.io/react-material-ui-carousel)
 
 ## Installation
 

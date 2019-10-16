@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from './Carousel';
+import Carousel from '../src/components/Carousel';
 import autoBind from 'auto-bind';
 import {
     FormLabel,
@@ -11,7 +11,7 @@ import {
     Button
 } from '@material-ui/core'
 
-import "../style/SecondExample.scss"
+import "./SecondExample.scss"
 
 function Project(props)
 {
