@@ -1,0 +1,93 @@
+$grey: rgb(175, 175, 175);
+$graphite: rgb(73, 73, 73);
+$small-font-size: 15px;
+$big-header-font-size: 30px;
+
+.Carousel
+{
+    position: relative;
+
+    .Indicators
+    {
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+        
+        .Indicator
+        {
+            font-size: $small-font-size;
+            
+            cursor: pointer;
+
+            transition: 200ms;
+
+            color: $grey;
+
+            &.Active
+            {
+                color: $graphite;
+            }
+
+            &:hover, &:active
+            {
+                color: rgb(31, 31, 31);
+            }
+        }
+    }
+
+    .ButtonWrapper
+    {
+        position: absolute;
+        height: calc(100% - 20px - 10px);
+        background-color: transparent;
+        top: 0;
+
+        &.Next
+        {
+            right: 0;
+        }
+
+        &.Prev
+        {
+            left: 0
+        }
+
+        &:hover > .Button
+        {
+            background-color: black;
+            filter: brightness(120%);
+            opacity: 0.4;
+        }
+    }
+
+    .Button
+    {
+        margin: 0 10px;
+        position: relative;
+        top: calc(50% - 20px);
+
+        background-color: $graphite;
+        color: white;
+        opacity: 0 !important;
+
+        font-size: $big-header-font-size;
+
+        &.Next
+        {
+            right: 0;
+        }
+
+        &.Prev
+        {
+            left: 0
+        }
+
+        transition: 200ms;
+        cursor: pointer;
+
+        &:hover
+        {
+            opacity: 0.6 !important;
+        }
+    }
+}
