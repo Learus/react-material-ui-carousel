@@ -6,7 +6,7 @@
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-material-ui-carousel": "^1.0.0",
+    "react-material-ui-carousel": "^1.1.0",
     "react-scripts": "3.2.0"
   },
   "scripts": {
