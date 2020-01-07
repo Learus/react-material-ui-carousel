@@ -1,0 +1,58 @@
+.Carousel {
+	 position: relative;
+}
+ .Carousel .Indicators {
+	 width: 100%;
+	 margin-top: 10px;
+	 text-align: center;
+}
+ .Carousel .Indicators .Indicator {
+	 font-size: 15px;
+	 cursor: pointer;
+	 transition: 200ms;
+	 color: #afafaf;
+}
+ .Carousel .Indicators .Indicator.Active {
+	 color: #494949;
+}
+ .Carousel .Indicators .Indicator:hover, .Carousel .Indicators .Indicator:active {
+	 color: #1f1f1f;
+}
+ .Carousel .ButtonWrapper {
+	 position: absolute;
+	 height: calc(100% - 20px - 10px);
+	 background-color: transparent;
+	 top: 0;
+}
+ .Carousel .ButtonWrapper.Next {
+	 right: 0;
+}
+ .Carousel .ButtonWrapper.Prev {
+	 left: 0;
+}
+ .Carousel .ButtonWrapper:hover > .Button {
+	 background-color: black;
+	 filter: brightness(120%);
+	 opacity: 0.4;
+}
+ .Carousel .Button {
+	 margin: 0 10px;
+	 position: relative;
+	 top: calc(50% - 20px);
+	 background-color: #494949;
+	 color: white;
+	 opacity: 0 !important;
+	 font-size: 30px;
+	 transition: 200ms;
+	 cursor: pointer;
+}
+ .Carousel .Button.Next {
+	 right: 0;
+}
+ .Carousel .Button.Prev {
+	 left: 0;
+}
+ .Carousel .Button:hover {
+	 opacity: 0.6 !important;
+}
+ 
