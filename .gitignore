@@ -11,6 +11,7 @@
 # production
 /build
 /dist
+/demodist
 
 demo/build
 demo/dist

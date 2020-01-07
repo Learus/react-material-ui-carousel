@@ -25,13 +25,13 @@
     ]
   },
   "dependencies": {
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
     "auto-bind": "^2.1.1",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.12.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-scripts": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
