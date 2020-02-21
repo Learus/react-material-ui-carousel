@@ -22,13 +22,13 @@ npm install react-material-ui-carousel --save
 ```jsx
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import Paper from '@material-ui/core'
+import {Paper} from '@material-ui/core'
 
 function Example(props)
 {
     var items = [
         {
-            name: "Random Name #1"
+            name: "Random Name #1",
             description: "Probably the most random thing you have ever seen!"
         },
         {
@@ -41,10 +41,10 @@ function Example(props)
         <Carousel>
             {
                 items.map( item => {
-                    <Item item={item}>
+                    <Item item={item} />
                 })
             }
-        <Carousel/>
+        </Carousel>
     )
 }
 
@@ -58,7 +58,7 @@ function Item(props)
             <Button className="CheckButton">
                 Check it out!
             </Button>
-        <Paper/>
+        </Paper>
     )
 }
 ```
