@@ -28,22 +28,26 @@
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
     "auto-bind": "^2.1.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "^3.3.0"
+    "react-scripts": "^3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "SET NODE_ENV=production && rmdir dist /s /q && mkdir dist && npx babel ./src --out-dir dist --copy-files",
+    "build-unix": "NODE_ENV=production && rm -rf dist && mkdir -p dist && npx babel ./src --out-dir dist --copy-files",
     "demo": "SET NODE_ENV=production && rmdir demodist /s /q && mkdir demodist && npx babel ./demo --out-dir ./demodist --copy-files",
-    "test": "react-scripts test",
+    "demo-unix": "NODE_ENV=production && rm -rf demodist && mkdir -p demodist && npx babel ./demo --out-dir ./demodist --copy-files",
     "predeploy": "npm run demo",
-    "deploy": "gh-pages -d demodist"
+    "deploy": "gh-pages -d demodist",
+    "predeploy-unix": "npm run demo-unix",
+    "deploy-unix": "gh-pages -d demodist"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "typings": "src/@types/react-material-ui-carousel/index.d.ts",
   "browserslist": {
     "production": [
       ">0.2%",
