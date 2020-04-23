@@ -8,7 +8,9 @@ import {
     Radio,
     RadioGroup,
     Paper,
-    Button
+    Button,
+    Slider,
+    Typography
 } from '@material-ui/core'
 
 import "../style/SecondExample.scss"
@@ -66,7 +68,8 @@ export default class MyProjectsExample extends React.Component
             autoPlay: true,
             timer: 500,
             animation: "fade",
-            indicators: true
+            indicators: true,
+            timeout: 500
         }
 
         autoBind(this);
@@ -93,6 +96,13 @@ export default class MyProjectsExample extends React.Component
         })
     }
 
+    changeTimeout(event, value)
+    {
+        this.setState({
+            timeout: value
+        })
+    }
+
     render()
     {
         return (
@@ -105,6 +115,7 @@ export default class MyProjectsExample extends React.Component
                     timer={this.state.timer}
                     animation={this.state.animation}
                     indicators={this.state.indicators}
+                    timeout={this.state.timeout}
                 >
                     {
                         items.map( (item, index) => {
@@ -129,13 +140,33 @@ export default class MyProjectsExample extends React.Component
                 />
 
                 
-                {/* <FormLabel component="legend">Animation</FormLabel> */}
                 <FormControlLabel
                     control={
                         <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{marginLeft: "10px"}}>
                             <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
                             <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
                         </RadioGroup>
+                    }
+                />
+
+                <FormControlLabel
+                    control={
+                        <div style={{width: 300}}>
+                            <Typography id="discrete-slider" gutterBottom>
+                                Animation Duration (Timeout) in ms
+                            </Typography>
+                            <Slider
+                                defaultValue={500}
+                                getAriaValueText={() => `${this.state.timeout}ms`}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={100}
+                                marks
+                                min={100}
+                                max={2000}
+                                onChange={this.changeTimeout}
+                            />
+                        </div>
                     }
                 />
                 

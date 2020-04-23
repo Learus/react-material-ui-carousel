@@ -3,7 +3,7 @@ import Carousel from "react-material-ui-carousel"
 import autoBind from "auto-bind"
 import '../style//Example.scss';
 
-import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel, Slider } from '@material-ui/core';
 
 function Banner(props)
 {
@@ -136,7 +136,8 @@ class BannerExample extends React.Component
             autoPlay: true,
             timer: 500,
             animation: "fade",
-            indicators: true
+            indicators: true,
+            timeout: 500
         }
 
         autoBind(this);
@@ -163,6 +164,13 @@ class BannerExample extends React.Component
         })
     }
 
+    changeTimeout(event, value)
+    {
+        this.setState({
+            timeout: value
+        })
+    }
+
     render()
     {
         return (
@@ -175,6 +183,7 @@ class BannerExample extends React.Component
                     timer={this.state.timer}
                     animation={this.state.animation}
                     indicators={this.state.indicators}
+                    timeout={this.state.timeout}
                 >
                     {
                         items.map( (item, index) => {
@@ -198,14 +207,33 @@ class BannerExample extends React.Component
                     label="Indicators"
                 />
 
-                
-                {/* <FormLabel component="legend">Animation</FormLabel> */}
                 <FormControlLabel
                     control={
                         <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{marginLeft: "10px"}}>
                             <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
                             <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
                         </RadioGroup>
+                    }
+                />
+
+                <FormControlLabel
+                    control={
+                        <div style={{width: 300}}>
+                            <Typography id="discrete-slider" gutterBottom>
+                                Animation Duration (Timeout) in ms
+                            </Typography>
+                            <Slider
+                                defaultValue={500}
+                                getAriaValueText={() => `${this.state.timeout}ms`}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={100}
+                                marks
+                                min={100}
+                                max={2000}
+                                onChange={this.changeTimeout}
+                            />
+                        </div>
                     }
                 />
                 

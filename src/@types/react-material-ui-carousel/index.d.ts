@@ -7,7 +7,8 @@
         interval?: number,
         animation?: 'fade' | 'slide',
         children?: ReactNode,
-        className?: string
+        className?: string,
+        timeout?: number | { appear?: number, enter?: number, exit?: number }
     }
     
     declare const Carousel: React.ComponentType<CarouselProps>;

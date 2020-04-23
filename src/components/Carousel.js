@@ -12,6 +12,7 @@ export default class Carousel extends Component
     constructor(props)
     {
         super(props);
+
         this.state = {
             active: 0,
             autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
@@ -116,6 +117,7 @@ export default class Carousel extends Component
     {
         const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade"
+        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200)
 
         return (
             <div className={`Carousel ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
@@ -123,11 +125,11 @@ export default class Carousel extends Component
                     Array.isArray(this.props.children) ? 
                         this.props.children.map( (child, index) => {
                             return (
-                                <CarouselItem key={index} active={index === this.state.active ? true : false} child={child} animation={animation}/>
+                                <CarouselItem key={index} active={index === this.state.active ? true : false} child={child} animation={animation} timeout={timeout}/>
                             )
                         })
                         :
-                        <CarouselItem key={0} active={true} child={this.props.children}/>
+                        <CarouselItem key={0} active={true} child={this.props.children} animation={animation} timeout={timeout}/>
                 }
                 
                 <div className="Next ButtonWrapper">
@@ -155,13 +157,13 @@ function CarouselItem(props)
         // (
             <div className="CarouselItem" hidden={!props.active}>
                 {props.animation === "slide" ?
-                    <Slide direction="left" in={props.active} timeout={200}>
+                    <Slide direction="left" in={props.active} timeout={props.timeout}>
                         <div>
                             {props.child}
                         </div>
                     </Slide>
                     :
-                    <Fade in={props.active} timeout={500}>
+                    <Fade in={props.active} timeout={500} timeout={props.timeout}>
                         <div>
                             {props.child}
                         </div>
