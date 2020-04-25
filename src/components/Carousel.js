@@ -1,13 +1,71 @@
 import React, { Component } from 'react';
 import {Fade, Slide, IconButton} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import autoBind from 'auto-bind';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import '../style/Carousel.css';
+const styles = {
+    root: {
+        position: "relative"
+    },
+    indicators: {
+        width: "100%",
+        marginTop: "10px",
+        textAlign: "center"
+    },
+    indicator: {
+        fontSize: "15px",
+        cursor: "pointer",
+        transition: "200ms",
+        color: "#afafaf",
+        '&:hover': {
+            color: "#1f1f1f"
+        },
+        '&:active': {
+            color: "#1f1f1f"
+        }
+    },
+    active: {
+        color: "#494949"
+    },
+    buttonWrapper: {
+        position: "absolute",
+        height: "calc(100% - 20px - 10px)",
+        backgroundColor: "transparent",
+        top: 0,
+        '&:hover': {
+            '& $button': {
+                backgroundColor: "black",
+                filter: "brightness(120%)",
+                opacity: 0.4
+            }
+        }
+    },
+    button: {
+        margin: "0 10px",
+        position: "relative",
+        top: "calc(50% - 20px)",
+        backgroundΨolor: "#494949",
+        color: "white",
+        opacity: "0 !important",
+        fontSize: "30px",
+        transition: "200ms",
+        cursor: "pointer",
+        '&:hover': {
+            opacity: "0.6 !important"
+        }
+    },
+    next: {
+        right: 0
+    },
+    prev: {
+        left: 0
+    }
+}
 
-export default class Carousel extends Component
+class Carousel extends Component
 {
     constructor(props)
     {
@@ -118,9 +176,10 @@ export default class Carousel extends Component
         const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade"
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200)
+        const classes = this.props.classes;
 
         return (
-            <div className={`Carousel ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
+            <div className={`${classes.root} ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
                 {   
                     Array.isArray(this.props.children) ? 
                         this.props.children.map( (child, index) => {
@@ -132,19 +191,19 @@ export default class Carousel extends Component
                         <CarouselItem key={0} active={true} child={this.props.children} animation={animation} timeout={timeout}/>
                 }
                 
-                <div className="Next ButtonWrapper">
-                    <IconButton className="Next Button mui--align-middle" onClick={this.next}>
+                <div className={`${classes.buttonWrapper} ${classes.next}`}>
+                    <IconButton className={`${classes.button} ${classes.next} mui--aligh-middle`} onClick={this.next}>
                         <NavigateNextIcon/>
                     </IconButton>
                 </div>
 
-                <div className="Prev ButtonWrapper">
-                    <IconButton className="Prev Button mui--align-middle" onClick={this.prev}>
+                <div className={`${classes.buttonWrapper} ${classes.prev}`}>
+                    <IconButton className={`${classes.button} ${classes.prev} mui--align-middle`} onClick={this.prev}>
                         <NavigateBeforeIcon/>
                     </IconButton>
                 </div>
                 
-                {indicators ? <Indicators length={this.props.children.length} active={this.state.active} press={this.pressIndicator}/> : null}
+                {indicators ? <Indicators classes={classes} length={this.props.children.length} active={this.state.active} press={this.pressIndicator}/> : null}
             </div>
         )
     }
@@ -176,18 +235,22 @@ function CarouselItem(props)
 
 function Indicators(props)
 {
+    const classes = props.classes;
+
     let indicators = [];
     for (let i = 0; i < props.length; i++)
     {
-        const className = i === props.active ? "Active Indicator" : "Indicator";
+        const className = i === props.active ? `${classes.indicator} ${classes.active}`: `${classes.indicator}`;
         const item = <FiberManualRecordIcon key={i} size='small' className={className} onClick={() => {props.press(i)}}/>;
 
         indicators.push(item);
     }
 
     return (
-        <div className="Indicators">
+        <div className={`${classes.indicators}`}>
             {indicators}
         </div>
     )
 }
+
+export default withStyles(styles)(Carousel);
