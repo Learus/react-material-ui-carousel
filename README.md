@@ -65,14 +65,15 @@ function Item(props)
 
 ## Props
 
-| Prop name  | Type                                                       | Default | Description                                                              |
-| ---------- | ---------------------------------------------------------- | ------- | ------------------------------------------------------------------------ |
-| className  | string                                                     | ""      | Defines custom class name(s), that will be **added** to Carousel element |
-| autoPlay   | boolean                                                    | true    | Defines if the component will auto scroll between children               |
-| interval   | number                                                     | 4000    | Defines the interval in **ms** between active child changes (autoPlay)   |
-| indicators | boolean                                                    | true    | Defines the existence of bullet indicators                               |
-| animation  | "fade"  \| "slide"                                         | "fade"  | Defines the animation style of the Carousel                              |
-| timeout    | number  \| {appear? number, enter?: number, exit?: number} | 500     | Defines the duration of the animation                                    |
+| Prop name                | Type                                                       | Default | Description                                                              |
+| ----------               | ---------------------------------------------------------- | ------- | ------------------------------------------------------------------------ |
+| className                | string                                                     | ""      | Defines custom class name(s), that will be **added** to Carousel element |
+| autoPlay                 | boolean                                                    | true    | Defines if the component will auto scroll between children               |
+| interval                 | number                                                     | 4000    | Defines the interval in **ms** between active child changes (autoPlay)   |
+| indicators               | boolean                                                    | true    | Defines the existence of bullet indicators                               |
+| animation                | "fade"  \| "slide"                                         | "fade"  | Defines the animation style of the Carousel                              |
+| timeout                  | number  \| {appear? number, enter?: number, exit?: number} | 500     | Defines the duration of the animation                                    |
+| navButtonsAlwaysVisible  | boolean                                                    | false   | Defines will be prev and next buttons always visible or not              |
 
 ## License
 

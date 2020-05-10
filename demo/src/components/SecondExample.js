@@ -69,7 +69,8 @@ export default class MyProjectsExample extends React.Component
             timer: 500,
             animation: "fade",
             indicators: true,
-            timeout: 500
+            timeout: 500,
+            navButtonsAlwaysVisible: false
         }
 
         autoBind(this);
@@ -86,6 +87,13 @@ export default class MyProjectsExample extends React.Component
     {
         this.setState({
             indicators: !this.state.indicators
+        })
+    }
+
+    toggleNavButtonsAlwaysVisible()
+    {
+        this.setState({
+            navButtonsAlwaysVisible: !this.state.navButtonsAlwaysVisible
         })
     }
 
@@ -116,6 +124,8 @@ export default class MyProjectsExample extends React.Component
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}
+                    navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
+                    
                 >
                     {
                         items.map( (item, index) => {
@@ -137,6 +147,12 @@ export default class MyProjectsExample extends React.Component
                         <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators" color="primary"/>
                     }
                     label="Indicators"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary"/>
+                    }
+                    label="NavButtonsAlwaysVisible"
                 />
 
                 

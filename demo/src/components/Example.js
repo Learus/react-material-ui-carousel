@@ -3,10 +3,22 @@ import Carousel from "react-material-ui-carousel"
 import autoBind from "auto-bind"
 import '../style//Example.scss';
 
-import { Card, CardContent, CardMedia, Typography, Grid, Button, Checkbox, FormControlLabel, Radio, RadioGroup, FormLabel, Slider } from '@material-ui/core';
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    Grid,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Radio,
+    RadioGroup,
+    FormLabel,
+    Slider
+} from '@material-ui/core';
 
-function Banner(props)
-{
+function Banner(props) {
     if (props.newProp) console.log(props.newProp)
     const contentPosition = props.contentPosition ? props.contentPosition : "left"
     const totalItems = props.length ? props.length : 3;
@@ -31,41 +43,33 @@ function Banner(props)
         </Grid>
     )
 
-    
-    for (let i = 0; i < mediaLength; i++)
-    {
+
+    for (let i = 0; i < mediaLength; i++) {
         const item = props.item.Items[i];
 
         const media = (
             <Grid item xs={12 / totalItems} key={item.Name}>
-                {/* <Link href={`/item/${item.Id}`} className="Link"> */}
-                    <CardMedia
-                        className="Media"
-                        image={item.Image}
-                        title={item.Name}
-                    >
-                        <Typography className="MediaCaption">
-                            {item.Name}
-                        </Typography>
-                    </CardMedia>
-                {/* </Link> */}
-                
+                <CardMedia
+                    className="Media"
+                    image={item.Image}
+                    title={item.Name}
+                >
+                    <Typography className="MediaCaption">
+                        {item.Name}
+                    </Typography>
+                </CardMedia>
+
             </Grid>
         )
 
         items.push(media);
     }
 
-    if (contentPosition === "left")
-    {
+    if (contentPosition === "left") {
         items.unshift(content);
-    }
-    else if (contentPosition === "right")
-    {
+    } else if (contentPosition === "right") {
         items.push(content);
-    }
-    else if (contentPosition === "middle")
-    {
+    } else if (contentPosition === "middle") {
         items.splice(items.length / 2, 0, content);
     }
 
@@ -79,57 +83,55 @@ function Banner(props)
 }
 
 const items = [
-  {
-      Name: "Electronics",
-      Caption: "Electrify your friends!",
-      contentPosition: "left",
-      Items: [
-          {
-              Name: "Macbook Pro",
-              Image: "https://source.unsplash.com/featured/?macbook"
-          },
-          {
-              Name: "iPhone",
-              Image: "https://source.unsplash.com/featured/?iphone"
-          }
-      ]
-  },
-  {
-      Name: "Home Appliances",
-      Caption: "Say no to manual home labour!",
-      contentPosition: "middle",
-      Items: [
-          {
-              Name: "Washing Machine WX9102",
-              Image: "https://source.unsplash.com/featured/?washingmachine"
-          },
-          {
-              Name: "Learus Vacuum Cleaner",
-              Image: "https://source.unsplash.com/featured/?vacuum,cleaner"
-          }
-      ]
-  },
-  {
-      Name: "Decoratives",
-      Caption: "Give style and color to your living room!",
-      contentPosition: "right",
-      Items: [
-          {
-              Name: "Living Room Lamp",
-              Image: "https://source.unsplash.com/featured/?lamp"
-          },
-          {
-              Name: "Floral Vase",
-              Image: "https://source.unsplash.com/featured/?vase"
-          }
-      ]
-  }
+    {
+        Name: "Electronics",
+        Caption: "Electrify your friends!",
+        contentPosition: "left",
+        Items: [
+            {
+                Name: "Macbook Pro",
+                Image: "https://source.unsplash.com/featured/?macbook"
+            },
+            {
+                Name: "iPhone",
+                Image: "https://source.unsplash.com/featured/?iphone"
+            }
+        ]
+    },
+    {
+        Name: "Home Appliances",
+        Caption: "Say no to manual home labour!",
+        contentPosition: "middle",
+        Items: [
+            {
+                Name: "Washing Machine WX9102",
+                Image: "https://source.unsplash.com/featured/?washingmachine"
+            },
+            {
+                Name: "Learus Vacuum Cleaner",
+                Image: "https://source.unsplash.com/featured/?vacuum,cleaner"
+            }
+        ]
+    },
+    {
+        Name: "Decoratives",
+        Caption: "Give style and color to your living room!",
+        contentPosition: "right",
+        Items: [
+            {
+                Name: "Living Room Lamp",
+                Image: "https://source.unsplash.com/featured/?lamp"
+            },
+            {
+                Name: "Floral Vase",
+                Image: "https://source.unsplash.com/featured/?vase"
+            }
+        ]
+    }
 ]
 
-class BannerExample extends React.Component
-{
-    constructor(props)
-    {
+class BannerExample extends React.Component {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -137,56 +139,60 @@ class BannerExample extends React.Component
             timer: 500,
             animation: "fade",
             indicators: true,
-            timeout: 500
+            timeout: 500,
+            navButtonsAlwaysVisible: false
         }
 
         autoBind(this);
     }
 
-    toggleAutoPlay()
-    {
+    toggleAutoPlay() {
         this.setState({
             autoPlay: !this.state.autoPlay
         })
     }
 
-    toggleIndicators()
-    {
+    toggleIndicators() {
         this.setState({
             indicators: !this.state.indicators
         })
     }
 
-    changeAnimation(event)
+    toggleNavButtonsAlwaysVisible()
     {
+        this.setState({
+            navButtonsAlwaysVisible: !this.state.navButtonsAlwaysVisible
+        })
+    }
+
+    changeAnimation(event) {
         this.setState({
             animation: event.target.value
         })
     }
 
-    changeTimeout(event, value)
-    {
+    changeTimeout(event, value) {
         this.setState({
             timeout: value
         })
     }
 
-    render()
-    {
+    render() {
         return (
             <div style={{marginTop: "50px", color: "#494949"}}>
                 <h2>Example: eBay&trade; style</h2>
 
-                <Carousel 
+                <Carousel
                     className="Example"
                     autoPlay={this.state.autoPlay}
                     timer={this.state.timer}
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}
+                    navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
                 >
                     {
-                        items.map( (item, index) => {
+                        items.map((item, index) => {
                             return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
                         })
                     }
@@ -196,20 +202,29 @@ class BannerExample extends React.Component
                 <FormLabel component="legend">Options</FormLabel>
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay" color="primary"/>
+                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay"
+                                  color="primary"/>
                     }
                     label="Auto-play"
                 />
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators"
+                                  color="primary"/>
                     }
                     label="Indicators"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary"/>
+                    }
+                    label="NavButtonsAlwaysVisible"
                 />
 
                 <FormControlLabel
                     control={
-                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{marginLeft: "10px"}}>
+                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row
+                                    style={{marginLeft: "10px"}}>
                             <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
                             <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
                         </RadioGroup>
@@ -236,9 +251,9 @@ class BannerExample extends React.Component
                         </div>
                     }
                 />
-                
+
             </div>
-            
+
         )
     }
 }
