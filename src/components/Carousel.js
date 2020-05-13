@@ -43,6 +43,10 @@ const styles = {
             }
         }
     },
+    fullHeightHoverWrapper: {
+        height: "calc(100% - 20px - 10px) !important",
+        top: "0 !important"
+    },
     button: {
         margin: "0 10px",
         position: "relative",
@@ -55,6 +59,9 @@ const styles = {
         '&:hover': {
             opacity: "0.6 !important"
         }
+    },
+    fullHeightHoverButton: {
+        top: "calc(50% - 20px) !important"
     },
     buttonVisible:{
         opacity: "0.6"
@@ -180,10 +187,13 @@ class Carousel extends Component
     {
         const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
         const navButtonsAlwaysVisible = this.props.navButtonsAlwaysVisible !== undefined ? this.props.navButtonsAlwaysVisible: false;
-        const animation = this.props.animation !== undefined ? this.props.animation: "fade"
-        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200)
+        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
+        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const fullHeightHover = this.props.fullHeightHover !== undefined ? this.props.fullHeightHover : true;
+
         const classes = this.props.classes;
-        const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible? classes.buttonVisible: classes.buttonHidden }`; 
+        const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible? classes.buttonVisible: classes.buttonHidden } ${fullHeightHover ? classes.fullHeightHoverButton : ""}`;
+        const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""}`;
 
         return (
             <div className={`${classes.root} ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
@@ -198,13 +208,13 @@ class Carousel extends Component
                         <CarouselItem key={0} active={true} child={this.props.children} animation={animation} timeout={timeout}/>
                 }
                 
-                <div className={`${classes.buttonWrapper} ${classes.next}`}>
+                <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
                     <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next}>
                         <NavigateNextIcon/>
                     </IconButton>
                 </div>
 
-                <div className={`${classes.buttonWrapper} ${classes.prev}`}>
+                <div className={`${buttonWrapperCssClassValue} ${classes.prev}`}>
                     <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev}>
                         <NavigateBeforeIcon/>
                     </IconButton>
@@ -229,7 +239,7 @@ function CarouselItem(props)
                         </div>
                     </Slide>
                     :
-                    <Fade in={props.active} timeout={500} timeout={props.timeout}>
+                    <Fade in={props.active} timeout={props.timeout}>
                         <div>
                             {props.child}
                         </div>
