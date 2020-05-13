@@ -4,6 +4,7 @@
     export interface CarouselProps {
         indicators?: boolean,
         autoPlay?: boolean,
+        navButtonsAlwaysVisible?: boolean,
         interval?: number,
         animation?: 'fade' | 'slide',
         children?: ReactNode,

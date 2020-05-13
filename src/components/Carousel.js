@@ -32,9 +32,9 @@ const styles = {
     },
     buttonWrapper: {
         position: "absolute",
-        height: "calc(100% - 20px - 10px)",
+        height: "100px",
         backgroundColor: "transparent",
-        top: 0,
+        top: "calc(50% - 70px)",
         '&:hover': {
             '& $button': {
                 backgroundColor: "black",
@@ -46,16 +46,21 @@ const styles = {
     button: {
         margin: "0 10px",
         position: "relative",
-        top: "calc(50% - 20px)",
-        backgroundΨolor: "#494949",
+        backgroundColor: "#494949",
+        top: "30px",
         color: "white",
-        opacity: "0 !important",
         fontSize: "30px",
         transition: "200ms",
         cursor: "pointer",
         '&:hover': {
             opacity: "0.6 !important"
         }
+    },
+    buttonVisible:{
+        opacity: "0.6"
+    },
+    buttonHidden:{
+        opacity: "0",
     },
     next: {
         right: 0
@@ -174,9 +179,11 @@ class Carousel extends Component
     render()
     {
         const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
+        const navButtonsAlwaysVisible = this.props.navButtonsAlwaysVisible !== undefined ? this.props.navButtonsAlwaysVisible: false;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade"
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200)
         const classes = this.props.classes;
+        const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible? classes.buttonVisible: classes.buttonHidden }`; 
 
         return (
             <div className={`${classes.root} ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
@@ -192,13 +199,13 @@ class Carousel extends Component
                 }
                 
                 <div className={`${classes.buttonWrapper} ${classes.next}`}>
-                    <IconButton className={`${classes.button} ${classes.next} mui--aligh-middle`} onClick={this.next}>
+                    <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next}>
                         <NavigateNextIcon/>
                     </IconButton>
                 </div>
 
                 <div className={`${classes.buttonWrapper} ${classes.prev}`}>
-                    <IconButton className={`${classes.button} ${classes.prev} mui--align-middle`} onClick={this.prev}>
+                    <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev}>
                         <NavigateBeforeIcon/>
                     </IconButton>
                 </div>
