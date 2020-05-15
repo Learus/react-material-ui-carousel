@@ -40,9 +40,7 @@ function Example(props)
     return (
         <Carousel>
             {
-                items.map( item => {
-                    <Item item={item} />
-                })
+                items.map( item => <Item item={item} /> )
             }
         </Carousel>
     )
