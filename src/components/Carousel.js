@@ -86,7 +86,8 @@ class Carousel extends Component
         this.state = {
             active: 0,
             autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
-            interval: this.props.interval !== undefined ? this.props.interval : 4000
+            interval: this.props.interval !== undefined ? this.props.interval : 4000,
+            displayed: 0
         }
 
         this.timer = null;
@@ -154,18 +155,37 @@ class Carousel extends Component
 
     pressIndicator(index)
     {
+        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
+        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+
         this.setState({
-            active: index
-        }, this.reset)
+            active: index,
+            displayed: this.state.active
+        }, this.reset);
+
+        setTimeout(() => {
+            this.setState({
+                displayed: index
+            })
+        }, timeout);
     }
 
     next(event)
     {
         const next = this.state.active + 1 > this.props.children.length - 1 ? 0 : this.state.active + 1;
+        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
+        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
 
         this.setState({
-            active: next
+            active: next,
+            displayed: this.state.active
         }, this.reset)
+
+        setTimeout(() => {
+            this.setState({
+                displayed: next
+            })
+        }, timeout);
 
         if (event)
             event.stopPropagation();
@@ -174,10 +194,19 @@ class Carousel extends Component
     prev(event)
     {
         const prev = this.state.active - 1 < 0 ? this.props.children.length - 1 : this.state.active - 1;
+        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
+        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
 
         this.setState({
-            active: prev
+            active: prev,
+            displayed: this.state.active
         }, this.reset)
+
+        setTimeout(() => {
+            this.setState({
+                displayed: prev
+            })
+        }, timeout);
 
         if (event)
             event.stopPropagation();
@@ -201,11 +230,25 @@ class Carousel extends Component
                     Array.isArray(this.props.children) ? 
                         this.props.children.map( (child, index) => {
                             return (
-                                <CarouselItem key={index} active={index === this.state.active ? true : false} child={child} animation={animation} timeout={timeout}/>
+                                <CarouselItem 
+                                    key={`carousel-item${index}`}
+                                    display={index === this.state.displayed ? true : false}
+                                    active={index === this.state.active ? true : false}
+                                    child={child}
+                                    animation={animation}
+                                    timeout={timeout}
+                                />
                             )
                         })
                         :
-                        <CarouselItem key={0} active={true} child={this.props.children} animation={animation} timeout={timeout}/>
+                        <CarouselItem
+                            key={`carousel-item0`}
+                            display={true}
+                            active={true}
+                            child={this.props.children}
+                            animation={animation}
+                            timeout={timeout}
+                        />
                 }
                 
                 <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
@@ -229,9 +272,8 @@ class Carousel extends Component
 function CarouselItem(props)
 {
     return (
-        // props.active ? 
-        // (
-            <div className="CarouselItem" hidden={!props.active}>
+        props.display ? (
+            <div className="CarouselItem" >
                 {props.animation === "slide" ?
                     <Slide direction="left" in={props.active} timeout={props.timeout}>
                         <div>
@@ -246,7 +288,7 @@ function CarouselItem(props)
                     </Fade>
                 }
             </div>
-        // ) : null
+        ) : null
     )
 }
 
