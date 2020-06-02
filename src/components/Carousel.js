@@ -83,11 +83,16 @@ class Carousel extends Component
     {
         super(props);
 
+        const strictIndexing = this.props.strictIndexing !== undefined ? props.strictIndexing : true;
+        let startAt = this.props.startAt !== undefined ? props.startAt : 0;
+        // if startAt is bigger than the children length, set it to be the last child (if strictIndexing)
+        startAt = Array.isArray(this.props.children) ? (strictIndexing && startAt > this.props.children.length - 1 ? this.props.children.length - 1 : startAt) : 0
+
         this.state = {
-            active: 0,
+            active: startAt,
             autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
             interval: this.props.interval !== undefined ? this.props.interval : 4000,
-            displayed: 0
+            displayed: startAt
         }
 
         this.timer = null;

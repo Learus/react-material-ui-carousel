@@ -63,16 +63,18 @@ function Item(props)
 
 ## Props
 
-| Prop name               | Type                                                       | Default | Description                                                                                                                               |
-| ----------------------- | ---------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| className               | string                                                     | ""      | Defines custom class name(s), that will be **added** to Carousel element                                                                  |
-| autoPlay                | boolean                                                    | true    | Defines if the component will auto scroll between children                                                                                |
-| interval                | number                                                     | 4000    | Defines the interval in **ms** between active child changes (autoPlay)                                                                    |
-| indicators              | boolean                                                    | true    | Defines the existence of bullet indicators                                                                                                |
-| animation               | "fade"  \| "slide"                                         | "fade"  | Defines the animation style of the Carousel                                                                                               |
-| timeout                 | number  \| {appear? number, enter?: number, exit?: number} | 500     | Defines the duration of the animation                                                                                                     |
-| navButtonsAlwaysVisible | boolean                                                    | false   | Defines if the next/previous buttons will always be visible or not                                                                        |
-| fullHeightHover         | boolean                                                    | true    | Defines if the the next/previous button wrappers will cover the full **height** of the Item element and show buttons on full height hover |
+| Prop name               | Type                                                       | Default | Description                                                                                                                                                                 |
+| ----------------------- | ---------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| className               | string                                                     | ""      | Defines custom class name(s), that will be **added** to Carousel element                                                                                                    |
+| autoPlay                | boolean                                                    | true    | Defines if the component will auto scroll between children                                                                                                                  |
+| interval                | number                                                     | 4000    | Defines the interval in **ms** between active child changes (autoPlay)                                                                                                      |
+| indicators              | boolean                                                    | true    | Defines the existence of bullet indicators                                                                                                                                  |
+| animation               | "fade"  \| "slide"                                         | "fade"  | Defines the animation style of the Carousel                                                                                                                                 |
+| timeout                 | number  \| {appear? number, enter?: number, exit?: number} | 500     | Defines the duration of the animation                                                                                                                                       |
+| navButtonsAlwaysVisible | boolean                                                    | false   | Defines if the next/previous buttons will always be visible or not                                                                                                          |
+| fullHeightHover         | boolean                                                    | true    | Defines if the the next/previous button wrappers will cover the full **height** of the Item element and show buttons on full height hover                                   |
+| startAt                 | number                                                     | 0       | Defines which child (assuming there are more than 1 children) will be displayed first. If (startAt > children.length) then if (strictIndexing) startAt = last element index |
+| strictIndexing          | boolean                                                    | true    | Defines whether startAt can be bigger than children length                                                                                                                  |
 
 ## License
 
