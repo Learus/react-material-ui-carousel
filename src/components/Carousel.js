@@ -257,13 +257,13 @@ class Carousel extends Component
                 }
                 
                 <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
-                    <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next}>
+                    <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next} aria-label="Next">
                         <NavigateNextIcon/>
                     </IconButton>
                 </div>
 
                 <div className={`${buttonWrapperCssClassValue} ${classes.prev}`}>
-                    <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev}>
+                    <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev} aria-label="Previous">
                         <NavigateBeforeIcon/>
                     </IconButton>
                 </div>
