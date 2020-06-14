@@ -5,6 +5,7 @@ import autoBind from 'auto-bind';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { useSwipeable } from 'react-swipeable';
 
 const styles = {
     root: {
@@ -177,9 +178,11 @@ class Carousel extends Component
 
     next(event)
     {
+        const active = this.state.active;
         const next = this.state.active + 1 > this.props.children.length - 1 ? 0 : this.state.active + 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const userNext = this.props.next !== undefined ? this.props.next : () => {};
 
         this.setState({
             active: next,
@@ -189,7 +192,7 @@ class Carousel extends Component
         setTimeout(() => {
             this.setState({
                 displayed: next
-            })
+            }, () => userNext(next, active))
         }, timeout);
 
         if (event)
@@ -198,9 +201,11 @@ class Carousel extends Component
 
     prev(event)
     {
+        const active = this.state.active;
         const prev = this.state.active - 1 < 0 ? this.props.children.length - 1 : this.state.active - 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const userPrev = this.props.prev !== undefined ? this.props.prev : () => {};
 
         this.setState({
             active: prev,
@@ -210,7 +215,7 @@ class Carousel extends Component
         setTimeout(() => {
             this.setState({
                 displayed: prev
-            })
+            }, userPrev(prev, active))
         }, timeout);
 
         if (event)
@@ -242,6 +247,8 @@ class Carousel extends Component
                                     child={child}
                                     animation={animation}
                                     timeout={timeout}
+                                    next={this.next}
+                                    prev={this.prev}
                                 />
                             )
                         })
@@ -253,6 +260,8 @@ class Carousel extends Component
                             child={this.props.children}
                             animation={animation}
                             timeout={timeout}
+                            // next={this.next}
+                            // prev={this.prev}
                         />
                 }
                 
@@ -276,9 +285,14 @@ class Carousel extends Component
 
 function CarouselItem(props)
 {
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => props.next(),
+        onSwipedRight: () => props.prev()
+    })
+
     return (
         props.display ? (
-            <div className="CarouselItem" >
+            <div {...swipeHandlers} className="CarouselItem" >
                 {props.animation === "slide" ?
                     <Slide direction="left" in={props.active} timeout={props.timeout}>
                         <div>

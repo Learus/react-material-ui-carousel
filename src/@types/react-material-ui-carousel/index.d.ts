@@ -12,7 +12,9 @@
         className?: string,
         timeout?: number | { appear?: number, enter?: number, exit?: number },
         startAt?: number,
-        strictIndexing?: boolean
+        strictIndexing?: boolean,
+        next?: Function,
+        prev?: Function
     }
     
     declare const Carousel: React.ComponentType<CarouselProps>;
