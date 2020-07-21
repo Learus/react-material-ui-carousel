@@ -161,8 +161,10 @@ class Carousel extends Component
 
     pressIndicator(index)
     {
+        const active = this.state.active;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const onChange = this.props.onChange !== undefined ? this.props.onChange : () => {};
 
         this.setState({
             active: index,
@@ -172,7 +174,7 @@ class Carousel extends Component
         setTimeout(() => {
             this.setState({
                 displayed: index
-            })
+            }, () => onChange(index, active))
         }, timeout);
     }
 
@@ -182,7 +184,16 @@ class Carousel extends Component
         const next = this.state.active + 1 > this.props.children.length - 1 ? 0 : this.state.active + 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
-        const userNext = this.props.next !== undefined ? this.props.next : () => {};
+
+        const onChange = this.props.onChange;
+        /**
+         * Callback to be called after setting the state. Will be:
+         * * () => {} | if !props.next && !props.onChange
+         * * props.onChange | if !props.next && props.onChange
+         * * props.next | if props.next
+         */
+        const userNext = this.props.next !== undefined ? this.props.next : (onChange !== undefined ? onChange : () => {});
+
 
         this.setState({
             active: next,
@@ -205,7 +216,16 @@ class Carousel extends Component
         const prev = this.state.active - 1 < 0 ? this.props.children.length - 1 : this.state.active - 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
-        const userPrev = this.props.prev !== undefined ? this.props.prev : () => {};
+
+        const onChange = this.props.onChange;
+        /**
+         * Callback to be called after setting the state. Will be:
+         * * () => {} | if !props.prev && !props.onChange
+         * * props.onChange | if !props.prev && props.onChange
+         * * props.prev | if props.prev
+         */
+        const userPrev = this.props.prev !== undefined ? this.props.prev : (onChange !== undefined ? onChange : () => {});
+
 
         this.setState({
             active: prev,
@@ -277,7 +297,17 @@ class Carousel extends Component
                     </IconButton>
                 </div>
                 
-                {indicators ? <Indicators classes={classes} length={this.props.children.length} active={this.state.active} press={this.pressIndicator}/> : null}
+                {
+                    indicators ? 
+                    <Indicators
+                        classes={classes}
+                        length={this.props.children.length}
+                        active={this.state.active}
+                        press={this.pressIndicator}
+                        indicatorProps={this.props.indicatorProps}
+                        activeIndicatorProps={this.props.activeIndicatorProps}
+                    /> : null
+                }
             </div>
         )
     }
@@ -318,8 +348,23 @@ function Indicators(props)
     let indicators = [];
     for (let i = 0; i < props.length; i++)
     {
-        const className = i === props.active ? `${classes.indicator} ${classes.active}`: `${classes.indicator}`;
-        const item = <FiberManualRecordIcon key={i} size='small' className={className} onClick={() => {props.press(i)}}/>;
+        const style = props.indicatorProps !== undefined ? props.indicatorProps.style : undefined;
+        let className = props.indicatorProps !== undefined ? props.indicatorProps.className : undefined;
+        const activeStyle = props.activeIndicatorProps !== undefined ? props.activeIndicatorProps.style : undefined;
+        const activeClassName = props.activeIndicatorProps !== undefined ? props.activeIndicatorProps.className : undefined;
+
+
+        className = i === props.active ? 
+            `${classes.indicator} ${classes.active} ${className}`: 
+            `${classes.indicator} ${activeClassName}`;
+
+        const item = <FiberManualRecordIcon 
+                        key={i}
+                        size='small'
+                        className={className}
+                        style={i === props.active ? activeStyle : style}
+                        onClick={() => {props.press(i)}}
+                    />;
 
         indicators.push(item);
     }
