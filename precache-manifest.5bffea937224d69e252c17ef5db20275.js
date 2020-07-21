@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e4175681b8fee437a780af04642ec213",
+    "revision": "cd19eb3f12cd3f50c186466d9294998f",
     "url": "/react-material-ui-carousel/index.html"
   },
   {
-    "revision": "176bd9ba6a2247eb70b3",
+    "revision": "e333f5be5ad482971960",
     "url": "/react-material-ui-carousel/static/css/main.d8307ab5.chunk.css"
   },
   {
-    "revision": "a164aeeca4791158a920",
-    "url": "/react-material-ui-carousel/static/js/2.d468a00c.chunk.js"
+    "revision": "88fb497b599ba32ba40f",
+    "url": "/react-material-ui-carousel/static/js/2.1d5977d0.chunk.js"
   },
   {
     "revision": "89b0379e7bcda1a468d8b0343aeb4e53",
-    "url": "/react-material-ui-carousel/static/js/2.d468a00c.chunk.js.LICENSE.txt"
+    "url": "/react-material-ui-carousel/static/js/2.1d5977d0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "176bd9ba6a2247eb70b3",
-    "url": "/react-material-ui-carousel/static/js/main.3e7728de.chunk.js"
+    "revision": "e333f5be5ad482971960",
+    "url": "/react-material-ui-carousel/static/js/main.12f4503b.chunk.js"
   },
   {
     "revision": "26da6be12155caaab720",
