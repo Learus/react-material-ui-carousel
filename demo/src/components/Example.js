@@ -140,7 +140,8 @@ class BannerExample extends React.Component {
             animation: "fade",
             indicators: true,
             timeout: 500,
-            navButtonsAlwaysVisible: false
+            navButtonsAlwaysVisible: false,
+            navButtonsAlwaysInvisible: false
         }
 
         autoBind(this);
@@ -162,6 +163,13 @@ class BannerExample extends React.Component {
     {
         this.setState({
             navButtonsAlwaysVisible: !this.state.navButtonsAlwaysVisible
+        })
+    }
+
+    toggleNavButtonsAlwaysInvisible()
+    {
+        this.setState({
+            navButtonsAlwaysInvisible: !this.state.navButtonsAlwaysInvisible
         })
     }
 
@@ -190,6 +198,7 @@ class BannerExample extends React.Component {
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}
                     navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
+                    navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
                 >
                     {
                         items.map((item, index) => {
@@ -219,6 +228,13 @@ class BannerExample extends React.Component {
                         <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary"/>
                     }
                     label="NavButtonsAlwaysVisible"
+                />
+
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.toggleNavButtonsAlwaysInvisible} value="indicators" color="primary"/>
+                    }
+                    label="NavButtonsAlwaysInvisible"
                 />
 
                 <FormControlLabel
