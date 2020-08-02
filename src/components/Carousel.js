@@ -9,7 +9,8 @@ import { useSwipeable } from 'react-swipeable';
 
 const styles = {
     root: {
-        position: "relative"
+        position: "relative",
+        overflow: "hidden"
     },
     indicators: {
         width: "100%",
@@ -245,12 +246,14 @@ class Carousel extends Component
     render()
     {
         const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
-        const navButtonsAlwaysVisible = this.props.navButtonsAlwaysVisible !== undefined ? this.props.navButtonsAlwaysVisible: false;
+        const navButtonsAlwaysInvisible = this.props.navButtonsAlwaysInvisible !== undefined ? this.props.navButtonsAlwaysInvisible : false;
+        const navButtonsAlwaysVisible = this.props.navButtonsAlwaysVisible !== undefined ? this.props.navButtonsAlwaysVisible : false;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
         const fullHeightHover = this.props.fullHeightHover !== undefined ? this.props.fullHeightHover : true;
 
         const classes = this.props.classes;
+        
         const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible? classes.buttonVisible: classes.buttonHidden } ${fullHeightHover ? classes.fullHeightHoverButton : ""}`;
         const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""}`;
 
@@ -285,17 +288,21 @@ class Carousel extends Component
                         />
                 }
                 
-                <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
-                    <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next} aria-label="Next">
-                        <NavigateNextIcon/>
-                    </IconButton>
-                </div>
+                {!navButtonsAlwaysInvisible && 
+                    <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
+                        <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next} aria-label="Next">
+                            <NavigateNextIcon/>
+                        </IconButton>
+                    </div>
+                }
 
-                <div className={`${buttonWrapperCssClassValue} ${classes.prev}`}>
-                    <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev} aria-label="Previous">
-                        <NavigateBeforeIcon/>
-                    </IconButton>
-                </div>
+                {!navButtonsAlwaysInvisible &&
+                    <div className={`${buttonWrapperCssClassValue} ${classes.prev}`}>
+                        <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev} aria-label="Previous">
+                            <NavigateBeforeIcon/>
+                        </IconButton>
+                    </div>
+                }
                 
                 {
                     indicators ? 

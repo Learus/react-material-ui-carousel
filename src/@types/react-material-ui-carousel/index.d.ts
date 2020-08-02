@@ -5,6 +5,7 @@
         indicators?: boolean,
         autoPlay?: boolean,
         navButtonsAlwaysVisible?: boolean,
+        navButtonsAlwaysInvisible?: boolean,
         fullHeightHover?: boolean,
         interval?: number,
         animation?: 'fade' | 'slide',
