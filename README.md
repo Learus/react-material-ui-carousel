@@ -17,6 +17,15 @@ Take a look at this interactible [Live Demo](https://learus.github.io/react-mate
 npm install react-material-ui-carousel --save
 ```
 
+**Note:**
+
+You will need to have `material-ui` installed, in order to use this library/component
+
+```shell
+npm install @material-ui/core
+npm install @material-ui/icons
+```
+
 ## Usage Example
 
 ```jsx
