@@ -85,16 +85,19 @@ class Carousel extends Component
     {
         super(props);
 
+        const childrenLength = this.props.children ? this.props.children.length : 0;
+
         const strictIndexing = this.props.strictIndexing !== undefined ? props.strictIndexing : true;
         let startAt = this.props.startAt !== undefined ? props.startAt : 0;
         // if startAt is bigger than the children length, set it to be the last child (if strictIndexing)
-        startAt = Array.isArray(this.props.children) ? (strictIndexing && startAt > this.props.children.length - 1 ? this.props.children.length - 1 : startAt) : 0
+        startAt = Array.isArray(this.props.children) ? (strictIndexing && startAt > childrenLength - 1 ? childrenLength - 1 : startAt) : 0
 
         this.state = {
             active: startAt,
             autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
             interval: this.props.interval !== undefined ? this.props.interval : 4000,
-            displayed: startAt
+            displayed: startAt,
+            childrenLength: childrenLength
         }
 
         this.timer = null;
@@ -182,7 +185,7 @@ class Carousel extends Component
     next(event)
     {
         const active = this.state.active;
-        const next = this.state.active + 1 > this.props.children.length - 1 ? 0 : this.state.active + 1;
+        const next = this.state.active + 1 > this.state.childrenLength - 1 ? 0 : this.state.active + 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
 
@@ -214,7 +217,7 @@ class Carousel extends Component
     prev(event)
     {
         const active = this.state.active;
-        const prev = this.state.active - 1 < 0 ? this.props.children.length - 1 : this.state.active - 1;
+        const prev = this.state.active - 1 < 0 ? this.state.childrenLength - 1 : this.state.active - 1;
         const animation = this.props.animation !== undefined ? this.props.animation: "fade";
         const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
 
@@ -308,7 +311,7 @@ class Carousel extends Component
                     indicators ? 
                     <Indicators
                         classes={classes}
-                        length={this.props.children.length}
+                        length={this.state.childrenLength}
                         active={this.state.active}
                         press={this.pressIndicator}
                         indicatorProps={this.props.indicatorProps}
