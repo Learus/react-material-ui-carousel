@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/ts_demo
 
 # production
 /build

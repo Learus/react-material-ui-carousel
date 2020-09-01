@@ -365,8 +365,8 @@ function Indicators(props)
 
 
         className = i === props.active ? 
-            `${classes.indicator} ${classes.active} ${className}`: 
-            `${classes.indicator} ${activeClassName}`;
+            `${classes.indicator} ${classes.active} ${activeClassName}`: 
+            `${classes.indicator} ${className}`;
 
         const item = <FiberManualRecordIcon 
                         key={i}
