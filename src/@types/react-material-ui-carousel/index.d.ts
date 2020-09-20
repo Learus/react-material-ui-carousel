@@ -14,6 +14,7 @@
         timeout?: number | { appear?: number, enter?: number, exit?: number },
         startAt?: number,
         strictIndexing?: boolean,
+        indicatorContainerProps: {className: string, style: React.CSSProperties},
         indicatorProps?: {className: string, style: React.CSSProperties},
         activeIndicatorProps?: {className: string, style: React.CSSProperties},
         onChange?: Function,

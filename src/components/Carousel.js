@@ -117,15 +117,33 @@ class Carousel extends Component
 
     static getDerivedStateFromProps(nextProps, prevState)
     {
-        if (nextProps.autoPlay !== prevState.autoPlay || nextProps.interval !== prevState.interval)
+        let newState = {};
+
+        // Check if children length has changed
+        if (nextProps.children)
         {
-            return {
-                autoPlay: nextProps.autoPlay !== undefined ? nextProps.autoPlay : true,
-                interval: nextProps.interval !== undefined ? nextProps.interval : 4000
+            if (nextProps.children.length !== prevState.childrenLength)
+            {
+                newState = {childrenLength: nextProps.children.length, ...newState};
+            }
+        }
+        else {
+            if (prevState.childrenLength !== 0)
+            {
+                newState = {childrenLength: 0, ...newState}
             }
         }
 
-        else return null;
+        if (nextProps.autoPlay !== prevState.autoPlay || nextProps.interval !== prevState.interval)
+        {
+            newState = {
+                autoPlay: nextProps.autoPlay !== undefined ? nextProps.autoPlay : true,
+                interval: nextProps.interval !== undefined ? nextProps.interval : 4000,
+                ...newState
+            }
+        }
+
+        return newState
     }
 
     componentDidUpdate(prevProps, prevState)
@@ -314,6 +332,7 @@ class Carousel extends Component
                         length={this.state.childrenLength}
                         active={this.state.active}
                         press={this.pressIndicator}
+                        indicatorContainerProps={this.props.indicatorContainerProps}
                         indicatorProps={this.props.indicatorProps}
                         activeIndicatorProps={this.props.activeIndicatorProps}
                     /> : null
@@ -379,8 +398,11 @@ function Indicators(props)
         indicators.push(item);
     }
 
+    const wrapperStyle = props.indicatorContainerProps !== undefined ? props.indicatorContainerProps.style : undefined;
+    const wrapperClassName = props.indicatorContainerProps !== undefined ? props.indicatorContainerProps.className: "";
+
     return (
-        <div className={`${classes.indicators}`}>
+        <div className={`${classes.indicators} ${wrapperClassName}`} style={wrapperStyle}>
             {indicators}
         </div>
     )
