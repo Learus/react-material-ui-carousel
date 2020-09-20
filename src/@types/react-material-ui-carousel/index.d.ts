@@ -1,6 +1,11 @@
 
     import React, { ReactNode } from 'react';
 
+    export interface CarouselIndicatorProps {
+        className: string,
+        style: React.CSSProperties
+    }
+
     export interface CarouselProps {
         indicators?: boolean,
         autoPlay?: boolean,
@@ -14,9 +19,9 @@
         timeout?: number | { appear?: number, enter?: number, exit?: number },
         startAt?: number,
         strictIndexing?: boolean,
-        indicatorContainerProps: {className: string, style: React.CSSProperties},
-        indicatorProps?: {className: string, style: React.CSSProperties},
-        activeIndicatorProps?: {className: string, style: React.CSSProperties},
+        indicatorContainerProps?: CarouselIndicatorProps,
+        indicatorProps?: CarouselIndicatorProps,
+        activeIndicatorProps?: CarouselIndicatorProps,
         onChange?: Function,
         next?: Function,
         prev?: Function
