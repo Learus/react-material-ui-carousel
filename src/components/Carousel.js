@@ -79,30 +79,56 @@ const styles = {
     }
 }
 
+const sanitizeProps = (props) =>
+{
+    const animation = props.animation !== undefined ? props.animation: "fade";
+
+    return {
+        children: props.children ? props.children : [],
+        startAt: props.startAt !== undefined ? props.startAt : 0,
+        strictIndexing: props.strictIndexing !== undefined ? props.strictIndexing : true,
+        autoPlay: props.autoPlay !== undefined ? props.autoPlay : true,
+        interval: props.interval !== undefined ? props.interval : 4000,
+        indicators: props.indicators !== undefined ? props.indicators : true,
+        navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
+        navButtonsAlwaysVisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysVisible : false,
+        animation: animation,
+        timeout: props.timeout !== undefined ? props.timeout : (animation === "fade" ? 500 : 200),
+        fullHeightHover: props.fullHeightHover !== undefined ? props.fullHeightHover : true,
+        indicatorContainerProps: props.indicatorContainerProps,
+        indicatorProps: props.indicatorProps,
+        activeIndicatorProps: props.activeIndicatorProps,
+        onChange: props.onChange !== undefined ? props.onChange : () => {},
+        // Leaving below functions unsanitizedProps for conditional callback purposes
+        next: props.onChange,
+        prev: props.onChange,
+        className: props.className !== undefined ? props.className : ""
+    }
+}
+
 class Carousel extends Component
 {
     constructor(props)
     {
         super(props);
+        autoBind(this);
 
-        const childrenLength = this.props.children ? this.props.children.length : 0;
+        let {
+            children,
+            strictIndexing,
+            startAt,
+        } = sanitizeProps(this.props);
 
-        const strictIndexing = this.props.strictIndexing !== undefined ? props.strictIndexing : true;
-        let startAt = this.props.startAt !== undefined ? props.startAt : 0;
         // if startAt is bigger than the children length, set it to be the last child (if strictIndexing)
-        startAt = Array.isArray(this.props.children) ? (strictIndexing && startAt > childrenLength - 1 ? childrenLength - 1 : startAt) : 0
+        startAt = Array.isArray(children) ? (strictIndexing && startAt > children.length - 1 ? children.length - 1 : startAt) : 0
 
         this.state = {
             active: startAt,
-            autoPlay: this.props.autoPlay !== undefined ? this.props.autoPlay : true,
-            interval: this.props.interval !== undefined ? this.props.interval : 4000,
+            prevActive: startAt,
             displayed: startAt,
-            childrenLength: childrenLength
         }
 
         this.timer = null;
-
-        autoBind(this);
     }
 
     componentDidMount()
@@ -115,42 +141,19 @@ class Carousel extends Component
         this.stop();
     }
 
-    static getDerivedStateFromProps(nextProps, prevState)
-    {
-        let newState = {};
-
-        // Check if children length has changed
-        if (nextProps.children)
-        {
-            if (nextProps.children.length !== prevState.childrenLength)
-            {
-                newState = {childrenLength: nextProps.children.length, ...newState};
-            }
-        }
-        else {
-            if (prevState.childrenLength !== 0)
-            {
-                newState = {childrenLength: 0, ...newState}
-            }
-        }
-
-        if (nextProps.autoPlay !== prevState.autoPlay || nextProps.interval !== prevState.interval)
-        {
-            newState = {
-                autoPlay: nextProps.autoPlay !== undefined ? nextProps.autoPlay : true,
-                interval: nextProps.interval !== undefined ? nextProps.interval : 4000,
-                ...newState
-            }
-        }
-
-        return newState
-    }
-
     componentDidUpdate(prevProps, prevState)
     {
-        if (prevProps.autoPlay !== prevState.autoPlay || prevProps.interval !== prevState.interval)
+        prevProps = sanitizeProps(prevProps);
+        const { autoPlay, interval, children, startAt } = sanitizeProps(this.props);
+
+        if (autoPlay !== prevProps.autoPlay || interval !== prevProps.interval)
         {
             this.reset();
+        }
+
+        if (children.length !== prevProps.children.length)
+        {
+            this.pressIndicator(startAt);
         }
     }
 
@@ -165,17 +168,20 @@ class Carousel extends Component
 
     start()
     {
-        if (this.state.autoPlay)
+        const { autoPlay, interval } = sanitizeProps(this.props);
+
+        if (autoPlay)
         {
-            this.timer = setInterval(this.next, this.state.interval);
+            this.timer = setInterval(this.next, interval);
         }
     }
 
     reset()
     {
+        const { autoPlay } = sanitizeProps(this.props);
         this.stop();
 
-        if (this.state.autoPlay)
+        if (autoPlay)
         {
             this.start();
         }
@@ -183,49 +189,47 @@ class Carousel extends Component
 
     pressIndicator(index)
     {
-        const active = this.state.active;
-        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
-        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
-        const onChange = this.props.onChange !== undefined ? this.props.onChange : () => {};
+        const { onChange, timeout } = sanitizeProps(this.props);
 
         this.setState({
             active: index,
+            prevActive: this.state.active,
             displayed: this.state.active
         }, this.reset);
 
         setTimeout(() => {
             this.setState({
                 displayed: index
-            }, () => onChange(index, active))
+            }, () => onChange(index, this.state.active))
         }, timeout);
     }
 
     next(event)
     {
-        const active = this.state.active;
-        const next = this.state.active + 1 > this.state.childrenLength - 1 ? 0 : this.state.active + 1;
-        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
-        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const { children, next, onChange, timeout } = sanitizeProps(this.props);
 
-        const onChange = this.props.onChange;
+        const prevActive = this.state.active;
+        const nextActive = this.state.active + 1 > children.length - 1 ? 0 : this.state.active + 1;
+
         /**
          * Callback to be called after setting the state. Will be:
          * * () => {} | if !props.next && !props.onChange
          * * props.onChange | if !props.next && props.onChange
          * * props.next | if props.next
          */
-        const userNext = this.props.next !== undefined ? this.props.next : (onChange !== undefined ? onChange : () => {});
+        const userNext = next !== undefined ? next : onChange;
 
 
         this.setState({
-            active: next,
-            displayed: this.state.active
+            active: nextActive,
+            prevActive: prevActive,
+            displayed: prevActive
         }, this.reset)
 
         setTimeout(() => {
             this.setState({
-                displayed: next
-            }, () => userNext(next, active))
+                displayed: nextActive
+            }, () => userNext(nextActive, prevActive))
         }, timeout);
 
         if (event)
@@ -234,30 +238,30 @@ class Carousel extends Component
 
     prev(event)
     {
-        const active = this.state.active;
-        const prev = this.state.active - 1 < 0 ? this.state.childrenLength - 1 : this.state.active - 1;
-        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
-        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
+        const { children, prev, onChange, timeout } = sanitizeProps(this.props);
 
-        const onChange = this.props.onChange;
+        const prevActive = this.state.active;
+        const nextActive = this.state.active - 1 < 0 ? children.length - 1 : this.state.active - 1;
+
         /**
          * Callback to be called after setting the state. Will be:
          * * () => {} | if !props.prev && !props.onChange
          * * props.onChange | if !props.prev && props.onChange
          * * props.prev | if props.prev
          */
-        const userPrev = this.props.prev !== undefined ? this.props.prev : (onChange !== undefined ? onChange : () => {});
+        const userPrev = prev !== undefined ? prev : onChange;
 
 
         this.setState({
-            active: prev,
-            displayed: this.state.active
+            active: nextActive,
+            prevActive: prevActive,
+            displayed: prevActive
         }, this.reset)
 
         setTimeout(() => {
             this.setState({
-                displayed: prev
-            }, userPrev(prev, active))
+                displayed: nextActive
+            }, userPrev(nextActive, prevActive))
         }, timeout);
 
         if (event)
@@ -266,28 +270,55 @@ class Carousel extends Component
 
     render()
     {
-        const indicators = this.props.indicators !== undefined ? this.props.indicators: true;
-        const navButtonsAlwaysInvisible = this.props.navButtonsAlwaysInvisible !== undefined ? this.props.navButtonsAlwaysInvisible : false;
-        const navButtonsAlwaysVisible = this.props.navButtonsAlwaysVisible !== undefined ? this.props.navButtonsAlwaysVisible : false;
-        const animation = this.props.animation !== undefined ? this.props.animation: "fade";
-        const timeout = this.props.timeout !== undefined ? this.props.timeout : (animation === "fade" ? 500 : 200);
-        const fullHeightHover = this.props.fullHeightHover !== undefined ? this.props.fullHeightHover : true;
+        const {
+            children,
+            indicators,
+            navButtonsAlwaysInvisible,
+            navButtonsAlwaysVisible,
+            animation,
+            timeout,
+            fullHeightHover,
+            indicatorContainerProps,
+            indicatorProps,
+            activeIndicatorProps,
+            className,
+        } = sanitizeProps(this.props);
 
         const classes = this.props.classes;
         
-        const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible? classes.buttonVisible: classes.buttonHidden } ${fullHeightHover ? classes.fullHeightHoverButton : ""}`;
+        const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible ? classes.buttonVisible: classes.buttonHidden } ${fullHeightHover ? classes.fullHeightHoverButton : ""}`;
         const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""}`;
 
+        const compareActiveDisplayed = () => {
+            if (this.state.active === 0 && this.state.prevActive === children.length - 1)
+            {
+                return true;
+            }
+
+            if (this.state.active === children.length - 1 && this.state.prevActive === 0)
+            {
+                return false;
+            }
+
+            if (this.state.active > this.state.prevActive)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         return (
-            <div className={`${classes.root} ${this.props.className ? this.props.className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
+            <div className={`${classes.root} ${className ? className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
                 {   
-                    Array.isArray(this.props.children) ? 
-                        this.props.children.map( (child, index) => {
+                    Array.isArray(children) ? 
+                       children.map( (child, index) => {
                             return (
                                 <CarouselItem 
                                     key={`carousel-item${index}`}
                                     display={index === this.state.displayed ? true : false}
                                     active={index === this.state.active ? true : false}
+                                    isNext={compareActiveDisplayed()}
                                     child={child}
                                     animation={animation}
                                     timeout={timeout}
@@ -301,7 +332,7 @@ class Carousel extends Component
                             key={`carousel-item0`}
                             display={true}
                             active={true}
-                            child={this.props.children}
+                            child={children}
                             animation={animation}
                             timeout={timeout}
                             // next={this.next}
@@ -329,12 +360,12 @@ class Carousel extends Component
                     indicators ? 
                     <Indicators
                         classes={classes}
-                        length={this.state.childrenLength}
+                        length={children.length}
                         active={this.state.active}
                         press={this.pressIndicator}
-                        indicatorContainerProps={this.props.indicatorContainerProps}
-                        indicatorProps={this.props.indicatorProps}
-                        activeIndicatorProps={this.props.activeIndicatorProps}
+                        indicatorContainerProps={indicatorContainerProps}
+                        indicatorProps={indicatorProps}
+                        activeIndicatorProps={activeIndicatorProps}
                     /> : null
                 }
             </div>
@@ -353,7 +384,7 @@ function CarouselItem(props)
         props.display ? (
             <div {...swipeHandlers} className="CarouselItem" >
                 {props.animation === "slide" ?
-                    <Slide direction="left" in={props.active} timeout={props.timeout}>
+                    <Slide direction={props.active ? (props.isNext ? "left" : "right") : (props.isNext ? "right" : "left")} in={props.active} timeout={props.timeout}>
                         <div>
                             {props.child}
                         </div>
