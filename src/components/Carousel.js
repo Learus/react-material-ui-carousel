@@ -125,6 +125,13 @@ class Carousel extends Component
             if (nextProps.children.length !== prevState.childrenLength)
             {
                 newState = {childrenLength: nextProps.children.length, ...newState};
+
+                // If the current active index is bigger than the new children length, set it to be the last child (if strictIndexing)
+                const strictIndexing = nextProps.strictIndexing !== undefined ? nextProps.strictIndexing : true;
+                if (strictIndexing && prevState.active > nextProps.children.length - 1) {
+                    newState.active = nextProps.children.length - 1;
+                    newState.displayed = nextProps.children.length - 1;
+                }
             }
         }
         else {
