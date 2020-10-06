@@ -91,7 +91,7 @@ const sanitizeProps = (props) =>
         interval: props.interval !== undefined ? props.interval : 4000,
         indicators: props.indicators !== undefined ? props.indicators : true,
         navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
-        navButtonsAlwaysVisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysVisible : false,
+        navButtonsAlwaysVisible: props.navButtonsAlwaysVisible !== undefined ? props.navButtonsAlwaysVisible : false,
         animation: animation,
         timeout: props.timeout !== undefined ? props.timeout : (animation === "fade" ? 500 : 200),
         fullHeightHover: props.fullHeightHover !== undefined ? props.fullHeightHover : true,
