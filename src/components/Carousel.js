@@ -100,8 +100,8 @@ const sanitizeProps = (props) =>
         activeIndicatorProps: props.activeIndicatorProps,
         onChange: props.onChange !== undefined ? props.onChange : () => {},
         // Leaving below functions unsanitizedProps for conditional callback purposes
-        next: props.onChange,
-        prev: props.onChange,
+        next: props.next,
+        prev: props.prev,
         className: props.className !== undefined ? props.className : ""
     }
 }
