@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/react-material-ui-carousel/static/css/main.686a3dcd.chunk.css",
-    "main.js": "/react-material-ui-carousel/static/js/main.c12edfbf.chunk.js",
-    "main.js.map": "/react-material-ui-carousel/static/js/main.c12edfbf.chunk.js.map",
+    "main.js": "/react-material-ui-carousel/static/js/main.ccfdd520.chunk.js",
+    "main.js.map": "/react-material-ui-carousel/static/js/main.ccfdd520.chunk.js.map",
     "runtime-main.js": "/react-material-ui-carousel/static/js/runtime-main.4e806228.js",
     "runtime-main.js.map": "/react-material-ui-carousel/static/js/runtime-main.4e806228.js.map",
-    "static/js/2.04a7f803.chunk.js": "/react-material-ui-carousel/static/js/2.04a7f803.chunk.js",
-    "static/js/2.04a7f803.chunk.js.map": "/react-material-ui-carousel/static/js/2.04a7f803.chunk.js.map",
+    "static/js/2.fb428df3.chunk.js": "/react-material-ui-carousel/static/js/2.fb428df3.chunk.js",
+    "static/js/2.fb428df3.chunk.js.map": "/react-material-ui-carousel/static/js/2.fb428df3.chunk.js.map",
     "index.html": "/react-material-ui-carousel/index.html",
     "static/css/main.686a3dcd.chunk.css.map": "/react-material-ui-carousel/static/css/main.686a3dcd.chunk.css.map",
-    "static/js/2.04a7f803.chunk.js.LICENSE.txt": "/react-material-ui-carousel/static/js/2.04a7f803.chunk.js.LICENSE.txt"
+    "static/js/2.fb428df3.chunk.js.LICENSE.txt": "/react-material-ui-carousel/static/js/2.fb428df3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.4e806228.js",
-    "static/js/2.04a7f803.chunk.js",
+    "static/js/2.fb428df3.chunk.js",
     "static/css/main.686a3dcd.chunk.css",
-    "static/js/main.c12edfbf.chunk.js"
+    "static/js/main.ccfdd520.chunk.js"
   ]
 }
