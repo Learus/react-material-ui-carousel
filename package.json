@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-carousel",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "license": "MIT",
   "description": "A Generic, extendible Carousel UI component for React using Material UI",
   "homepage": "https://learus.github.io",
@@ -61,7 +61,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "gh-pages": "^2.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^4.0.0"
   },
   "peerDependencies": {
     "react": "^16.13.1",

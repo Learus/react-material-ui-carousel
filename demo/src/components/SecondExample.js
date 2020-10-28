@@ -15,13 +15,12 @@ import {
 
 import "../style/SecondExample.scss"
 
-function Project(props)
-{
+function Project(props) {
     return (
-        <Paper 
+        <Paper
             className="Project"
             style={{
-                backgroundColor: props.item.color, 
+                backgroundColor: props.item.color,
             }}
             elevation={10}
         >
@@ -58,10 +57,8 @@ const items = [
     }
 ]
 
-export default class MyProjectsExample extends React.Component
-{
-    constructor(props)
-    {
+export default class MyProjectsExample extends React.Component {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -77,55 +74,48 @@ export default class MyProjectsExample extends React.Component
         autoBind(this);
     }
 
-    toggleAutoPlay()
-    {
+    toggleAutoPlay() {
         this.setState({
             autoPlay: !this.state.autoPlay
         })
     }
 
-    toggleIndicators()
-    {
+    toggleIndicators() {
         this.setState({
             indicators: !this.state.indicators
         })
     }
 
-    toggleNavButtonsAlwaysVisible()
-    {
+    toggleNavButtonsAlwaysVisible() {
         this.setState({
             navButtonsAlwaysVisible: !this.state.navButtonsAlwaysVisible
         })
     }
 
-    toggleNavButtonsAlwaysInvisible()
-    {
+    toggleNavButtonsAlwaysInvisible() {
         this.setState({
             navButtonsAlwaysInvisible: !this.state.navButtonsAlwaysInvisible
         })
     }
 
-    changeAnimation(event)
-    {
+    changeAnimation(event) {
         this.setState({
             animation: event.target.value
         })
     }
 
-    changeTimeout(event, value)
-    {
+    changeTimeout(event, value) {
         this.setState({
             timeout: value
         })
     }
 
-    render()
-    {
+    render() {
         return (
-            <div style={{marginTop: "50px", color: "#494949"}}>
+            <div style={{ marginTop: "50px", color: "#494949" }}>
                 <h2>Example: Learus Projects (random)</h2>
 
-                <Carousel 
+                <Carousel
                     className="SecondExample"
                     autoPlay={this.state.autoPlay}
                     timer={this.state.timer}
@@ -134,11 +124,11 @@ export default class MyProjectsExample extends React.Component
                     timeout={this.state.timeout}
                     navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
                     navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
-                    
+
                 >
                     {
-                        items.map( (item, index) => {
-                            return <Project item={item} key={index}/>
+                        items.map((item, index) => {
+                            return <Project item={item} key={index} />
                         })
                     }
                 </Carousel>
@@ -147,43 +137,43 @@ export default class MyProjectsExample extends React.Component
                 <FormLabel component="legend">Options</FormLabel>
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay" color="primary"/>
+                        <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay" color="primary" />
                     }
                     label="Auto-play"
                 />
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators" color="primary" />
                     }
                     label="Indicators"
                 />
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary" />
                     }
                     label="NavButtonsAlwaysVisible"
                 />
 
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.navButtonsAlwaysInvisible} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.navButtonsAlwaysInvisible} value="indicators" color="primary" />
                     }
                     label="NavButtonsAlwaysInvisible"
                 />
 
-                
+
                 <FormControlLabel
                     control={
-                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{marginLeft: "10px"}}>
-                            <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
-                            <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
+                        <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row style={{ marginLeft: "10px" }}>
+                            <FormControlLabel value="fade" control={<Radio color="primary" />} label="Fade" />
+                            <FormControlLabel value="slide" control={<Radio color="primary" />} label="Slide" />
                         </RadioGroup>
                     }
                 />
 
                 <FormControlLabel
                     control={
-                        <div style={{width: 300}}>
+                        <div style={{ width: 300 }}>
                             <Typography id="discrete-slider" gutterBottom>
                                 Animation Duration (Timeout) in ms
                             </Typography>
@@ -201,7 +191,7 @@ export default class MyProjectsExample extends React.Component
                         </div>
                     }
                 />
-                
+
             </div>
         )
     }

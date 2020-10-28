@@ -82,10 +82,11 @@ const styles = {
 const sanitizeProps = (props) =>
 {
     const animation = props.animation !== undefined ? props.animation: "fade";
+    const timeout = props.timeout !== undefined ? props.timeout : (animation === "fade" ? 500 : 200);
 
     return {
         children: props.children ? props.children : [],
-        startAt: props.startAt !== undefined ? props.startAt : 0,
+        index: props.index !== undefined ? props.index : 0,
         strictIndexing: props.strictIndexing !== undefined ? props.strictIndexing : true,
         autoPlay: props.autoPlay !== undefined ? props.autoPlay : true,
         interval: props.interval !== undefined ? props.interval : 4000,
@@ -93,15 +94,15 @@ const sanitizeProps = (props) =>
         navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
         navButtonsAlwaysVisible: props.navButtonsAlwaysVisible !== undefined ? props.navButtonsAlwaysVisible : false,
         animation: animation,
-        timeout: props.timeout !== undefined ? props.timeout : (animation === "fade" ? 500 : 200),
+        timeout: timeout,
         fullHeightHover: props.fullHeightHover !== undefined ? props.fullHeightHover : true,
         indicatorContainerProps: props.indicatorContainerProps,
         indicatorProps: props.indicatorProps,
         activeIndicatorProps: props.activeIndicatorProps,
         onChange: props.onChange !== undefined ? props.onChange : () => {},
-        // Leaving below functions unsanitizedProps for conditional callback purposes
-        next: props.next,
-        prev: props.prev,
+        changeOnFirstRender: props.changeOnFirstRender !== undefined ? props.changeOnFirstRender : false,
+        next: props.next !== undefined ? props.next : () => {},
+        prev: props.prev !== undefined ? props.prev : () => {},
         className: props.className !== undefined ? props.className : ""
     }
 }
@@ -113,19 +114,10 @@ class Carousel extends Component
         super(props);
         autoBind(this);
 
-        let {
-            children,
-            strictIndexing,
-            startAt,
-        } = sanitizeProps(this.props);
-
-        // if startAt is bigger than the children length, set it to be the last child (if strictIndexing)
-        startAt = Array.isArray(children) ? (strictIndexing && startAt > children.length - 1 ? children.length - 1 : startAt) : 0
-
         this.state = {
-            active: startAt,
-            prevActive: startAt,
-            displayed: startAt,
+            active: 0,
+            prevActive: 0,
+            displayed: 0,
         }
 
         this.timer = null;
@@ -133,6 +125,9 @@ class Carousel extends Component
 
     componentDidMount()
     {
+        const { index, changeOnFirstRender } = sanitizeProps(this.props)
+        this.setActive(index, undefined, changeOnFirstRender);
+
         this.start();
     }
 
@@ -144,7 +139,7 @@ class Carousel extends Component
     componentDidUpdate(prevProps, prevState)
     {
         prevProps = sanitizeProps(prevProps);
-        const { autoPlay, interval, children, startAt } = sanitizeProps(this.props);
+        const { autoPlay, interval, children, index } = sanitizeProps(this.props);
 
         if (autoPlay !== prevProps.autoPlay || interval !== prevProps.interval)
         {
@@ -153,7 +148,12 @@ class Carousel extends Component
 
         if (children.length !== prevProps.children.length)
         {
-            this.pressIndicator(startAt);
+            this.setActive(index);
+        }
+
+        if (prevProps.index !== index)
+        {
+            this.setActive(index)
         }
     }
 
@@ -178,6 +178,7 @@ class Carousel extends Component
 
     reset()
     {
+
         const { autoPlay } = sanitizeProps(this.props);
         this.stop();
 
@@ -187,50 +188,52 @@ class Carousel extends Component
         }
     }
 
-    pressIndicator(index)
+    setActive(index, callback=() => {}, runCallbacks=true)
     {
-        const { onChange, timeout } = sanitizeProps(this.props);
+        const { onChange, timeout, children, strictIndexing } = sanitizeProps(this.props);
+
+        // if index is bigger than the children length, set it to be the last child (if strictIndexing)
+        if (Array.isArray(children))
+        {
+            if (strictIndexing && index > children.length - 1) index = children.length - 1;
+            if (strictIndexing && index < 0) index = 0;
+        }
+        else
+        {
+            index = 0;
+        }
+
+        const prevActive = this.state.active;
 
         this.setState({
             active: index,
-            prevActive: this.state.active,
-            displayed: this.state.active
+            prevActive: prevActive,
+            displayed: prevActive
         }, this.reset);
 
         setTimeout(() => {
             this.setState({
                 displayed: index
-            }, () => onChange(index, this.state.active))
+            }, () => {
+                if (runCallbacks)
+                {
+                    // Call user defined callbacks
+                    callback(index, prevActive);
+                    onChange(index, prevActive);
+                }
+
+
+            })
         }, timeout);
     }
 
     next(event)
     {
-        const { children, next, onChange, timeout } = sanitizeProps(this.props);
+        const { children, next } = sanitizeProps(this.props);
 
-        const prevActive = this.state.active;
         const nextActive = this.state.active + 1 > children.length - 1 ? 0 : this.state.active + 1;
 
-        /**
-         * Callback to be called after setting the state. Will be:
-         * * () => {} | if !props.next && !props.onChange
-         * * props.onChange | if !props.next && props.onChange
-         * * props.next | if props.next
-         */
-        const userNext = next !== undefined ? next : onChange;
-
-
-        this.setState({
-            active: nextActive,
-            prevActive: prevActive,
-            displayed: prevActive
-        }, this.reset)
-
-        setTimeout(() => {
-            this.setState({
-                displayed: nextActive
-            }, () => userNext(nextActive, prevActive))
-        }, timeout);
+        this.setActive(nextActive, next)
 
         if (event)
             event.stopPropagation();
@@ -238,31 +241,11 @@ class Carousel extends Component
 
     prev(event)
     {
-        const { children, prev, onChange, timeout } = sanitizeProps(this.props);
+        const { children, prev } = sanitizeProps(this.props);
 
-        const prevActive = this.state.active;
         const nextActive = this.state.active - 1 < 0 ? children.length - 1 : this.state.active - 1;
 
-        /**
-         * Callback to be called after setting the state. Will be:
-         * * () => {} | if !props.prev && !props.onChange
-         * * props.onChange | if !props.prev && props.onChange
-         * * props.prev | if props.prev
-         */
-        const userPrev = prev !== undefined ? prev : onChange;
-
-
-        this.setState({
-            active: nextActive,
-            prevActive: prevActive,
-            displayed: prevActive
-        }, this.reset)
-
-        setTimeout(() => {
-            this.setState({
-                displayed: nextActive
-            }, userPrev(nextActive, prevActive))
-        }, timeout);
+        this.setActive(nextActive, prev)
 
         if (event)
             event.stopPropagation();
@@ -362,7 +345,7 @@ class Carousel extends Component
                         classes={classes}
                         length={children.length}
                         active={this.state.active}
-                        press={this.pressIndicator}
+                        press={this.setActive}
                         indicatorContainerProps={indicatorContainerProps}
                         indicatorProps={indicatorProps}
                         activeIndicatorProps={activeIndicatorProps}

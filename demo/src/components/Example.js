@@ -159,15 +159,13 @@ class BannerExample extends React.Component {
         })
     }
 
-    toggleNavButtonsAlwaysVisible()
-    {
+    toggleNavButtonsAlwaysVisible() {
         this.setState({
             navButtonsAlwaysVisible: !this.state.navButtonsAlwaysVisible
         })
     }
 
-    toggleNavButtonsAlwaysInvisible()
-    {
+    toggleNavButtonsAlwaysInvisible() {
         this.setState({
             navButtonsAlwaysInvisible: !this.state.navButtonsAlwaysInvisible
         })
@@ -187,7 +185,7 @@ class BannerExample extends React.Component {
 
     render() {
         return (
-            <div style={{marginTop: "50px", color: "#494949"}}>
+            <div style={{ marginTop: "50px", color: "#494949" }}>
                 <h2>Example: eBay&trade; style</h2>
 
                 <Carousel
@@ -199,10 +197,13 @@ class BannerExample extends React.Component {
                     timeout={this.state.timeout}
                     navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
                     navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
+                    next={(now, previous) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                    prev={(now, previous) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                    onChange={(now, previous) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 >
                     {
                         items.map((item, index) => {
-                            return <Banner item={item} key={index} contentPosition={item.contentPosition}/>
+                            return <Banner item={item} key={index} contentPosition={item.contentPosition} />
                         })
                     }
                 </Carousel>
@@ -212,27 +213,27 @@ class BannerExample extends React.Component {
                 <FormControlLabel
                     control={
                         <Checkbox onChange={this.toggleAutoPlay} checked={this.state.autoPlay} value="autoplay"
-                                  color="primary"/>
+                            color="primary" />
                     }
                     label="Auto-play"
                 />
                 <FormControlLabel
                     control={
                         <Checkbox onChange={this.toggleIndicators} checked={this.state.indicators} value="indicators"
-                                  color="primary"/>
+                            color="primary" />
                     }
                     label="Indicators"
                 />
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary" />
                     }
                     label="NavButtonsAlwaysVisible"
                 />
 
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.toggleNavButtonsAlwaysInvisible} value="indicators" color="primary"/>
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.toggleNavButtonsAlwaysInvisible} value="indicators" color="primary" />
                     }
                     label="NavButtonsAlwaysInvisible"
                 />
@@ -240,16 +241,16 @@ class BannerExample extends React.Component {
                 <FormControlLabel
                     control={
                         <RadioGroup name="animation" value={this.state.animation} onChange={this.changeAnimation} row
-                                    style={{marginLeft: "10px"}}>
-                            <FormControlLabel value="fade" control={<Radio color="primary"/>} label="Fade"/>
-                            <FormControlLabel value="slide" control={<Radio color="primary"/>} label="Slide"/>
+                            style={{ marginLeft: "10px" }}>
+                            <FormControlLabel value="fade" control={<Radio color="primary" />} label="Fade" />
+                            <FormControlLabel value="slide" control={<Radio color="primary" />} label="Slide" />
                         </RadioGroup>
                     }
                 />
 
                 <FormControlLabel
                     control={
-                        <div style={{width: 300}}>
+                        <div style={{ width: 300 }}>
                             <Typography id="discrete-slider" gutterBottom>
                                 Animation Duration (Timeout) in ms
                             </Typography>
