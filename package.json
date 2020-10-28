@@ -30,14 +30,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "SET NODE_ENV=production && rmdir dist /s /q && mkdir dist && npx babel ./src --out-dir dist --copy-files",
-    "build-unix": "NODE_ENV=production && rm -rf dist && mkdir -p dist && npx babel ./src --out-dir dist --copy-files",
-    "demo": "SET NODE_ENV=production && rmdir demodist /s /q && mkdir demodist && npx babel ./demo --out-dir ./demodist --copy-files",
-    "demo-unix": "NODE_ENV=production && rm -rf demodist && mkdir -p demodist && npx babel ./demo --out-dir ./demodist --copy-files",
-    "predeploy": "npm run demo",
-    "deploy": "gh-pages -d demodist",
-    "predeploy-unix": "npm run demo-unix",
-    "deploy-unix": "gh-pages -d demodist"
+    "build": "NODE_ENV=production && npx rimraf dist && npx mkdirp dist && npx babel ./src --out-dir dist --copy-files",
+    "prepublish": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
