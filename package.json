@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "NODE_ENV=production && npx rimraf dist && npx mkdirp dist && npx babel ./src --out-dir dist --copy-files",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
