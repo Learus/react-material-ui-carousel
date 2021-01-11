@@ -91,6 +91,8 @@ const sanitizeProps = (props) =>
         index: props.index !== undefined ? props.index : 0,
         strictIndexing: props.strictIndexing !== undefined ? props.strictIndexing : true,
         autoPlay: props.autoPlay !== undefined ? props.autoPlay : true,
+        stopAutoPlayOnHover: props.stopAutoPlayOnHover !== undefined ? props.stopAutoPlayOnHover : true,
+        swipe: props.swipe !== undefined ? props.swipe : true,
         interval: props.interval !== undefined ? props.interval : 4000,
         indicators: props.indicators !== undefined ? props.indicators : true,
         navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
@@ -171,7 +173,6 @@ class Carousel extends Component
     start()
     {
         const { autoPlay, interval } = sanitizeProps(this.props);
-
         if (autoPlay)
         {
             this.timer = setInterval(this.next, interval);
@@ -180,7 +181,6 @@ class Carousel extends Component
 
     reset()
     {
-
         const { autoPlay } = sanitizeProps(this.props);
         this.stop();
 
@@ -223,10 +223,8 @@ class Carousel extends Component
                     callback(index, prevActive);
                     onChange(index, prevActive);
                 }
-
-
             })
-        }, timeout);
+        }, timeout.exit ? timeout.exit : timeout);
     }
 
     next(event)
@@ -262,6 +260,8 @@ class Carousel extends Component
             navButtonsAlwaysVisible,
             animation,
             timeout,
+            stopAutoPlayOnHover,
+            swipe,
             fullHeightHover,
             indicatorContainerProps,
             indicatorProps,
@@ -277,12 +277,12 @@ class Carousel extends Component
         const compareActiveDisplayed = () => {
             if (this.state.active === 0 && this.state.prevActive === children.length - 1)
             {
-                return true;
+                return false;
             }
 
             if (this.state.active === children.length - 1 && this.state.prevActive === 0)
             {
-                return false;
+                return true;
             }
 
             if (this.state.active > this.state.prevActive)
@@ -294,7 +294,11 @@ class Carousel extends Component
         }
 
         return (
-            <div className={`${classes.root} ${className ? className : ""}`} onMouseEnter={this.stop} onMouseOut={this.reset}>
+            <div
+                className={`${classes.root} ${className ? className : ""}`}
+                onMouseOver={() => {stopAutoPlayOnHover && this.stop()}}
+                onMouseOut={() => {stopAutoPlayOnHover && this.reset()}}
+            >
                 {   
                     Array.isArray(children) ? 
                        children.map( (child, index) => {
@@ -307,6 +311,7 @@ class Carousel extends Component
                                     child={child}
                                     animation={animation}
                                     timeout={timeout}
+                                    swipe={swipe}
                                     next={this.next}
                                     prev={this.prev}
                                 />
@@ -360,10 +365,12 @@ class Carousel extends Component
 
 function CarouselItem(props)
 {
-    const swipeHandlers = useSwipeable({
+    let swipeHandlers = useSwipeable({
         onSwipedLeft: () => props.next(),
         onSwipedRight: () => props.prev()
     })
+
+    swipeHandlers = props.swipe ? swipeHandlers : {};
 
     return (
         props.display ? (

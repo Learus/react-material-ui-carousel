@@ -136,7 +136,6 @@ class BannerExample extends React.Component {
 
         this.state = {
             autoPlay: true,
-            timer: 500,
             animation: "fade",
             indicators: true,
             timeout: 500,
@@ -191,7 +190,6 @@ class BannerExample extends React.Component {
                 <Carousel
                     className="Example"
                     autoPlay={this.state.autoPlay}
-                    timer={this.state.timer}
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}

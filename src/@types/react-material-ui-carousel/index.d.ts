@@ -9,6 +9,8 @@ export interface CarouselIndicatorProps {
 export interface CarouselProps {
     indicators?: boolean,
     autoPlay?: boolean,
+    stopAutoPlayOnHover?: boolean,
+    swipe?: boolean,
     navButtonsAlwaysVisible?: boolean,
     navButtonsAlwaysInvisible?: boolean,
     fullHeightHover?: boolean,
