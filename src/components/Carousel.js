@@ -95,6 +95,7 @@ const sanitizeProps = (props) =>
         swipe: props.swipe !== undefined ? props.swipe : true,
         interval: props.interval !== undefined ? props.interval : 4000,
         indicators: props.indicators !== undefined ? props.indicators : true,
+        infiniteNavigation: props.infiniteNavigation !== undefined ? props.infiniteNavigation : true,
         navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
         navButtonsAlwaysVisible: props.navButtonsAlwaysVisible !== undefined ? props.navButtonsAlwaysVisible : false,
         animation: animation,
@@ -229,11 +230,19 @@ class Carousel extends Component
 
     next(event)
     {
-        const { children, next } = sanitizeProps(this.props);
+        const { children, next, infiniteNavigation } = sanitizeProps(this.props);
 
-        const nextActive = this.state.active + 1 > children.length - 1 ? 0 : this.state.active + 1;
+        const nextActive = this.state.active + 1;
+        const nextIsPostLast = nextActive > children.length - 1;
 
-        this.setActive(nextActive, next)
+        if (nextIsPostLast) {
+            if (infiniteNavigation) {
+                this.setActive(0, next);
+            }
+        } else {
+            this.setActive(nextActive, next);
+        }
+
 
         if (event)
             event.stopPropagation();
@@ -241,11 +250,18 @@ class Carousel extends Component
 
     prev(event)
     {
-        const { children, prev } = sanitizeProps(this.props);
+        const { children, prev, infiniteNavigation } = sanitizeProps(this.props);
 
-        const nextActive = this.state.active - 1 < 0 ? children.length - 1 : this.state.active - 1;
+        const nextActive = this.state.active - 1;
+        const nextIsPreFirst = nextActive < 0;
 
-        this.setActive(nextActive, prev)
+        if (nextIsPreFirst) {
+            if (infiniteNavigation) {
+                this.setActive(children.length - 1, prev);
+            }
+        } else {
+            this.setActive(nextActive, prev);
+        }
 
         if (event)
             event.stopPropagation();
@@ -270,7 +286,7 @@ class Carousel extends Component
         } = sanitizeProps(this.props);
 
         const classes = this.props.classes;
-        
+
         const buttonCssClassValue = `${classes.button} ${navButtonsAlwaysVisible ? classes.buttonVisible: classes.buttonHidden } ${fullHeightHover ? classes.fullHeightHoverButton : ""}`;
         const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""}`;
 
@@ -299,11 +315,11 @@ class Carousel extends Component
                 onMouseOver={() => {stopAutoPlayOnHover && this.stop()}}
                 onMouseOut={() => {stopAutoPlayOnHover && this.reset()}}
             >
-                {   
-                    Array.isArray(children) ? 
+                {
+                    Array.isArray(children) ?
                        children.map( (child, index) => {
                             return (
-                                <CarouselItem 
+                                <CarouselItem
                                     key={`carousel-item${index}`}
                                     display={index === this.state.displayed ? true : false}
                                     active={index === this.state.active ? true : false}
@@ -329,8 +345,8 @@ class Carousel extends Component
                             // prev={this.prev}
                         />
                 }
-                
-                {!navButtonsAlwaysInvisible && 
+
+                {!navButtonsAlwaysInvisible &&
                     <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
                         <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next} aria-label="Next">
                             <NavigateNextIcon/>
@@ -345,9 +361,9 @@ class Carousel extends Component
                         </IconButton>
                     </div>
                 }
-                
+
                 {
-                    indicators ? 
+                    indicators ?
                     <Indicators
                         classes={classes}
                         length={children.length}
@@ -406,11 +422,11 @@ function Indicators(props)
         const activeClassName = props.activeIndicatorProps !== undefined ? props.activeIndicatorProps.className : undefined;
 
 
-        className = i === props.active ? 
-            `${classes.indicator} ${classes.active} ${activeClassName}`: 
+        className = i === props.active ?
+            `${classes.indicator} ${classes.active} ${activeClassName}`:
             `${classes.indicator} ${className}`;
 
-        const item = <FiberManualRecordIcon 
+        const item = <FiberManualRecordIcon
                         key={i}
                         size='small'
                         className={className}
