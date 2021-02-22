@@ -32,6 +32,9 @@ npm install @material-ui/icons
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import {Paper} from '@material-ui/core'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 function Example(props)
 {
@@ -47,7 +50,11 @@ function Example(props)
     ]
 
     return (
-        <Carousel>
+        <Carousel 
+            IndicatorIcon={FiberManualRecordIcon}
+            NextIcon={NavigateNextIcon}
+            PrevIcon={NavigateBeforeIcon}
+        >
             {
                 items.map( (item, i) => <Item key={i} item={item} /> )
             }
@@ -118,6 +125,9 @@ Note: `onChange` works in a similar fashion. See [Props](#props) below.
 | changeOnFirstRender       | `boolean`                                                          | `false`     | Defines if `onChange` prop will be called when the carousel renders for the first time. In `componentDidMount`                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | next                      | `(next: number, active: number) => void` (internally: `Function`)  | `() => {}`  | Function that is called **after** internal `next()` method. First argument is the child **we are going to display**, while the second argument is the child **that was previously displayed**                                                                                                                                                                                                                                                                                                                                  |
 | prev                      | `(prev: number, active: number) => void` (internally: `Function`)  | `() => {}`  | Function that is called **after** internal `prev()` method. First argument is the child **we are going to display**, while the second argument is the child **that was previously displayed**                                                                                                                                                                                                                                                                                                                                  |
+| IndicatorIcon             | `elementType`                                                      | `undefined` | The React component that will be rendered for indicators.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| NextIcon                  | `elementType`                                                      | `undefined` | The React component that will be rendered for `next` button.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| PrevIcon                  | `elementType`                                                      | `undefined` | The React component that will be rendered for `prev` button.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ## License
 
