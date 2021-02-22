@@ -1,5 +1,5 @@
 
-import React, {ReactElement, ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 
 export interface CarouselIndicatorProps {
     className: string,
@@ -27,10 +27,7 @@ export interface CarouselProps {
     onChange?: Function,
     changeOnFirstRender?: boolean,
     next?: Function,
-    prev?: Function,
-    IndicatorIcon: ReactElement,
-    NextIcon: ReactElement,
-    PrevIcon: ReactElement,
+    prev?: Function
 }
 
 declare const Carousel: React.ComponentType<CarouselProps>;
