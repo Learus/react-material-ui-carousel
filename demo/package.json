@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "typescript": "^4.1.3"
   }
 }

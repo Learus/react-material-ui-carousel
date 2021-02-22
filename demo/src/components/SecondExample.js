@@ -63,7 +63,6 @@ export default class MyProjectsExample extends React.Component {
 
         this.state = {
             autoPlay: true,
-            timer: 500,
             animation: "fade",
             indicators: true,
             timeout: 500,
@@ -118,7 +117,6 @@ export default class MyProjectsExample extends React.Component {
                 <Carousel
                     className="SecondExample"
                     autoPlay={this.state.autoPlay}
-                    timer={this.state.timer}
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}
