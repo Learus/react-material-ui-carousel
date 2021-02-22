@@ -4,6 +4,9 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import autoBind from 'auto-bind';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { useSwipeable } from 'react-swipeable';
 
 const styles = {
@@ -104,10 +107,7 @@ const sanitizeProps = (props) =>
         changeOnFirstRender: props.changeOnFirstRender !== undefined ? props.changeOnFirstRender : false,
         next: props.next !== undefined ? props.next : () => {},
         prev: props.prev !== undefined ? props.prev : () => {},
-        className: props.className !== undefined ? props.className : "",
-        IndicatorIcon: props.IndicatorIcon,
-        NextIcon: props.NextIcon,
-        PrevIcon: props.PrevIcon,
+        className: props.className !== undefined ? props.className : ""
     }
 }
 
@@ -267,9 +267,6 @@ class Carousel extends Component
             indicatorProps,
             activeIndicatorProps,
             className,
-            IndicatorIcon,
-            NextIcon,
-            PrevIcon,
         } = sanitizeProps(this.props);
 
         const classes = this.props.classes;
@@ -336,7 +333,7 @@ class Carousel extends Component
                 {!navButtonsAlwaysInvisible && 
                     <div className={`${buttonWrapperCssClassValue} ${classes.next}`}>
                         <IconButton className={`${buttonCssClassValue} ${classes.next}`} onClick={this.next} aria-label="Next">
-                            <NextIcon/>
+                            <NavigateNextIcon/>
                         </IconButton>
                     </div>
                 }
@@ -344,7 +341,7 @@ class Carousel extends Component
                 {!navButtonsAlwaysInvisible &&
                     <div className={`${buttonWrapperCssClassValue} ${classes.prev}`}>
                         <IconButton className={`${buttonCssClassValue}  ${classes.prev}`} onClick={this.prev} aria-label="Previous">
-                            <PrevIcon/>
+                            <NavigateBeforeIcon/>
                         </IconButton>
                     </div>
                 }
@@ -352,7 +349,6 @@ class Carousel extends Component
                 {
                     indicators ? 
                     <Indicators
-                        Icon={IndicatorIcon}
                         classes={classes}
                         length={children.length}
                         active={this.state.active}
@@ -400,7 +396,6 @@ function CarouselItem(props)
 function Indicators(props)
 {
     const classes = props.classes;
-    const Icon = props.Icon;
 
     let indicators = [];
     for (let i = 0; i < props.length; i++)
@@ -415,7 +410,7 @@ function Indicators(props)
             `${classes.indicator} ${classes.active} ${activeClassName}`: 
             `${classes.indicator} ${className}`;
 
-        const item = <Icon
+        const item = <FiberManualRecordIcon 
                         key={i}
                         size='small'
                         className={className}
