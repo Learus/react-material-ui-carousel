@@ -3,12 +3,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.0] - *Feb 23, 2021*
+
+### Added
+
+1. Added `boolean` prop `cycleNavigation` that allows the developer to choose whether they want the carousel to cycle when it reaches the first or last slide. (@learus)
+2. Added customizability to button icons. Using the `NextIcon`, `PrevIcon`, and `IndicatorIcon` one can customize the icon part of the navigation buttons and indicators. Those props are of type `ReactNode`, meaning they can be whatever one wants them to be, without breaking important carousel functionality. (@learus & @cansin)
+3. Added even more customizability to buttons. Using the `NavButton` prop, you get full control of the navigation buttons. The prop should be a function that takes the specified parameters and returns a ReactNode. It's advised to return a `<Button/>` using the given `onClick` parameter for the next and prev functions to work properly. It works in tandem with all other customization options: `navButtonsProps`, `navButtonsWrapperProps`, `navButtonsAlwaysVisible`, `navButtonsAlwaysInvisible`, `fullHeightHover`, ...). (@learus)
+4. Added the Customizability section to the [README.md](README.md) and demo (TODO) (@learus)
+
+### Changed (Breaking)
+
+1. Changed indicator rendering implementation to support customization, and introduce consistency with next and prev buttons. Now, working with MUI `IconButton`. (@learus) 
+2. Changed `indicatorProps` to `indicatorIconButtonProps` and `activeIndicatorProps` to `activeIndicatorIconButtonProps` (@learus)
+3. Changed `indicatorIconButtonProps` to style **all** indicators rather than only the **non-active** ones (@learus)
+4. Changed `buttonVisible` class' `opacity` to `1` from `0.6`.
+
+### Fixed
+
+1. Added `Button` import in the example code in [README.md](README.md) (@learus)
+
 ## [2.1.2] - *Jan 11, 2021*
 
 ### Added
 
 1. Added CHANGELOG.md (@learus)
-2. Added `boolean` prop `swipe` prop that implements ability to toggle swipe behaviour. Default: `true`. (@learus)
+2. Added `boolean` prop `swipe` that implements ability to toggle swipe behaviour. Default: `true`. (@learus)
 3. Added `boolean` prop `stopAutoPlayOnHover` that implements ability to stop autoPlay (auto-scroll slides) when mousing over the carousel. Default: `true`. (@learus)
 
 ### Changed

@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from "react-material-ui-carousel"
 import autoBind from "auto-bind"
-import '../style//Example.scss';
+import '../style/Example.scss';
 
 import {
     Card,
@@ -15,7 +15,8 @@ import {
     Radio,
     RadioGroup,
     FormLabel,
-    Slider
+    Slider,
+    IconButton
 } from '@material-ui/core';
 
 function Banner(props) {
@@ -140,7 +141,8 @@ class BannerExample extends React.Component {
             indicators: true,
             timeout: 500,
             navButtonsAlwaysVisible: false,
-            navButtonsAlwaysInvisible: false
+            navButtonsAlwaysInvisible: false,
+            cycleNavigation: true
         }
 
         autoBind(this);
@@ -170,6 +172,12 @@ class BannerExample extends React.Component {
         })
     }
 
+    toggleCycleNavigation() {
+        this.setState({
+            cycleNavigation: !this.state.cycleNavigation
+        })
+    }
+
     changeAnimation(event) {
         this.setState({
             animation: event.target.value
@@ -193,11 +201,17 @@ class BannerExample extends React.Component {
                     animation={this.state.animation}
                     indicators={this.state.indicators}
                     timeout={this.state.timeout}
+                    cycleNavigation={this.state.cycleNavigation}
                     navButtonsAlwaysVisible={this.state.navButtonsAlwaysVisible}
                     navButtonsAlwaysInvisible={this.state.navButtonsAlwaysInvisible}
                     next={(now, previous) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                     prev={(now, previous) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                     onChange={(now, previous) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                    // fullHeightHover={false}
+                    // navButtonsProps={{style: {backgroundColor: 'cornflowerblue', borderRadius: 0}}}
+                    // navButtonsWrapperProps={{style: {bottom: '0', top: 'unset', }}}
+                    // indicatorContainerProps={{style: {margin: "20px"}}}
+                    // NextIcon='next'
                 >
                     {
                         items.map((item, index) => {
@@ -224,16 +238,22 @@ class BannerExample extends React.Component {
                 />
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="indicators" color="primary" />
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysVisible} checked={this.state.navButtonsAlwaysVisible} value="NavButtonsAlwaysVisible" color="primary" />
                     }
                     label="NavButtonsAlwaysVisible"
                 />
 
                 <FormControlLabel
                     control={
-                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.toggleNavButtonsAlwaysInvisible} value="indicators" color="primary" />
+                        <Checkbox onChange={this.toggleNavButtonsAlwaysInvisible} checked={this.state.navButtonsAlwaysInvisible} value="NavButtonsAlwaysInvisible" color="primary" />
                     }
                     label="NavButtonsAlwaysInvisible"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox onChange={this.toggleCycleNavigation} checked={this.state.cycleNavigation} value="CycleNavigation" color="primary" />
+                    }
+                    label="CycleNavigation"
                 />
 
                 <FormControlLabel
