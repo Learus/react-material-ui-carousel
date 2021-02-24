@@ -96,7 +96,252 @@ Note: `onChange` works in a similar fashion. See [Props](#props) below.
 
 ## Customizing Navigation
 
-### TODO
+### Navigation Buttons - Customizing the default solution
+
+These are the props that are used to directly customize the Carousel's default buttons:
+* NextIcon
+* PrevIcon
+* navButtonsProps
+* navButtonsWrapperProps
+* fullHeightHover
+
+#### Example #1
+Say we don't like the default icons used for the next and prev buttons
+and want to change them to be an MUI Icon or an image of our own.
+
+```jsx
+
+
+import RandomIcon from '@material-ui/icons/Random'; // Note: this doesn't exist
+
+<Carousel
+    NextIcon={<RandomIcon/>}
+    PrevIcon={<RandomIcon/>}
+    // OR
+    NextIcon={<img src="http://random.com/next"/>}
+    PrevIcon={<img src="http://random.com/prev"/>}
+>
+    {...}
+</Carousel>
+```
+The `NextIcon` and `PrevIcon` is of type `ReactNode`, meaning it can be any JSX element or a string. *Note: Extra styling may be needed when using those props*.
+
+#### Example #2
+
+Let's now say we don't like the default graphite background of the buttons, nor do we like the fact that it is round.  
+We also want to place them under the main Carousel, and finally remove the arrows and have "next" and "prev" accordingly to each button.
+
+A very important note here, is that any styles specified by the user **DO NOT OVERRIDE THE EXISTING STYLES**. They work in tandem with them. That means, that if you want to change, or get rid of a CSS attribute you will have to override it or unset it. The [Default styles](#default-styles) are given at the end of this section, and are part of the code.
+
+```jsx
+<Carousel
+    fullHeightHover={false}     // We want the nav buttons wrapper to only be as big as the button element is
+    navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+        style: {
+            backgroundColor: 'cornflowerblue',
+            borderRadius: 0
+        }
+    }} 
+    navButtonsWrapperProps={{   // Move the buttons to the bottom. Unsetting top here to override default style.
+        style: {
+            bottom: '0',
+            top: 'unset'
+        }
+    }} 
+    NextIcon='next'             // Change the "inside" of the next button to "next"
+    PrevIcon='prev'             // Change the "inside of the prev button to pref
+>
+    {...}
+</Carousel>
+```
+Of course, extra styling to the button wrappers, or indicators might be needed to achieve exactly what we may be looking for. *Note: You can also use `className` to change the styles externally*.
+
+### Customizing the navigation buttons directly
+
+We also provide the `NavButton` prop, that allows the user to take complete control of the components rendered as the navigation buttons. It should be used like this:
+
+#### Example
+
+```jsx
+import {Button} from '@material-ui/core';
+
+<Carousel
+    NavButton={({onClick, className, style, next, prev}) => {
+        // Other logic
+
+        return (
+            <Button onClick={onClick} className={className} style={style}>
+                {next && "Next"}
+                {prev && "Previous"}
+            </Button>
+        )
+    }}
+>
+    {...}
+</Carousel>
+```
+
+**Parameters Explanation**
+  * `onClick`: The function that handles actual navigation. If you do not add this to your component, the buttons will not work.
+  * `className`: The className given by the carousel component. This is used to handle Visible/Invisible, hover, and user specified styles (e.g. from navButtonProps). Apply it to the outmost element.
+  * `style`: The style given by the carousel component. Used to give any user specified styles (e.g. from navButtonProps).
+  * `next`: Boolean value that specifies whether this is the next button.
+  * `prev`: Boolean value that specifies whether this is the prev button.
+
+The prop value must be a function that returns a component. All parameters are optional as far as styling goes (**not functionality**), but it is advised you use them as shown above.  
+As implied, any `className`s or `style`s specified in the navButtonsProps will only be used iff you apply the given `className` and `style` parameters.
+
+### Customizing the Indicators
+
+There are 4 props that handle indicator customization
+* IndicatorIcon
+* activeIndicatorIconButtonProps
+* indicatorIconButtonProps
+* indicatorContainerProps
+
+#### Example
+
+Let's say we would like to change the indicator icon from a circle to a something else, for example a little house
+```jsx
+import Home from '@material-ui/icons/Home';
+
+<Carousel
+    IndicatorIcon={<Home/>}
+    // OR
+    IndicatorIcon={<img src="http://random.com/home"/>}
+>
+    {...}
+</Carousel>
+```
+
+The `IndicatorIcon`  works the same way as the `NextIcon` and `PrevIcon` prop.
+
+#### Example #2
+
+Now we want to do more complex customizations. Specifically:
+1. More distance between the indicator icons
+2. Change the background color of the active indicator to `red`
+3. Change the color of all indicators to `blue`
+4. Move the indicators to the right side of the carousel
+5. Move the indicators to be further away down from the carousel
+
+We are going to use all props to style the indicators
+
+```jsx
+import Home from '@material-ui/icons/Home';
+
+<Carousel
+    IndicatorIcon={<Home/>} // Previous Example
+    indicatorIconButtonProps={{
+        style: {
+            padding: '10px',    // 1
+            color: 'blue'       // 3
+        }
+    }}
+    activeIndicatorIcomButtonProps={{
+        style: {
+            backgroundColor: 'red' // 2
+        }
+    }}
+    indicatorContainerProps={{
+        style: {
+            marginTop: '50px', // 5
+            textAligh: 'right' // 4
+        }
+
+    }}
+>
+    {...}
+</Carousel>
+```
+
+As before, you can use `className` to style the elements externally.
+
+### Default Styles
+
+Giving the default styles in pseudo-code.
+
+#### Navigation Buttons
+
+```js
+{
+    buttonWrapper: {
+        position: "absolute",
+        height: "100px",
+        backgroundColor: "transparent",
+        top: "calc(50% - 70px)",
+        '&:hover': {
+            '& $button': {
+                backgroundColor: "black",
+                filter: "brightness(120%)",
+                opacity: "0.4"
+            }
+        }
+    },
+    fullHeightHoverWrapper: {
+        height: "100%",
+        top: "0"
+    },
+    buttonVisible:{
+        opacity: "1"
+    },
+    buttonHidden:{
+        opacity: "0",
+    },
+    button: {
+        margin: "0 10px",
+        position: "relative",
+        backgroundColor: "#494949",
+        top: "calc(50% - 20px) !important",
+        color: "white",
+        fontSize: "30px",
+        transition: "200ms",
+        cursor: "pointer",
+        '&:hover': {
+            opacity: "0.6 !important"
+        },
+    },
+    // Applies to the "next" button wrapper
+    next: {
+        right: 0
+    },
+    // Applies to the "prev" button wrapper
+    prev: {
+        left: 0
+    }
+}
+```
+
+#### Indicators
+
+```js
+{
+    indicators: {
+        width: "100%",
+        marginTop: "10px",
+        textAlign: "center"
+    },
+    indicator: {
+        cursor: "pointer",
+        transition: "200ms",
+        padding: 0,
+        color: "#afafaf",
+        '&:hover': {
+            color: "#1f1f1f"
+        },
+        '&:active': {
+            color: "#1f1f1f"
+        }
+    },
+    indicatorIcon: {
+        fontSize: "15px",
+    },
+    // Applies to the active indicator
+    active: {           
+        color: "#494949"
+    }
+}
+```
 
 ## Props
 
@@ -116,11 +361,11 @@ Note: `onChange` works in a similar fashion. See [Props](#props) below.
 | navButtonsAlwaysInvisible      | `boolean`                                                                                                                                | `false`               | Defines if the next/previous buttons will always be invisible or not                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | cycleNavigation                | `boolean`                                                                                                                                | `true`                | Defines if the next button will be visible on the last slide, and the previous button on the first slide. Auto-play also stops on the last slide. Indicators continue to work normally.                                                                                                                                                                                                                                                                                                                                        |
 | fullHeightHover                | `boolean`                                                                                                                                | `true`                | Defines if the the next/previous button wrappers will cover the full **height** of the Item element and show buttons on full height hover                                                                                                                                                                                                                                                                                                                                                                                      |
-| navButtonsWrapperProps         | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize the div surrounding the nav `IconButtons`. Use this to position the buttons onto, below, outside, e.t.c. the carousel. *Tip*: Check the [default styles]() below.                                                                                                                                                                                                                                                                                                                                            |
+| navButtonsWrapperProps         | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize the div surrounding the nav `IconButtons`. Use this to position the buttons onto, below, outside, e.t.c. the carousel. *Tip*: Check the [default styles](#default-styles) below.                                                                                                                                                                                                                                                                                                                                            |
 | navButtonsProps                | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize the actual nav `IconButton`s                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | NextIcon                       | `ReactNode`                                                                                                                              | `<NavigateNextIcon/>` | Defines the element inside the nav "next" `IconButton`. Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples. It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like.                                                                                                                                                                                                                                                   |
 | PrevIcon                       | `ReactNode`                                                                                                                              | `<NavigateNextIcon/>` | Defines the element inside the nav "prev" `IconButton`. Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples.  It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like.                                                                                                                                                                                                                                                  |
-| NavButton                      | `({onClick, next, prev}: {onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean}) => ReactNode` | `undefined`           | Gives full control of the nav buttons. Should return a button that uses the given `onClick`. Works in tandem with all other customization options (`navButtonsProps`, `navButtonsWrapperProps`, `navButtonsAlwaysVisible`, `navButtonsAlwaysInvisible`, `fullHeightHover`, ...). Refer to the [example section](README.md#CustomizingNavigation) for more information.                                                                                                                                                                                                  |
+| NavButton                      | `({onClick, className, style, prev, next}: {onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean}) => ReactNode` | `undefined`           | Gives full control of the nav buttons. Should return a button that uses the given `onClick`. Works in tandem with all other customization options (`navButtonsProps`, `navButtonsWrapperProps`, `navButtonsAlwaysVisible`, `navButtonsAlwaysInvisible`, `fullHeightHover`, ...). Refer to the [example section](README.md#CustomizingNavigation) for more information.                                                                                                                                                                                                  |
 | indicatorIconButtonProps       | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize **all** indicator `IconButton`s                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | activeIndicatorIconButtonProps | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize the **active** indicator `IconButton`                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | indicatorContainerProps        | `{className: string, style: React.CSSProperties}`                                                                                        | `undefined`           | Used to customize the indicators container/wrapper                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
