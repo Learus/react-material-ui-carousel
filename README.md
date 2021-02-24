@@ -149,7 +149,7 @@ A very important note here, is that any styles specified by the user **DO NOT OV
         }
     }} 
     NextIcon='next'             // Change the "inside" of the next button to "next"
-    PrevIcon='prev'             // Change the "inside of the prev button to pref
+    PrevIcon='prev'             // Change the "inside of the prev button to "prev"
 >
     {...}
 </Carousel>
