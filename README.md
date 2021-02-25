@@ -158,7 +158,7 @@ Of course, extra styling to the button wrappers, or indicators might be needed t
 
 ### Customizing the navigation buttons directly
 
-We also provide the `NavButton` prop, that allows the user to take complete control of the components rendered as the navigation buttons. It should be used like this:
+Do directly customize/change the navigation buttons `NavButton` prop, that allows the user to take complete control of the components rendered as the navigation buttons. It should be used like this:
 
 #### Example
 
