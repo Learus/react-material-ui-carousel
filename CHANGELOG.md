@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.1] - *Feb 26, 2021*
+
+### Added
+
+1. Added `index.d.ts` explanation for `IndicatorIcon` prop. (@learus)
+
+### Fixed
+
+1. Fixed `index.d.ts` 2.2.0 new props to be optional, from mandatory. (@learus)
+
 ## [2.2.0] - *Feb 23, 2021*
 
 ### Added

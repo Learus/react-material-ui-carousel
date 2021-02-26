@@ -52,23 +52,23 @@ export interface CarouselProps {
     fullHeightHover?: boolean,
 
     /** Used to customize the div surrounding the nav `IconButtons`. Use this to position the buttons onto, below, outside, e.t.c. the carousel. */
-    navButtonsWrapperProps: CarouselStyleProps,
+    navButtonsWrapperProps?: CarouselStyleProps,
 
     /** Used to customize the actual nav `IconButton`s */
-    navButtonsProps: CarouselStyleProps,
+    navButtonsProps?: CarouselStyleProps,
 
     /** Defines the element inside the nav "next" `IconButton`. Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples.  
      * It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like. */
-    NextIcon: ReactNode,
+    NextIcon?: ReactNode,
 
     /** Defines the element inside the nav "prev" `IconButton`. Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples.  
      * It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like. */
-    PrevIcon: ReactNode,
+    PrevIcon?: ReactNode,
 
     /** Gives full control of the nav buttons. Should return a button that uses the given `onClick`.  
      * Works in tandem with all other customization options (`navButtonsProps`, `navButtonsWrapperProps`, `navButtonsAlwaysVisible`, `navButtonsAlwaysInvisible`, `fullHeightHover` ...).  
      * Refer to the [example section](README.md) for more information */
-    NavButton: ({onClick, next, prev}: {onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean}) => ReactNode
+    NavButton?: ({onClick, next, className, style, prev}: {onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean}) => ReactNode
 
     /** Used to customize the indicators container/wrapper.  
      * Type: `{className: string, style: React.CSSProperties}` */
@@ -94,7 +94,9 @@ export interface CarouselProps {
     /** Function that is called **after** internal `prev()` method. First argument is the child **we are going to display**, while the second argument is the child **that was previously displayed** */
     prev?: Function,
 
-    IndicatorIcon: ReactNode,
+    /** Defines the element inside the indicator `IconButton`s Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples.  
+     * It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like.*/
+    IndicatorIcon?: ReactNode,
 
 }
 
