@@ -238,7 +238,7 @@ import Home from '@material-ui/icons/Home';
             color: 'blue'       // 3
         }
     }}
-    activeIndicatorIcomButtonProps={{
+    activeIndicatorIconButtonProps={{
         style: {
             backgroundColor: 'red' // 2
         }
