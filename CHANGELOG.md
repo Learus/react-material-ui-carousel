@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.2] - *Mar 26 2021*
+
+### Fixed
+
+- Removed a wrongly placed brace in the class value of the navigation buttons, that caused them to not be hidden by default. (@8BitAron)
+
 ## [2.2.1] - *Feb 26, 2021*
 
 ### Added
