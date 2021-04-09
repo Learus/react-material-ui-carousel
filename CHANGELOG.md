@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.2] - *Apr 9 2021*
+
+### Changed
+
+- Updated the library's `peerDependencies` to `react: ^17.0.1` and `@material-ui: ^4.11.3`
+
 ## [2.2.2] - *Mar 26 2021*
 
 ### Fixed

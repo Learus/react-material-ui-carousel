@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-carousel",
-  "version": "2.2.2",
+  "version": "2.2.4",
   "license": "MIT",
   "description": "A Generic, extendible Carousel UI component for React using Material UI",
   "homepage": "https://learus.github.io",
@@ -59,7 +59,7 @@
   },
   "peerDependencies": {
     "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
