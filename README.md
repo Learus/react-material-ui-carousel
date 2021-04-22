@@ -246,7 +246,7 @@ import Home from '@material-ui/icons/Home';
     indicatorContainerProps={{
         style: {
             marginTop: '50px', // 5
-            textAligh: 'right' // 4
+            textAlign: 'right' // 4
         }
 
     }}
