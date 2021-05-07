@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.5] - *May 7 2021*
+
+### Added
+
+- Added `IndicatorIcon` prop explanation to Documentation.
+
+## [2.2.4] - *Apr 22 2021*
+
+### Changed
+
+- Corrected typo: `textAligh` --> `textAlign` on README.md
+
 ## [2.2.2] - *Apr 9 2021*
 
 ### Changed
