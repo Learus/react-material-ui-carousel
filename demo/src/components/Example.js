@@ -16,7 +16,6 @@ import {
     RadioGroup,
     FormLabel,
     Slider,
-    IconButton
 } from '@material-ui/core';
 
 function Banner(props) {

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.6] - *May 7 2021*
+
+### Changed
+
+- Updated `react-swipeable` package to `^6.1.0` from `^5.5.1`.
+
 ## [2.2.5] - *May 7 2021*
 
 ### Added
@@ -50,7 +56,7 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ### Changed (Breaking)
 
-1. Changed indicator rendering implementation to support customization, and introduce consistency with next and prev buttons. Now, working with MUI `IconButton`. (@learus) 
+1. Changed indicator rendering implementation to support customization, and introduce consistency with next and prev buttons. Now, working with MUI `IconButton`. (@learus)
 2. Changed `indicatorProps` to `indicatorIconButtonProps` and `activeIndicatorProps` to `activeIndicatorIconButtonProps` (@learus)
 3. Changed `indicatorIconButtonProps` to style **all** indicators rather than only the **non-active** ones (@learus)
 4. Changed `buttonVisible` class' `opacity` to `1` from `0.6`.
@@ -80,8 +86,6 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 1. Fixed a bug, where pressing the first indicator, while being on the last slide (and backwards) would trigger the wrong/unexpected animation. Fixed by change #1. (@learus)
 2. Fixed a bug, where exit animation would not play if `timeout` prop was not a `number`. (@learus)
-
-
 
 <!-- Links -->
 [Keep a Changelog]: https://keepachangelog.com/
