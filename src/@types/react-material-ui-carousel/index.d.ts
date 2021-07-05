@@ -2,8 +2,8 @@
 import React, { ReactNode } from 'react';
 
 export interface CarouselStyleProps {
-    className: string,
-    style: React.CSSProperties
+    className?: string,
+    style?: React.CSSProperties
 }
 
 export interface CarouselProps {
@@ -68,7 +68,7 @@ export interface CarouselProps {
     /** Gives full control of the nav buttons. Should return a button that uses the given `onClick`.  
      * Works in tandem with all other customization options (`navButtonsProps`, `navButtonsWrapperProps`, `navButtonsAlwaysVisible`, `navButtonsAlwaysInvisible`, `fullHeightHover` ...).  
      * Refer to the [example section](README.md) for more information */
-    NavButton?: ({onClick, next, className, style, prev}: {onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean}) => ReactNode
+    NavButton?: ({ onClick, next, className, style, prev }: { onClick: Function, className: string, style: React.CSSProperties, next: boolean, prev: boolean }) => ReactNode
 
     /** Used to customize the indicators container/wrapper.  
      * Type: `{className: string, style: React.CSSProperties}` */
