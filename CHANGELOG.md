@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.2.7] - *July 5 2021*
+
+### Fixed
+
+- Fixed a bug where it was necessary to provide both `className` and `style` when styling buttons or indicators, when using typescript.
+
 ## [2.2.6] - *May 7 2021*
 
 ### Changed
