@@ -24,7 +24,7 @@ You will need to have `material-ui` installed, in order to use this library/comp
 ```shell
 npm install @material-ui/core
 npm install @material-ui/icons
-npm install @material-ui/styles // Material UI 5+
+npm install @material-ui/styles
 ```
 
 ## Usage Example
