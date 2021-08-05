@@ -381,4 +381,4 @@ The MIT License.
 
 ## Author
 
-[Learus](learus.github.io)
+[Learus](https://learus.github.io)
