@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.3.1] - *August 15 2021*
+
+### Fixed
+
+- Fixed author link on README.md. It didn't work. (@hamidreza-nateghi)
 
 ## [2.3.0] - *August 15 2021*
 
