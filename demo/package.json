@@ -4,13 +4,13 @@
   "private": true,
   "homepage": "https://learus.github.io/react-material-ui-carousel",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^6.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-material-ui-carousel": "^2.2.6",
-    "react-scripts": "^4.0.0"
+    "react-material-ui-carousel": "^2.3.0",
+    "react-scripts": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
