@@ -81,12 +81,15 @@ const styles = {
     }
 }
 
-const sanitizeStyleProps = (props) =>
+const sanitizeNavProps = (props) =>
 {
+    const {className, style, ...rest} = props || {};
+
     return props !== undefined ? {
         style: props.style !== undefined ? props.style : {},
-        className: props.className !== undefined ? props.className : ""
-    } : {style: {}, className: ""}
+        className: props.className !== undefined ? props.className : "",
+        ...rest
+    } : {style: {}, className: "", ...rest}
 }
 
 const sanitizeProps = (props) =>
@@ -106,6 +109,7 @@ const sanitizeProps = (props) =>
         interval: props.interval !== undefined ? props.interval : 4000,
 
         animation: animation,
+        reverseEdgeAnimationDirection: props.reverseEdgeAnimationDirection !== undefined ? props.reverseEdgeAnimationDirection : true,
         timeout: timeout,
 
         swipe: props.swipe !== undefined ? props.swipe : true,
@@ -114,17 +118,17 @@ const sanitizeProps = (props) =>
         navButtonsAlwaysVisible: props.navButtonsAlwaysVisible !== undefined ? props.navButtonsAlwaysVisible : false,
         cycleNavigation: props.cycleNavigation !== undefined ? props.cycleNavigation : true,
         fullHeightHover: props.fullHeightHover !== undefined ? props.fullHeightHover : true,
-        navButtonsWrapperProps: sanitizeStyleProps(props.navButtonsWrapperProps),
-        navButtonsProps: sanitizeStyleProps(props.navButtonsProps),
+        navButtonsWrapperProps: sanitizeNavProps(props.navButtonsWrapperProps),
+        navButtonsProps: sanitizeNavProps(props.navButtonsProps),
         NavButton: props.NavButton,
 
         NextIcon: props.NextIcon !== undefined ? props.NextIcon : <NavigateNextIcon/>,
         PrevIcon: props.PrevIcon !== undefined ? props.PrevIcon : <NavigateBeforeIcon/>,
 
         indicators: props.indicators !== undefined ? props.indicators : true,
-        indicatorContainerProps: sanitizeStyleProps(props.indicatorContainerProps),
-        indicatorIconButtonProps: sanitizeStyleProps(props.indicatorIconButtonProps),
-        activeIndicatorIconButtonProps: sanitizeStyleProps(props.activeIndicatorIconButtonProps),
+        indicatorContainerProps: sanitizeNavProps(props.indicatorContainerProps),
+        indicatorIconButtonProps: sanitizeNavProps(props.indicatorIconButtonProps),
+        activeIndicatorIconButtonProps: sanitizeNavProps(props.activeIndicatorIconButtonProps),
         IndicatorIcon: props.IndicatorIcon,
 
         onChange: props.onChange !== undefined ? props.onChange : () => {},
@@ -283,6 +287,7 @@ class Carousel extends Component
             
             stopAutoPlayOnHover,
             animation,
+            reverseEdgeAnimationDirection,
             timeout,
             swipe,
             
@@ -305,20 +310,25 @@ class Carousel extends Component
         } = sanitizeProps(this.props);
 
         const classes = this.props.classes;
+        const {className: buttonsClass, style: buttonsStyle, ...buttonsProps} = navButtonsProps;
+        const {className: buttonsWrapperClass, style: buttonsWrapperStyle, ...buttonsWrapperProps} = navButtonsWrapperProps;
         
         const buttonVisibilityClassValue = `${navButtonsAlwaysVisible ? classes.buttonVisible : classes.buttonHidden}`;
-        const buttonCssClassValue = `${classes.button} ${buttonVisibilityClassValue} ${fullHeightHover ? classes.fullHeightHoverButton : ""} ${navButtonsProps.className}`;
-        const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""} ${navButtonsWrapperProps.className}`;
+        const buttonCssClassValue = `${classes.button} ${buttonVisibilityClassValue} ${fullHeightHover ? classes.fullHeightHoverButton : ""} ${buttonsClass}`;
+        const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""} ${buttonsWrapperClass}`;
+
+        
+
 
         const compareActiveDisplayed = () => {
             if (this.state.active === 0 && this.state.prevActive === children.length - 1)
             {
-                return false;
+                return reverseEdgeAnimationDirection ? false : true;
             }
 
             if (this.state.active === children.length - 1 && this.state.prevActive === 0)
             {
-                return true;
+                return reverseEdgeAnimationDirection ? true : false;
             }
 
             if (this.state.active > this.state.prevActive)
@@ -374,11 +384,11 @@ class Carousel extends Component
                 }
                 
                 {!navButtonsAlwaysInvisible && showButton(true) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={navButtonsWrapperProps.style}>
+                    <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                         {NavButton !== undefined ?
-                            NavButton({onClick: this.next, className: buttonCssClassValue, style: navButtonsProps.style, next: true, prev: false})
+                            NavButton({onClick: this.next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps})
                             :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={this.next} aria-label="Next" style={navButtonsProps.style}>
+                            <IconButton className={`${buttonCssClassValue}`} onClick={this.next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
                                 {NextIcon}
                             </IconButton>
                         }
@@ -386,11 +396,11 @@ class Carousel extends Component
                 }
 
                 {!navButtonsAlwaysInvisible && showButton(false) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={navButtonsWrapperProps.style}>
+                    <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                         {NavButton !== undefined ?
-                            NavButton({onClick: this.prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true})
+                            NavButton({onClick: this.prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true}, ...buttonsProps)
                             :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={this.prev} aria-label="Previous" style={navButtonsProps.style}>
+                            <IconButton className={`${buttonCssClassValue}`} onClick={this.prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
                                 {PrevIcon}
                             </IconButton>
                         }
@@ -455,16 +465,24 @@ function Indicators(props)
         />
     ;
 
+    const {className: indicatorIconButtonClass, style: indicatorIconButtonStyle, ...indicatorIconButtonProps} = props.indicatorIconButtonProps;
+    const {className: activeIndicatorIconButtonClass, style: activeIndicatorIconButtonStyle, ...activeIndicatorIconButtonProps} = props.activeIndicatorIconButtonProps;
+
     let indicators = [];
     for (let i = 0; i < props.length; i++)
     {
         const className = i === props.active ? 
-            `${classes.indicator} ${props.indicatorIconButtonProps.className} ${classes.active} ${props.activeIndicatorIconButtonProps.className}`: 
-            `${classes.indicator} ${props.indicatorIconButtonProps.className}`;
+            `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}`: 
+            `${classes.indicator} ${indicatorIconButtonClass}`;
 
         const style = i === props.active ?
-            Object.assign({}, props.indicatorIconButtonProps.style, props.activeIndicatorIconButtonProps.style) :
-            props.indicatorIconButtonProps.style;
+            Object.assign({}, indicatorIconButtonStyle, activeIndicatorIconButtonStyle) :
+            indicatorIconButtonStyle;
+
+        let restProps = i === props.active ? Object.assign({}, indicatorIconButtonProps, activeIndicatorIconButtonProps) : indicatorIconButtonProps;
+
+        if (restProps['aria-label'] === undefined) restProps['aria-label'] = 'carousel indicator';
+
 
         const item =    <IconButton 
                             key={i} 
@@ -472,6 +490,9 @@ function Indicators(props)
                             style={style} 
                             onClick={() => {props.press(i)}}
                             size='small'
+                            {...restProps}
+                            // Always add the index to any given aria label
+                            aria-label={`${restProps['aria-label']} ${i+1}`}
                         >
                             {IndicatorIcon}
                         </IconButton>
@@ -479,11 +500,10 @@ function Indicators(props)
         indicators.push(item);
     }
 
-    const wrapperStyle = props.indicatorContainerProps !== undefined ? props.indicatorContainerProps.style : undefined;
-    const wrapperClassName = props.indicatorContainerProps !== undefined ? props.indicatorContainerProps.className: "";
+    const {className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps} = props.indicatorContainerProps;
 
     return (
-        <div className={`${classes.indicators} ${wrapperClassName}`} style={wrapperStyle}>
+        <div className={`${classes.indicators} ${indicatorContainerClass}`} style={indicatorContainerStyle} {...indicatorContainerProps}>
             {indicators}
         </div>
     )
