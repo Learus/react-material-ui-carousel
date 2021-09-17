@@ -1,7 +1,7 @@
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, AriaAttributes } from 'react';
 
-export interface CarouselStyleProps {
+export interface CarouselNavProps extends AriaAttributes {
     className?: string,
     style?: React.CSSProperties
 }
@@ -30,6 +30,9 @@ export interface CarouselProps {
     /** Defines the animation style of the Carousel  */
     animation?: 'fade' | 'slide',
 
+    /** Defines whether the animation from the last child towards the first will be reverse. Same for the animation from the first child towards the last */
+    reverseEdgeAnimationDirection?: boolean
+
     /** Defines the duration of the animations. For more information refer to the [Material UI Documentation for Transitions](https://material-ui.com/components/transitions/) */
     timeout?: number | { appear?: number, enter?: number, exit?: number },
 
@@ -52,10 +55,10 @@ export interface CarouselProps {
     fullHeightHover?: boolean,
 
     /** Used to customize the div surrounding the nav `IconButtons`. Use this to position the buttons onto, below, outside, e.t.c. the carousel. */
-    navButtonsWrapperProps?: CarouselStyleProps,
+    navButtonsWrapperProps?: CarouselNavProps,
 
     /** Used to customize the actual nav `IconButton`s */
-    navButtonsProps?: CarouselStyleProps,
+    navButtonsProps?: CarouselNavProps,
 
     /** Defines the element inside the nav "next" `IconButton`. Refer to [MaterialUI Button Documentation](https://material-ui.com/components/buttons/) for more examples.  
      * It is advised to use Material UI Icons, but you could use any element (`<img/>`, `<div/>`, ...) you like. */
@@ -72,15 +75,15 @@ export interface CarouselProps {
 
     /** Used to customize the indicators container/wrapper.  
      * Type: `{className: string, style: React.CSSProperties}` */
-    indicatorContainerProps?: CarouselStyleProps,
+    indicatorContainerProps?: CarouselNavProps,
 
     /** Used to customize the **non-active** indicator `IconButton`s.  
      * Type: `{className: string, style: React.CSSProperties}` */
-    indicatorIconButtonProps?: CarouselStyleProps,
+    indicatorIconButtonProps?: CarouselNavProps,
 
     /** Used to customize the **active** indicator `IconButton`.  
      * Type: `{className: string, style: React.CSSProperties}` */
-    activeIndicatorIconButtonProps?: CarouselStyleProps,
+    activeIndicatorIconButtonProps?: CarouselNavProps,
 
     /** Function that is called **after** internal `setActive()` method. The `setActive()` method is called when the next and previous buttons are pressed, when an indicator is pressed, or when the `index` prop changes. First argument is the child **we are going to display**, while the second argument is the child **that was previously displayed**. Will be c */
     onChange?: Function,
