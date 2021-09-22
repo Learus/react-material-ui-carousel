@@ -54,6 +54,9 @@ const styles = {
         height: "100%", // This is 100% - indicator height - indicator margin
         top: "0"
     },
+    fullHeightHoverButton: {
+
+    },
     buttonVisible:{
         opacity: "1"
     },
@@ -323,12 +326,12 @@ class Carousel extends Component
         const compareActiveDisplayed = () => {
             if (this.state.active === 0 && this.state.prevActive === children.length - 1)
             {
-                return reverseEdgeAnimationDirection ? false : true;
+                return reverseEdgeAnimationDirection; // ? false : true;
             }
 
             if (this.state.active === children.length - 1 && this.state.prevActive === 0)
             {
-                return reverseEdgeAnimationDirection ? true : false;
+                return reverseEdgeAnimationDirection; // ? true : false;
             }
 
             if (this.state.active > this.state.prevActive)
@@ -360,8 +363,8 @@ class Carousel extends Component
                             return (
                                 <CarouselItem 
                                     key={`carousel-item${index}`}
-                                    display={index === this.state.displayed ? true : false}
-                                    active={index === this.state.active ? true : false}
+                                    display={index === this.state.displayed} // ? true : false
+                                    active={index === this.state.active}     // ? true : false
                                     isNext={compareActiveDisplayed()}
                                     child={child}
                                     animation={animation}

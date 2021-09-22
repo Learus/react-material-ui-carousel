@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.3.5] - *Sep 22 2021*
+
+### Fixed
+
+- Added fullHeightHoverButton class to styles, to fix `property does not exist` error. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/110) (@learus)
+
+### Changed
+
+- Removed unnecessary ternary operators. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/111) (@learus)
+
 ## [2.3.1] - *August 15 2021*
 
 ### Fixed
@@ -20,8 +30,8 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
   - `indicatorIconButtonProps`
   - `activeIndicatorIconButtonProps`
   - `indicatorContainerProps` (@Learus)
-- Added `reverseEdgeAnimationDirection` prop. Normally, the Carousel reverses the animation direction when going from its last child to its first (right --> left). It also reverses the animation direction when going from its first child to its last (left --> right). This prop disables this functionality.  
-Now every "next" button press will have a right directed animation and each "previous" button press will have a left directed animation. (@Learus)
+- Added `reverseEdgeAnimationDirection` prop. Normally, the Carousel reverses the animation direction when going from its last child to its first (right --> left). It also reverses the animation direction when going from its first child to its last (left --> right). This prop disables this functionality.
+  Now every "next" button press will have a right directed animation and each "previous" button press will have a left directed animation. (@Learus)
 
 ## [2.2.7] - *July 5 2021*
 
@@ -113,9 +123,10 @@ Now every "next" button press will have a right directed animation and each "pre
 2. Fixed a bug, where exit animation would not play if `timeout` prop was not a `number`. (@Learus)
 
 <!-- Links -->
-[Keep a Changelog]: https://keepachangelog.com/
-[Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
+
+[Keep a Changelog]: https://keepachangelog.com/
+[Semantic Versioning]: https://semver.org/
 [0.0.2]: https://github.com/Author/Repository/compare/v0.0.1..v0.0.2
 [0.0.1]: https://github.com/Author/Repository/releases/v0.0.1
