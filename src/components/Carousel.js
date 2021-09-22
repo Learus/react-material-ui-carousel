@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Fade from '@material-ui/core/Fade';
-import Slide from '@material-ui/core/Slide';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
+import Fade from '@mui/material/Fade';
+import Slide from '@mui/material/Slide';
+import IconButton from '@mui/material/IconButton';
+import { withStyles } from '@mui/material/styles';
 import autoBind from 'auto-bind';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useSwipeable } from 'react-swipeable';
 
 const styles = {
@@ -53,6 +53,9 @@ const styles = {
     fullHeightHoverWrapper: {
         height: "100%", // This is 100% - indicator height - indicator margin
         top: "0"
+    },
+    fullHeightHoverButton: {
+
     },
     buttonVisible:{
         opacity: "1"
@@ -323,12 +326,12 @@ class Carousel extends Component
         const compareActiveDisplayed = () => {
             if (this.state.active === 0 && this.state.prevActive === children.length - 1)
             {
-                return reverseEdgeAnimationDirection ? false : true;
+                return reverseEdgeAnimationDirection; // ? false : true;
             }
 
             if (this.state.active === children.length - 1 && this.state.prevActive === 0)
             {
-                return reverseEdgeAnimationDirection ? true : false;
+                return reverseEdgeAnimationDirection; // ? true : false;
             }
 
             if (this.state.active > this.state.prevActive)
@@ -360,8 +363,8 @@ class Carousel extends Component
                             return (
                                 <CarouselItem 
                                     key={`carousel-item${index}`}
-                                    display={index === this.state.displayed ? true : false}
-                                    active={index === this.state.active ? true : false}
+                                    display={index === this.state.displayed} // ? true : false
+                                    active={index === this.state.active}     // ? true : false
                                     isNext={compareActiveDisplayed()}
                                     child={child}
                                     animation={animation}

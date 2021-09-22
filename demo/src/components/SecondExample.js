@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
+import Carousel from "react-material-ui-carousel";
 import autoBind from 'auto-bind';
 import {
     FormLabel,
@@ -11,7 +11,7 @@ import {
     Button,
     Slider,
     Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 import "../style/SecondExample.scss"
 
@@ -167,6 +167,7 @@ export default class MyProjectsExample extends React.Component {
                             <FormControlLabel value="slide" control={<Radio color="primary" />} label="Slide" />
                         </RadioGroup>
                     }
+                    label=""
                 />
 
                 <FormControlLabel
@@ -188,6 +189,7 @@ export default class MyProjectsExample extends React.Component {
                             />
                         </div>
                     }
+                    label=""
                 />
 
             </div>
