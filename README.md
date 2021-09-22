@@ -4,7 +4,7 @@ This is the version of this package that is created to run on newly released Mat
 
 ## Description
 
-A Generic, extendible Carousel UI component for React using [Material UI](https://material-ui.com/) 5
+A Generic, extendible Carousel UI component for React using [Material UI 5](https://material-ui.com/)
 It switches between given children using a smooth animation.
 Provides next and previous buttons.
 Also provides interactible bullet indicators.
@@ -16,7 +16,7 @@ Take a look at this interactible [Live Demo](https://learus.github.io/react-mate
 ## Installation
 
 ```shell
-npm install react-material-ui-carousel --save
+npm install react-material-ui-carousel@mui5 --save
 ```
 
 **Note:**

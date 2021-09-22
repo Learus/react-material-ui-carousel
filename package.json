@@ -1,6 +1,6 @@
 {
     "name": "react-material-ui-carousel",
-    "version": "2.3.3-mui5",
+    "version": "2.3.7-mui5",
     "license": "MIT",
     "description": "A Generic, extendible Carousel UI component for React using Material UI",
     "homepage": "https://learus.github.io",

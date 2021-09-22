@@ -10555,6 +10555,14 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+"react-material-ui-carousel@^2.3.4-mui5":
+  "integrity" "sha512-o5tmOnJrbcoisJ+2hgE5OQpEra5v1o5unAP9A+M8nnkIdcEOU86HITO9VOSXx0RaM5KhUkJt8JG+CtoRKWAbbw=="
+  "resolved" "https://registry.npmjs.org/react-material-ui-carousel/-/react-material-ui-carousel-2.3.4-mui5.tgz"
+  "version" "2.3.4-mui5"
+  dependencies:
+    "auto-bind" "^2.1.1"
+    "react-swipeable" "^6.1.0"
+
 "react-refresh@^0.8.3", "react-refresh@>=0.8.3 <0.10.0":
   "integrity" "sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg=="
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.8.3.tgz"

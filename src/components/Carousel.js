@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import Fade from '@mui/material/Fade';
 import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
-import { withStyles } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import autoBind from 'auto-bind';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { useSwipeable } from 'react-swipeable';
 
 const styles = {
@@ -32,7 +33,7 @@ const styles = {
         }
     },
     indicatorIcon: {
-        fontSize: "15px",
+        fontSize: "15px !important",
     },
     active: {
         color: "#494949"
@@ -352,78 +353,80 @@ class Carousel extends Component
         }
 
         return (
-            <div
-                className={`${classes.root} ${className ? className : ""}`}
-                onMouseOver={() => {stopAutoPlayOnHover && this.stop()}}
-                onMouseOut={() => {stopAutoPlayOnHover && this.reset()}}
-            >
-                {   
-                    Array.isArray(children) ? 
-                       children.map( (child, index) => {
-                            return (
-                                <CarouselItem 
-                                    key={`carousel-item${index}`}
-                                    display={index === this.state.displayed} // ? true : false
-                                    active={index === this.state.active}     // ? true : false
-                                    isNext={compareActiveDisplayed()}
-                                    child={child}
-                                    animation={animation}
-                                    timeout={timeout}
-                                    swipe={swipe}
-                                    next={this.next}
-                                    prev={this.prev}
-                                />
-                            )
-                        })
-                        :
-                        <CarouselItem
-                            key={`carousel-item0`}
-                            display={true}
-                            active={true}
-                            child={children}
-                            animation={animation}
-                            timeout={timeout}
-                        />
-                }
-                
-                {!navButtonsAlwaysInvisible && showButton(true) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
-                        {NavButton !== undefined ?
-                            NavButton({onClick: this.next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps})
+            <StyledEngineProvider injectFirst>
+                <div
+                    className={`${classes.root} ${className ? className : ""}`}
+                    onMouseOver={() => {stopAutoPlayOnHover && this.stop()}}
+                    onMouseOut={() => {stopAutoPlayOnHover && this.reset()}}
+                >
+                    {   
+                        Array.isArray(children) ? 
+                        children.map( (child, index) => {
+                                return (
+                                    <CarouselItem 
+                                        key={`carousel-item${index}`}
+                                        display={index === this.state.displayed} // ? true : false
+                                        active={index === this.state.active}     // ? true : false
+                                        isNext={compareActiveDisplayed()}
+                                        child={child}
+                                        animation={animation}
+                                        timeout={timeout}
+                                        swipe={swipe}
+                                        next={this.next}
+                                        prev={this.prev}
+                                    />
+                                )
+                            })
                             :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={this.next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
-                                {NextIcon}
-                            </IconButton>
-                        }
-                    </div>
-                }
+                            <CarouselItem
+                                key={`carousel-item0`}
+                                display={true}
+                                active={true}
+                                child={children}
+                                animation={animation}
+                                timeout={timeout}
+                            />
+                    }
+                    
+                    {!navButtonsAlwaysInvisible && showButton(true) &&
+                        <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                            {NavButton !== undefined ?
+                                NavButton({onClick: this.next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps})
+                                :
+                                <IconButton className={`${buttonCssClassValue}`} onClick={this.next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
+                                    {NextIcon}
+                                </IconButton>
+                            }
+                        </div>
+                    }
 
-                {!navButtonsAlwaysInvisible && showButton(false) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
-                        {NavButton !== undefined ?
-                            NavButton({onClick: this.prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true}, ...buttonsProps)
-                            :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={this.prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
-                                {PrevIcon}
-                            </IconButton>
-                        }
-                    </div>
-                }
-                
-                {
-                    indicators ? 
-                    <Indicators
-                        classes={classes}
-                        length={children.length}
-                        active={this.state.active}
-                        press={this.setActive}
-                        indicatorContainerProps={indicatorContainerProps}
-                        indicatorIconButtonProps={indicatorIconButtonProps}
-                        activeIndicatorIconButtonProps={activeIndicatorIconButtonProps}
-                        IndicatorIcon={IndicatorIcon}
-                    /> : null
-                }
-            </div>
+                    {!navButtonsAlwaysInvisible && showButton(false) &&
+                        <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                            {NavButton !== undefined ?
+                                NavButton({onClick: this.prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true}, ...buttonsProps)
+                                :
+                                <IconButton className={`${buttonCssClassValue}`} onClick={this.prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
+                                    {PrevIcon}
+                                </IconButton>
+                            }
+                        </div>
+                    }
+                    
+                    {
+                        indicators ? 
+                        <Indicators
+                            classes={classes}
+                            length={children.length}
+                            active={this.state.active}
+                            press={this.setActive}
+                            indicatorContainerProps={indicatorContainerProps}
+                            indicatorIconButtonProps={indicatorIconButtonProps}
+                            activeIndicatorIconButtonProps={activeIndicatorIconButtonProps}
+                            IndicatorIcon={IndicatorIcon}
+                        /> : null
+                    }
+                </div>
+            </StyledEngineProvider>
         )
     }
 }
@@ -506,6 +509,7 @@ function Indicators(props)
     const {className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps} = props.indicatorContainerProps;
 
     return (
+
         <div className={`${classes.indicators} ${indicatorContainerClass}`} style={indicatorContainerStyle} {...indicatorContainerProps}>
             {indicators}
         </div>

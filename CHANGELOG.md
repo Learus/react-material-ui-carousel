@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.3.7-mui5] - *Sep 22 2021*
+
+### Added
+
+- Created release for Material UI 5 support. Check the [Branch Readme](https://github.com/Learus/react-material-ui-carousel/blob/material-ui-5/README.md) for instructions.
+
+## [2.3.5] - *Sep 22 2021*
+
+### Fixed
+
+- Added fullHeightHoverButton class to styles, to fix `property does not exist` error. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/110) (@learus)
+
+### Changed
+
+- Removed unnecessary ternary operators. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/111) (@learus)
+
 ## [2.3.1] - *August 15 2021*
 
 ### Fixed

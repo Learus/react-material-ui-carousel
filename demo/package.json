@@ -13,7 +13,7 @@
     "node-sass": "^6.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-material-ui-carousel": "^2.3.2-mui5",
+    "react-material-ui-carousel": "^2.3.7-mui5",
     "react-scripts": "^4.0.3"
   },
   "scripts": {
