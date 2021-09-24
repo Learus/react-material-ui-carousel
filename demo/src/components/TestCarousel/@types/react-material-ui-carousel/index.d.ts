@@ -30,9 +30,6 @@ export interface CarouselProps {
     /** Defines the animation style of the Carousel  */
     animation?: 'fade' | 'slide',
 
-    /** Defines whether the animation from the last child towards the first will be reverse. Same for the animation from the first child towards the last */
-    reverseEdgeAnimationDirection?: boolean
-
     /** Defines the duration of the animations. For more information refer to the [Material UI Documentation for Transitions](https://material-ui.com/components/transitions/) */
     duration?: number,
 

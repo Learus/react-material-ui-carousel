@@ -6,18 +6,10 @@ import {
 } from '@material-ui/core'
 
 import "../style/SecondExample.scss"
-import Settings, { SettingsT } from './Settings';
+import Settings, { DefaultSettingsT, SettingsT } from './Settings';
 
 const SecondExample = () => {
-    const [settings, setSettings] = useState<SettingsT>({
-        autoPlay: true,
-        animation: "fade",
-        indicators: true,
-        duration: 500,
-        navButtonsAlwaysVisible: false,
-        navButtonsAlwaysInvisible: false,
-        cycleNavigation: true
-    });
+    const [settings, setSettings] = useState<SettingsT>(DefaultSettingsT);
 
     return (
         <div style={{ marginTop: "50px", color: "#494949" }}>
@@ -31,7 +23,7 @@ const SecondExample = () => {
                 duration={settings.duration}
                 navButtonsAlwaysVisible={settings.navButtonsAlwaysVisible}
                 navButtonsAlwaysInvisible={settings.navButtonsAlwaysInvisible}
-
+                fullHeightHover={settings.fullHeightHover}
             >
                 {
                     items.map((item, index) => {
@@ -39,6 +31,7 @@ const SecondExample = () => {
                     })
                 }
             </Carousel>
+            <br/>
             <Settings settings={settings} setSettings={setSettings} />
         </div>
     )

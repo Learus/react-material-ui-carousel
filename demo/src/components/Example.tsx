@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Settings, { SettingsT } from './Settings';
+import Settings, { DefaultSettingsT, SettingsT } from './Settings';
 import Carousel from './TestCarousel';
 import '../style/Example.scss';
 
@@ -15,15 +15,7 @@ import {
 
 const Example = () => {
 
-    const [settings, setSettings] = useState<SettingsT>({
-        autoPlay: true,
-        animation: "fade",
-        indicators: true,
-        duration: 500,
-        navButtonsAlwaysVisible: false,
-        navButtonsAlwaysInvisible: false,
-        cycleNavigation: true
-    });
+    const [settings, setSettings] = useState<SettingsT>(DefaultSettingsT);
 
     return (
         <div style={{ marginTop: "50px", color: "#494949" }}>
@@ -38,23 +30,23 @@ const Example = () => {
                 cycleNavigation={settings.cycleNavigation}
                 navButtonsAlwaysVisible={settings.navButtonsAlwaysVisible}
                 navButtonsAlwaysInvisible={settings.navButtonsAlwaysInvisible}
+                fullHeightHover={settings.fullHeightHover}
                 // next={(now, previous) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 // prev={(now, previous) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 // onChange={(now, previous) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
-                reverseEdgeAnimationDirection={true}
-                // fullHeightHover={false}
+                
                 // navButtonsProps={{style: {backgroundColor: 'cornflowerblue', borderRadius: 0}}}
                 // navButtonsWrapperProps={{style: {bottom: '0', top: 'unset', }}}
                 // indicatorContainerProps={{style: {margin: "20px"}}}
                 // NextIcon='next'
             >
                 {
-                    items.concat(items).concat(items).map((item, index) => {
+                    items.map((item, index) => {
                         return <Banner item={item} key={index} contentPosition={item.contentPosition} />
                     })
                 }
             </Carousel>
-
+            <br/>
             <Settings settings={settings} setSettings={setSettings}/>
         </div>
     );

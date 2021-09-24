@@ -6,4 +6,4 @@
 * Changelog
 * Delete unused .js files
 * Migrate to MUI 5
-* Add more Settings and style
+* Swipe no work

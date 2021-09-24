@@ -1,0 +1,50 @@
+.root
+{
+    padding: 40px 20%;
+    background-color: #ebebeb;
+
+    .description
+    {
+        display: flex;
+        // justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        div
+        {
+            flex-grow: 1;
+        }
+    }
+
+    h1, h3
+    {
+        color: #494949;
+    }
+
+    >p
+    {
+        color: #494949;
+    }
+
+    a
+    {
+        text-decoration: none;
+        color: cornflowerblue;
+    }
+
+    ul
+    {
+        list-style: none;
+    }
+}
+
+/* Portrait Phone */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+    .root
+    {
+        padding: 40px 10px;
+    }
+}

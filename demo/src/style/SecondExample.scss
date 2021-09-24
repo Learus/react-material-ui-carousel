@@ -3,10 +3,11 @@
 
 .SecondExample
 {
-    width: 500px;
+    max-width: 500px;
 
     .Project
     {
+        max-width: 100%;
         position: relative;
         height: 300px;
         overflow: hidden;

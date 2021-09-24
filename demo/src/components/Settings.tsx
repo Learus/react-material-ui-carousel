@@ -7,7 +7,9 @@ import {
     FormLabel,
     Slider,
     Typography,
+    Switch,
 } from '@material-ui/core';
+import '../style/Settings.scss';
 
 export interface SettingsT {
     autoPlay: boolean,
@@ -16,8 +18,20 @@ export interface SettingsT {
     duration: number,
     navButtonsAlwaysVisible: boolean,
     navButtonsAlwaysInvisible: boolean,
+    fullHeightHover: boolean,
     cycleNavigation: boolean,
     [key: string]: any
+}
+
+export const DefaultSettingsT: SettingsT = {
+    autoPlay: true,
+    animation: "fade",
+    indicators: true,
+    duration: 500,
+    navButtonsAlwaysVisible: false,
+    navButtonsAlwaysInvisible: false,
+    cycleNavigation: true,
+    fullHeightHover: true
 }
 
 interface SettingsProps
@@ -57,84 +71,89 @@ const Settings = ({settings, setSettings}: SettingsProps) => {
         })
     }
 
+    const Toggler = ({name}: {name: string}) => {
+        return (
+            <FormControlLabel
+                control={
+                    <Switch onChange={toggler} checked={settings[name]} value={name}
+                        color="primary" />
+                }
+                label={name}
+                labelPlacement='end'
+            />
+        )
+    }
+
     return (
         <>
-            <FormLabel component="legend">Options</FormLabel>
-            <FormControlLabel
-                control={
-                    <Checkbox onChange={toggler} checked={settings.autoPlay} value="autoPlay"
-                        color="primary" />
-                }
-                label="Auto-play"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox onChange={toggler} checked={settings.indicators} value="indicators"
-                        color="primary" />
-                }
-                label="Indicators"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox onChange={toggler} checked={settings.navButtonsAlwaysVisible} value="navButtonsAlwaysVisible" color="primary" />
-                }
-                label="NavButtonsAlwaysVisible"
-            />
+            <div className="Options">
+                <div>
+                    <Typography>General Options</Typography>
+                    <Toggler name="autoPlay"/>
+                    <Toggler name="indicators"/>
+                </div>
+                
+                <div>
+                    <Typography>Navigation (Buttons) Options</Typography>
+                    <Toggler name="cycleNavigation"/>
+                    <Toggler name="navButtonsAlwaysVisible"/>
+                    <Toggler name="navButtonsAlwaysInvisible"/>
+                    <Toggler name='fullHeightHover'/>
+                </div>
 
-            <FormControlLabel
-                control={
-                    <Checkbox onChange={toggler} checked={settings.navButtonsAlwaysInvisible} value="navButtonsAlwaysInvisible" color="primary" />
-                }
-                label="NavButtonsAlwaysInvisible"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox onChange={toggler} checked={settings.cycleNavigation} value="cycleNavigation" color="primary" />
-                }
-                label="CycleNavigation"
-            />
+                <div>
+                    <Typography>Animation Options</Typography>
+                    <FormControlLabel
+                        control={
+                            <div>
+                                <RadioGroup
+                                    name="animation"
+                                    value={settings.animation}
+                                    onChange={radio}
+                                    row
+                                    style={{ marginLeft: "10px" }}
+                                >
+                                    <FormControlLabel value="fade" control={<Radio color="primary" />} label="Fade" />
+                                    <FormControlLabel value="slide" control={<Radio color="primary" />} label="Slide" />
+                                </RadioGroup>
+                            </div>
+                        }
+                        label=""
+                    />
 
-            <FormControlLabel
-                control={
-                    <div style={{width: 300}}>
-                        <Typography>
-                            Animation Type
-                        </Typography>
-                        <br/>
-                        <RadioGroup name="animation" value={settings.animation} onChange={radio} row
-                            style={{ marginLeft: "10px" }}>
-                            <FormControlLabel value="fade" control={<Radio color="primary" />} label="Fade" />
-                            <FormControlLabel value="slide" control={<Radio color="primary" />} label="Slide" />
-                        </RadioGroup>
-                    </div>
-                }
-                label=""
-            />
+                    <FormControlLabel
+                        control={
+                            <div style={{ width: '100%' }}>
+                                {/* <Typography>
+                                    Animation Duration in ms
+                                </Typography> */}
+                                <Slider
+                                    defaultValue={500}
+                                    getAriaValueText={() => `${settings.duration}ms`}
+                                    aria-labelledby="discrete-slider"
+                                    valueLabelDisplay="auto"
+                                    step={100}
+                                    marks
+                                    min={100}
+                                    max={3000}
+                                    onChangeCommitted={(e: any, v: any) => {
+                                        e.target.name = 'duration';
+                                        slider(e, v);
+                                    }}
+                                />
+                            </div>
+                        }
+                        label="Animation Duration in ms"
+                        labelPlacement='bottom'
+                    />
+                </div>
+            </div>
 
-            <FormControlLabel
-                control={
-                    <div style={{ width: 300 }}>
-                        <Typography>
-                            Animation Duration in ms
-                        </Typography>
-                        <Slider
-                            defaultValue={500}
-                            getAriaValueText={() => `${settings.duration}ms`}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={100}
-                            marks
-                            min={100}
-                            max={3000}
-                            onChangeCommitted={(e: any, v: any) => {
-                                e.target.name = 'duration';
-                                slider(e, v);
-                            }}
-                        />
-                    </div>
-                }
-                label=""
-            />
+
+            
+
+            
+
         </>
     )
 }
