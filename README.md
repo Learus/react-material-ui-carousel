@@ -7,6 +7,10 @@ It switches between given children using a smooth animation.
 Provides next and previous buttons.
 Also provides interactible bullet indicators.
 
+For Material UI 5 support please use the links below.  
+[Github Branch](https://github.com/Learus/react-material-ui-carousel/tree/material-ui-5)
+[npm package](https://www.npmjs.com/package/react-material-ui-carousel/v/2.3.7-mui5)
+
 ## Live Demo
 
 Take a look at this interactible [Live Demo](https://learus.github.io/react-material-ui-carousel)

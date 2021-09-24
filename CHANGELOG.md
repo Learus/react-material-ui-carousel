@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.3.6] - *Sep 24 2021*
+
+### Added
+
+- Added disclaimer and links for MUI 5 supported version, in MUI 4 version's README.md
+
 ## [2.3.5] - *Sep 22 2021*
 
 ### Fixed
