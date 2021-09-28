@@ -40,8 +40,6 @@ interface SettingsProps
     setSettings: Function
 }
 
-// TODO Styling
-
 
 const Settings = ({settings, setSettings}: SettingsProps) => {
 

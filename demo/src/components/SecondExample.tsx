@@ -3,6 +3,7 @@ import Carousel from './TestCarousel';
 import {
     Paper,
     Button,
+    Typography,
 } from '@material-ui/core'
 
 import "../style/SecondExample.scss"
@@ -13,8 +14,8 @@ const SecondExample = () => {
 
     return (
         <div style={{ marginTop: "50px", color: "#494949" }}>
-            <h2>Example: Learus Projects (random)</h2>
-
+            <Typography variant='h4'>Example: Learus Projects (random)</Typography>
+            <br/>
             <Carousel
                 className="SecondExample"
                 autoPlay={settings.autoPlay}
@@ -58,8 +59,9 @@ function Project({item}: ProjectProps) {
             }}
             elevation={10}
         >
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
+            <Typography variant='h5'>{item.name}</Typography>
+            <br/>
+            <Typography>{item.description}</Typography>
 
             <Button className="CheckButton">
                 Check it out!

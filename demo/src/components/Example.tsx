@@ -19,8 +19,8 @@ const Example = () => {
 
     return (
         <div style={{ marginTop: "50px", color: "#494949" }}>
-            <h2>Example: eBay&trade; style</h2>
-
+            <Typography variant='h4'>Example: eBay&trade; style</Typography>
+            <br/>
             <Carousel
                 className="Example"
                 autoPlay={settings.autoPlay}
