@@ -25,6 +25,7 @@ const SecondExample = () => {
                 navButtonsAlwaysVisible={settings.navButtonsAlwaysVisible}
                 navButtonsAlwaysInvisible={settings.navButtonsAlwaysInvisible}
                 fullHeightHover={settings.fullHeightHover}
+                cycleNavigation={settings.cycleNavigation}
             >
                 {
                     items.map((item, index) => {
@@ -42,7 +43,8 @@ const SecondExample = () => {
 type Item = {
     name: string,
     description: string,
-    color: string
+    color: string,
+    href: string
 }
 
 interface ProjectProps
@@ -63,33 +65,37 @@ function Project({item}: ProjectProps) {
             <br/>
             <Typography>{item.description}</Typography>
 
-            <Button className="CheckButton">
+            <Button className="CheckButton" component='a' href={item.href} target='_blank' rel='noreferrer'>
                 Check it out!
             </Button>
         </Paper>
     )
 }
 
-const items = [
+const items: Item[] = [
     {
         name: "Lear Music Reader",
         description: "A PDF Reader specially designed for musicians.",
-        color: "#64ACC8"
+        color: "#64ACC8",
+        href: 'https://github.com/Learus/Lear-Music-Reader'
     },
     {
         name: "Hash Code 2019",
         description: "My Solution on the 2019 Hash Code by Google Slideshow problem.",
-        color: "#7D85B1"
+        color: "#7D85B1",
+        href: 'https://github.com/Learus/HashCode2019'
     },
     {
         name: "Terrio",
         description: "A exciting mobile game game made in the Unity Engine.",
-        color: "#CE7E78"
+        color: "#CE7E78",
+        href: 'https://play.google.com/store/apps/details?id=com.Brewery.Terrio'
     },
     {
         name: "React Carousel",
         description: "A Generic carousel UI component for React using material ui.",
-        color: "#C9A27E"
+        color: "#C9A27E",
+        href: 'https://github.com/Learus/react-material-ui-carousel'
     }
 ]
 

@@ -52,6 +52,7 @@ const styles = makeStyles((theme: Theme) => createStyles({
         position: "absolute",
         height: "100px",
         backgroundColor: "transparent",
+        zIndex: 1,
         top: "calc(50% - 70px)",
         '&:hover': {
             '& $button': {
@@ -324,8 +325,8 @@ export const Carousel = (props: CarouselProps) => {
 
         const last = Array.isArray(children) ? children.length - 1 : 0;
 
-        if (next && state.active + 1 > last) return false;
-        if (!next && state.active - 1 < 0) return false;
+        if (next && state.active === last) return false;
+        if (!next && state.active === 0) return false;
 
         return true;
     }
@@ -438,24 +439,34 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
         leftwardExit: {
             x: slide ? '-100%' : undefined,
             opacity: fade ? 0 : undefined,
+            zIndex: 0,
+            // position: 'relative'
         },
         leftOut: {
             x: slide ? '-100%' : undefined,
             opacity: fade ? 0 : undefined,
             display: 'none',
+            zIndex: 0,
+            // position: 'relative'
         },
         rightwardExit: {
             x: slide ? '100%' : undefined,
             opacity: fade ? 0 : undefined,
+            zIndex: 0,
+            // position: 'relative'
         },
         rightOut: {
             x: slide ? '100%' : undefined,
             opacity: fade ? 0 : undefined,
             display: 'none',
+            zIndex: 0,
+            // position: 'relative'
         },
         center: {
             x: 0,
-            opacity: 1
+            opacity: 1,
+            zIndex: 1,
+            // position: 'relative'
         },
     };
 
@@ -508,6 +519,7 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
                         x: { type: "tween", duration: duration, delay: 0 },
                         opacity: { duration: duration },
                     }}
+                    style={{position: 'relative'}}
                 >
                     {child}
                 </motion.div>

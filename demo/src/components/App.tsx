@@ -2,19 +2,23 @@ import React from 'react';
 import Example from './Example'
 import SecondExample from './SecondExample'
 import '../style/App.scss';
-import { Button, Icon, ThemeProvider, Typography } from '@material-ui/core';
+import { Button, ThemeProvider, Typography } from '@material-ui/core';
 import DemoTheme from '../style/Theme';
-import { GitHub, FreeBreakfast } from '@material-ui/icons';
-import NpmLogo from '../images/npm.svg';
+import { GitHub, CloudDownload } from '@material-ui/icons';
 
 const App = () => (
     <ThemeProvider theme={DemoTheme}>
         <div className="root">
             
             <Typography variant='h2'>
-                {/* <span><img src={ReactLogo} alt='React Logo'/></span> */}
                 <Typography component='span' variant='h2' color='primary'>React </Typography>
                 Material UI Carousel
+            </Typography>
+            <Typography variant='subtitle1' align='left'>
+                by &nbsp;
+                <a href='https://github.com/learus' target='_blank' rel='noreferrer'>
+                    Learus
+                </a>
             </Typography>
             <br/>
             <div className="buttonContainer">
@@ -31,7 +35,7 @@ const App = () => (
                 </Button>
                 &nbsp;
                 <Button 
-                    // startIcon={<Icon><img src={NpmLogo}/></Icon>} 
+                    startIcon={<CloudDownload/>} 
                     variant='contained'
                     className='npm'
                     component='a'
@@ -59,13 +63,8 @@ const App = () => (
                 <div>
                     <Typography variant='h4'>Links</Typography>
                     <Typography>
-                        <a href="https://github.com/Learus/react-material-ui-carousel.git" target="_blank" rel='noreferrer'>
-                            GitHub Repo
-                        </a>
-                    </Typography>
-                    <Typography>
-                        <a href="https://www.npmjs.com/package/react-material-ui-carousel" target="_blank" rel='noreferrer'>
-                            NPM Package
+                        <a href="https://github.com/Learus/react-material-ui-carousel/blob/master/README.md" target="_blank" rel='noreferrer'>
+                            Documentation
                         </a>
                     </Typography>
                     <Typography>
@@ -74,16 +73,26 @@ const App = () => (
                         </a>
                     </Typography>
                     <Typography>
-                        <a href="http://learus.github.io" target="_blank" rel='noreferrer'>Learus</a>
+                        <a href="https://www.buymeacoffee.com/Learus" target="_blank" rel='noreferrer'>Buy me a Coffee</a>
                     </Typography>
                 </div>
             </div>
 
             <br/>
-            {/* TODO copy code + MUI 5 support */}
+
             <div className='installation'>
+                <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                    # Latest Release
+                </Typography>
                 <Typography style={{fontFamily: 'monospace'}}>
-                    npm install react-material-ui-carousel --save
+                    npm install react-material-ui-carousel
+                </Typography>
+                <br/>
+                <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                    # Material UI 5 support
+                </Typography>
+                <Typography style={{fontFamily: 'monospace'}}>
+                    npm install react-material-ui-carousel@mui5
                 </Typography>
             </div>
 

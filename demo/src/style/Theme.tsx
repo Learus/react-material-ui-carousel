@@ -26,6 +26,7 @@ const DemoTheme = createTheme({
         h4: {color: typographyDefaultColor},
         h5: {color: typographyDefaultColor},
         body1: {color: typographyDefaultColor},
+        subtitle1: {color: typographyDefaultColor}
     },
     spacing: 32
 });
