@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { createStyles, makeStyles, Theme, Fade, Slide, SlideProps, FadeProps, IconButton } from '@material-ui/core';
-import { CarouselProps, CarouselNavProps } from '../@types/react-material-ui-carousel';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { SwipeableHandlers, useSwipeable } from 'react-swipeable';
-import { AnimatePresence, motion } from 'framer-motion'
+import React, { ReactNode, useState, useEffect, useRef } from 'react';
+import { CarouselNavProps, CarouselProps } from './types';
 
-const styles = makeStyles((theme: Theme) => createStyles({
+import { createStyles, makeStyles } from '@mui/styles';
+import { IconButton } from '@mui/material';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
+import { AnimatePresence, motion, MotionProps, PanInfo } from 'framer-motion'
+
+
+const styles = makeStyles(() => createStyles({
     root: {
         position: "relative",
         overflow: "hidden",
@@ -52,6 +55,7 @@ const styles = makeStyles((theme: Theme) => createStyles({
         position: "absolute",
         height: "100px",
         backgroundColor: "transparent",
+        zIndex: 1,
         top: "calc(50% - 70px)",
         '&:hover': {
             '& $button': {
@@ -93,7 +97,7 @@ const styles = makeStyles((theme: Theme) => createStyles({
     prev: {
         left: 0
     }
-}))
+}));
 
 interface SanitizedCarouselProps extends CarouselProps {
     className: string,
@@ -137,7 +141,7 @@ interface SanitizedCarouselProps extends CarouselProps {
 interface SanitizedCarouselNavProps extends CarouselNavProps {
     style: React.CSSProperties,
     className: string
-}
+};
 
 const sanitizeNavProps = (props: CarouselNavProps | undefined): SanitizedCarouselNavProps => {
     const {className, style, ...rest} = props || {};
@@ -324,8 +328,8 @@ export const Carousel = (props: CarouselProps) => {
 
         const last = Array.isArray(children) ? children.length - 1 : 0;
 
-        if (next && state.active + 1 > last) return false;
-        if (!next && state.active - 1 < 0) return false;
+        if (next && state.active === last) return false;
+        if (!next && state.active === 0) return false;
 
         return true;
     }
@@ -434,47 +438,64 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
     const slide = animation === 'slide';
     const fade = animation === 'fade';
 
-    const variants = {
-        leftwardExit: {
-            x: slide ? '-100%' : undefined,
-            opacity: fade ? 0 : undefined,
-        },
-        leftOut: {
-            x: slide ? '-100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            display: 'none',
-        },
-        rightwardExit: {
-            x: slide ? '100%' : undefined,
-            opacity: fade ? 0 : undefined,
-        },
-        rightOut: {
-            x: slide ? '100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            display: 'none',
-        },
-        center: {
-            x: 0,
-            opacity: 1
-        },
-    };
 
 
-    let swipeHandlers: SwipeableHandlers | {} = useSwipeable({
-        onSwipedLeft: () => next && next(),
-        onSwipedRight: () => prev && prev()
-    })
+    const dragProps: MotionProps = {
+        drag: 'x',
+        layout: true,
+        onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
+            if (!swipe) return;
+            console.log(info);
+            if (info.offset.x > 0) prev && prev();
+            else if (info.offset.x < 0) next && next();
 
-    swipeHandlers = swipe ? swipeHandlers : {};
+            event.stopPropagation();
+        },
+        dragElastic: 0,
+        dragConstraints: {left: 0, right: 0}
+    }
 
     const divRef = useRef<any>(null);
 
     useEffect(() => {
         if (divRef.current)
-        {
             setHeight(divRef.current.offsetHeight);
-        }
     }, [divRef])
+
+    const variants = {
+        leftwardExit: {
+            x: slide ? '-100%' : undefined,
+            opacity: fade ? 0 : undefined,
+            zIndex: 0,
+            // position: 'relative'
+        },
+        leftOut: {
+            x: slide ? '-100%' : undefined,
+            opacity: fade ? 0 : undefined,
+            display: 'none',
+            zIndex: 0,
+            // position: 'relative'
+        },
+        rightwardExit: {
+            x: slide ? '100%' : undefined,
+            opacity: fade ? 0 : undefined,
+            zIndex: 0,
+            // position: 'relative'
+        },
+        rightOut: {
+            x: slide ? '100%' : undefined,
+            opacity: fade ? 0 : undefined,
+            display: 'none',
+            zIndex: 0,
+            // position: 'relative'
+        },
+        center: {
+            x: 0,
+            opacity: 1,
+            zIndex: 1,
+            // position: 'relative'
+        },
+    };
 
     // Handle animation directions and opacity given based on active, prevActive and this item's index
     const {active, next: isNext, prevActive} = state;
@@ -496,20 +517,22 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
 
     duration = duration / 1000;
 
-
     return (
-        <div {...swipeHandlers} className={classes.item} ref={divRef}>
+        <div className={classes.item} ref={divRef}>
             <AnimatePresence custom={isNext}>
-                <motion.div
-                    custom={isNext}
-                    variants={variants}
-                    animate={animate}
-                    transition={{
-                        x: { type: "tween", duration: duration, delay: 0 },
-                        opacity: { duration: duration },
-                    }}
-                >
-                    {child}
+                <motion.div {...(swipe && dragProps)}>
+                    <motion.div
+                        custom={isNext}
+                        variants={variants}
+                        animate={animate}
+                        transition={{
+                            x: { type: "tween", duration: duration, delay: 0 },
+                            opacity: { duration: duration },
+                        }}
+                        style={{position: 'relative'}}
+                    >
+                        {child}
+                    </motion.div>
                 </motion.div>
             </AnimatePresence>
         </div>
@@ -598,6 +621,8 @@ const useInterval = (callback: Function, delay: number) => {
             let id = setInterval(tick, delay);
             return () => clearInterval(id);
         }
+
+        return () => {};
     }, [delay]);
 }
 

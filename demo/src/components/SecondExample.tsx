@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Carousel from './TestCarousel';
+import Carousel from 'react-material-ui-carousel';
 import {
     Paper,
     Button,
     Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import "../style/SecondExample.scss"
 import Settings, { DefaultSettingsT, SettingsT } from './Settings';
@@ -18,14 +18,7 @@ const SecondExample = () => {
             <br/>
             <Carousel
                 className="SecondExample"
-                autoPlay={settings.autoPlay}
-                animation={settings.animation}
-                indicators={settings.indicators}
-                duration={settings.duration}
-                navButtonsAlwaysVisible={settings.navButtonsAlwaysVisible}
-                navButtonsAlwaysInvisible={settings.navButtonsAlwaysInvisible}
-                fullHeightHover={settings.fullHeightHover}
-                cycleNavigation={settings.cycleNavigation}
+                {...settings}
             >
                 {
                     items.map((item, index) => {

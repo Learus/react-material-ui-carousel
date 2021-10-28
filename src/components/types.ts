@@ -99,7 +99,3 @@ export interface CarouselProps {
     IndicatorIcon?: ReactNode,
 
 }
-
-declare const Carousel: React.ComponentType<CarouselProps>;
-
-export default Carousel;

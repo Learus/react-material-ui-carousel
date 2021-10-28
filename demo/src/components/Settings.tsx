@@ -1,14 +1,12 @@
 import React from 'react';
 import {
-    Checkbox,
     FormControlLabel,
     Radio,
     RadioGroup,
-    FormLabel,
     Slider,
     Typography,
     Switch,
-} from '@material-ui/core';
+} from '@mui/material';
 import '../style/Settings.scss';
 
 export interface SettingsT {
@@ -20,6 +18,7 @@ export interface SettingsT {
     navButtonsAlwaysInvisible: boolean,
     fullHeightHover: boolean,
     cycleNavigation: boolean,
+    swipe: boolean,
     [key: string]: any
 }
 
@@ -31,7 +30,8 @@ export const DefaultSettingsT: SettingsT = {
     navButtonsAlwaysVisible: false,
     navButtonsAlwaysInvisible: false,
     cycleNavigation: true,
-    fullHeightHover: true
+    fullHeightHover: true,
+    swipe: true
 }
 
 interface SettingsProps
@@ -43,7 +43,7 @@ interface SettingsProps
 
 const Settings = ({settings, setSettings}: SettingsProps) => {
 
-    /** Default function for Checkboxes */
+    /** Default function for Switches */
     const toggler = (event: any) => {
         setSettings({
             ...settings,
@@ -89,6 +89,7 @@ const Settings = ({settings, setSettings}: SettingsProps) => {
                     <Typography>General Options</Typography>
                     <Toggler name="autoPlay"/>
                     <Toggler name="indicators"/>
+                    <Toggler name="swipe"/>
                 </div>
                 
                 <div>
@@ -146,12 +147,6 @@ const Settings = ({settings, setSettings}: SettingsProps) => {
                     />
                 </div>
             </div>
-
-
-            
-
-            
-
         </>
     )
 }

@@ -22,8 +22,8 @@ npm install react-material-ui-carousel --save
 You will need to have `material-ui` installed, in order to use this library/component
 
 ```shell
-npm install @material-ui/core
-npm install @material-ui/icons
+npm install @mui/material
+npm install @mui/icons-material
 ```
 
 ## Usage Example
@@ -31,7 +31,7 @@ npm install @material-ui/icons
 ```jsx
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import { Paper, Button } from '@material-ui/core'
+import { Paper, Button } from '@mui/material'
 
 function Example(props)
 {
@@ -114,7 +114,7 @@ and want to change them to be an MUI Icon or an image of our own.
 ```jsx
 
 
-import RandomIcon from '@material-ui/icons/Random'; // Note: this doesn't exist
+import RandomIcon from '@@mui/icons-material/Random'; // Note: this doesn't exist
 
 <Carousel
     NextIcon={<RandomIcon/>}
@@ -167,7 +167,7 @@ Do directly customize/change the navigation buttons `NavButton` prop, that allow
 #### Example
 
 ```jsx
-import {Button} from '@material-ui/core';
+import {Button} from '@mui/material';
 
 <Carousel
     NavButton={({onClick, className, style, next, prev}) => {
@@ -210,7 +210,7 @@ There are 4 props that handle indicator customization
 Let's say we would like to change the indicator icon from a circle to a something else, for example a little house
 
 ```jsx
-import Home from '@material-ui/icons/Home';
+import Home from '@mui/icons-material/Home';
 
 <Carousel
     IndicatorIcon={<Home/>}
@@ -236,7 +236,7 @@ Now we want to do more complex customizations. Specifically:
 We are going to use all props to style the indicators
 
 ```jsx
-import Home from '@material-ui/icons/Home';
+import Home from '@mui/icons-material/Home';
 
 <Carousel
     IndicatorIcon={<Home/>} // Previous Example

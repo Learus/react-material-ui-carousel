@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Settings, { DefaultSettingsT, SettingsT } from './Settings';
-import Carousel from './TestCarousel';
+import Carousel from 'react-material-ui-carousel';
 import '../style/Example.scss';
 
 import {
@@ -10,7 +10,7 @@ import {
     Typography,
     Grid,
     Button,
-} from '@material-ui/core';
+} from '@mui/material';
 
 
 const Example = () => {
@@ -23,14 +23,7 @@ const Example = () => {
             <br/>
             <Carousel
                 className="Example"
-                autoPlay={settings.autoPlay}
-                animation={settings.animation}
-                indicators={settings.indicators}
-                duration={settings.duration}
-                cycleNavigation={settings.cycleNavigation}
-                navButtonsAlwaysVisible={settings.navButtonsAlwaysVisible}
-                navButtonsAlwaysInvisible={settings.navButtonsAlwaysInvisible}
-                fullHeightHover={settings.fullHeightHover}
+                {...settings}
                 // next={(now, previous) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 // prev={(now, previous) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 // onChange={(now, previous) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
