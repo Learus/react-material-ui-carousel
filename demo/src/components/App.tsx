@@ -124,6 +124,13 @@ const App = () => {
                         <Typography style={{fontFamily: 'monospace'}}>
                             npm install react-material-ui-carousel@v2
                         </Typography>
+                        <br/>
+                        <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                            # Version 2 (Using explicitly MUI 5)
+                        </Typography>
+                        <Typography style={{fontFamily: 'monospace'}}>
+                            npm install react-material-ui-carousel@v2mui5
+                        </Typography>
                     </div>
 
                     <Example />

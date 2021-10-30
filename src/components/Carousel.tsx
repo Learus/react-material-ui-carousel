@@ -132,10 +132,10 @@ interface SanitizedCarouselProps extends CarouselProps {
     activeIndicatorIconButtonProps: SanitizedCarouselNavProps,
     IndicatorIcon: ReactNode,
 
-    onChange: Function,
+    onChange: (now?: number, previous?: number) => any,
     changeOnFirstRender: boolean,
-    next: Function,
-    prev: Function
+    next: (now?: number, previous?: number) => any,
+    prev: (now?: number, previous?: number) => any
 }
 
 interface SanitizedCarouselNavProps extends CarouselNavProps {
