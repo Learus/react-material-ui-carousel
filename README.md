@@ -23,11 +23,25 @@ npm install react-material-ui-carousel --save
 
 **Note:**
 
-You will need to have `material-ui` installed, in order to use this library/component
+You will need to have Material UI installed, in order to use this library/component
 
 ```shell
+npm install @mui/material
+npm install @mui/icons-material
+npm install @mui/styles
+```
+
+### Other Versions
+
+```shell
+# Version 2 with MUI 4
+npm install react-material-ui-carousel@version2 --save
 npm install @material-ui/core
 npm install @material-ui/icons
+
+
+# Version 2 with MUI 5 support
+npm install react-material-ui-carousel@version2mui5 --save
 ```
 
 ## Usage Example
