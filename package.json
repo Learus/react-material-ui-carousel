@@ -1,6 +1,6 @@
 {
     "name": "react-material-ui-carousel",
-    "version": "2.3.8",
+    "version": "3.0.2-alpha",
     "license": "MIT",
     "description": "A Generic, extendible Carousel UI component for React using Material UI",
     "homepage": "https://learus.github.io",
@@ -17,6 +17,10 @@
     ],
     "main": "dist/index.js",
     "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "/dist"
+    ],
     "babel": {
         "presets": [
             "react",
@@ -24,18 +28,15 @@
             "stage-2"
         ]
     },
-    "dependencies": {
-        "auto-bind": "^2.1.1",
-        "react-swipeable": "^6.1.0"
-    },
     "scripts": {
         "start": "react-scripts start",
-        "build": "NODE_ENV=production && npx rimraf dist && npx mkdirp dist && npx babel ./src --out-dir dist --copy-files"
+        "build": "npx rimraf dist && npm run build:cjs",
+        "build:cjs": "tsc --module commonjs --outDir dist",
+        "build_old": "NODE_ENV=production && npx rimraf dist && npx mkdirp dist && npx babel ./src --out-dir dist --copy-files"
     },
     "eslintConfig": {
         "extends": "react-app"
     },
-    "typings": "src/@types/react-material-ui-carousel/index.d.ts",
     "browserslist": {
         "production": [
             ">0.2%",
@@ -48,18 +49,25 @@
             "last 1 safari version"
         ]
     },
+    "dependencies": {
+        "framer-motion": "^4.1.17"
+    },
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.7.0",
         "babel-preset-react": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
         "gh-pages": "^2.2.0",
-        "react-scripts": "^4.0.3"
+        "react-scripts": "^4.0.3",
+        "typescript": "^4.4.4"
     },
     "peerDependencies": {
-        "@material-ui/core": "^4.11.3",
-        "@material-ui/icons": "^4.11.2",
-        "react": "^16.13.1 || ^17.0.1",
-        "react-dom": "^16.13.1 || ^17.0.1"
+        "@emotion/react": "^11.4.1",
+        "@emotion/styled": "^11.3.0",
+        "@mui/icons-material": "^5.0.0",
+        "@mui/material": "^5.0.0",
+        "@mui/styles": "^5.0.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
     }
 }

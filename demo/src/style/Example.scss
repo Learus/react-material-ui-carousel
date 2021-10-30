@@ -31,7 +31,7 @@
 
             font:
             {
-                size: $header-font-size;
+                size: $bigger-font-size;
                 weight: 200;
             }
 
@@ -85,14 +85,16 @@
 
         .Title
         {
-            font-size: $huge-font-size;
+            font-size: $big-header-font-size;
             font-weight: 500;
+            color: white;
         }
 
         .Caption
         {
             margin-top: 10px;
-            font-size: $bigger-font-size;
+            font-size: $normal-font-size;
+            color: white;
         }
 
         .ViewButton

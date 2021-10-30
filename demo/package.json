@@ -1,15 +1,21 @@
 {
   "name": "react-material-ui-carousel-demo",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "homepage": "https://learus.github.io/react-material-ui-carousel",
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
+    "@types/react-dom": "^17.0.10",
+    "axios": "^0.24.0",
+    "framer-motion": "^4.1.17",
     "node-sass": "^6.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-material-ui-carousel": "^2.3.0",
+    "react-material-ui-carousel": "^3.0.1-alpha",
     "react-scripts": "^4.0.3"
   },
   "scripts": {
@@ -37,6 +43,6 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
-    "typescript": "^4.1.3"
+    "typescript": "^4.4.4"
   }
 }

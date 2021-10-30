@@ -4,11 +4,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
-## [2.3.6] - *Sep 24 2021*
+## [3.0.2] - *Oct 29 2021*
 
-### Added
+### Changed
 
-- Added disclaimer and links for MUI 5 supported version, in MUI 4 version's README.md
+* Changed `next`, `prev`, and `onChange` typings to reflect their arguments and return value.
+
+## [3.0.0] - *Oct 28 2021*
+
+:fireworks::fire: React Material Ui Carousel has been fully refactored to use more modern react techniques such as hooks, functional components and other cool stuff. :fire::fireworks:  
+In general, its usage does not change.
+
+### Changed
+
+* The library is now written in Typescript, for easier development, debugging and smaller package sizing.
+* **(Breaking)** Now supports MUI 5 **by default**. Version 3 will not work with MUI 4 as of now. (@learus)
+  * Hence, minimum React version has been bumped to `^17.0.1`
+* **(Breaking)** Now uses [`framer/motion`](https://github.com/framer/motion) to handle animations and gesture support. More animations will be added in the future. (@learus)
+  * "Enter" and "Exit" animations are now simultaneous. No flash/gap of background between slide changes. Fixes issues [20](https://github.com/Learus/react-material-ui-carousel/issues/20), [61](https://github.com/Learus/react-material-ui-carousel/issues/61), [66](https://github.com/Learus/react-material-ui-carousel/issues/66).
+  * The first carousel item now renders without an "initial" animation. Implements feature request [92](https://github.com/Learus/react-material-ui-carousel/issues/92).
+  * **(Breaking)** The `timeout` prop is now `duration` and only supports a number that handles every aspect of the animation (enter, exit, e.t.c.)
+* **(Breaking)** Now renders (preloads) all items initially **and does not rerender** them, unless there has been a state change. Implements feature request [88](https://github.com/Learus/react-material-ui-carousel/issues/88) (@learus)
+* **(Breaking)** `CarouselStyleProps` &#8594; `CarouselNavProps` (@learus)
+* Updated the [Demo page](https://learus.github.io/react-material-ui-carousel) look.
+
+### Fixed
+
+* `findDOMNode is deprecated in StrictMode.` warning has now been fixed. Material UI animations are no longer being used. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/32) (@learus)
+* `Can't perform a React state update on an unmounted component.` warning has now been fixed. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/44) (@learus)
+
+### Removed
+
+* Removed any dependencies that were necessary for version 2. Only dependency now is `framer/motion`
 
 ## [2.3.5] - *Sep 22 2021*
 
@@ -134,5 +161,3 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 [Keep a Changelog]: https://keepachangelog.com/
 [Semantic Versioning]: https://semver.org/
-[0.0.2]: https://github.com/Author/Repository/compare/v0.0.1..v0.0.2
-[0.0.1]: https://github.com/Author/Repository/releases/v0.0.1
