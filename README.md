@@ -237,7 +237,25 @@ import Home from '@mui/icons-material/Home';
 
 The `IndicatorIcon`  works the same way as the `NextIcon` and `PrevIcon` prop.
 
+
 #### Example #2
+
+Let's say we would like to have an array to icons like numbers, to order the elements of my carousel numerically. Let's do this!
+ 
+```jsx
+const anArrayOfNumbers = [<img src="http://random.com/one"/>, 
+                          <img src="http://random.com/two"/>, 
+                          <img src="http://random.com/three"/>
+                         ];
+
+<Carousel
+    IndicatorIcon={anArrayOfNumbers}
+>
+    {...}
+</Carousel>
+```
+
+#### Example #3
 
 Now we want to do more complex customizations. Specifically:
 
