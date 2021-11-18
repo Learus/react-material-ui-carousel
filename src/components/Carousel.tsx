@@ -557,14 +557,11 @@ const Indicators = (props: IndicatorProps) => {
         }
     }, [props.length])
 
-    useEffect(() => {
-        if (Array.isArray(IndicatorIcon)) completeListIfRequired(IndicatorIcon)
-    }, [IndicatorIcon, completeListIfRequired])
-
     const { className: indicatorIconButtonClass, style: indicatorIconButtonStyle, ...indicatorIconButtonProps } = props.indicatorIconButtonProps;
     const { className: activeIndicatorIconButtonClass, style: activeIndicatorIconButtonStyle, ...activeIndicatorIconButtonProps } = props.activeIndicatorIconButtonProps;
 
     let indicators = [];
+
     for (let i = 0; i < props.length; i++) {
         const className = i === props.active ?
             `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}` :
@@ -596,7 +593,7 @@ const Indicators = (props: IndicatorProps) => {
         }
 
         Array.isArray(IndicatorIcon)
-            ? indicators.push(createIndicator(IndicatorIcon[i]))
+            ? indicators.push(createIndicator(IndicatorIcon[i])) && completeListIfRequired(IndicatorIcon)
             : indicators.push(createIndicator(IndicatorIcon))
 
     }
