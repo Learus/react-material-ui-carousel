@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect, useRef } from 'react';
+import React, { ReactNode, useState, useEffect, useRef, useMemo, useCallback, ReactNodeArray } from 'react';
 import { CarouselNavProps, CarouselProps } from './types';
 
 import { createStyles, makeStyles } from '@mui/styles';
@@ -8,7 +8,6 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { AnimatePresence, motion, MotionProps, PanInfo } from 'framer-motion'
-
 
 const styles = makeStyles(() => createStyles({
     root: {
@@ -21,7 +20,7 @@ const styles = makeStyles(() => createStyles({
         position: "absolute",
         // height: 'inherit',
         width: '100%',
-    //    flexGrow: 1
+        //    flexGrow: 1
     },
     itemWrapper: {
         position: 'relative',
@@ -49,7 +48,7 @@ const styles = makeStyles(() => createStyles({
         fontSize: "15px",
     },
     active: {
-        color: "#494949"
+        color: "#494949",
     },
     buttonWrapper: {
         position: "absolute",
@@ -144,8 +143,8 @@ interface SanitizedCarouselNavProps extends CarouselNavProps {
 };
 
 const sanitizeNavProps = (props: CarouselNavProps | undefined): SanitizedCarouselNavProps => {
-    const {className, style, ...rest} = props || {};
-    
+    const { className, style, ...rest } = props || {};
+
     return props !== undefined ? {
         style: props.style !== undefined ? props.style : {},
         className: props.className !== undefined ? props.className : "",
@@ -230,7 +229,7 @@ export const Carousel = (props: CarouselProps) => {
 
     useEffect(() => {
         setNext(sanitizedProps.index, true);
-    }, [sanitizedProps.index, sanitizedProps.children])
+    }, [])
 
     const next = (event: any) => {
         const { children, cycleNavigation } = sanitizedProps;
@@ -259,26 +258,22 @@ export const Carousel = (props: CarouselProps) => {
     const setNext = (index: number, isNext: boolean, runCallbacks: boolean = true) => {
         const { onChange, children, strictIndexing } = sanitizedProps;
 
-        if (Array.isArray(children))
-        {
-            if (strictIndexing && index > children.length -1)index = children.length - 1;
+        if (Array.isArray(children)) {
+            if (strictIndexing && index > children.length - 1) index = children.length - 1;
             if (strictIndexing && index < 0) index = 0;
         }
-        else
-        {
+        else {
             index = 0;
         }
 
-        if (runCallbacks)
-        {
+        if (runCallbacks) {
             if (isNext !== undefined)
                 isNext ? sanitizedProps.next(index, state.active) : sanitizedProps.prev(index, state.active);
 
             onChange(index, state.active);
         }
 
-        if (isNext === undefined)
-        {
+        if (isNext === undefined) {
             isNext = index > state.active
         }
 
@@ -289,15 +284,16 @@ export const Carousel = (props: CarouselProps) => {
         })
     }
 
+
     const {
         children,
         className,
-        
+
         stopAutoPlayOnHover,
         animation,
         duration,
         swipe,
-        
+
         navButtonsAlwaysInvisible,
         navButtonsAlwaysVisible,
         cycleNavigation,
@@ -308,7 +304,7 @@ export const Carousel = (props: CarouselProps) => {
 
         NextIcon,
         PrevIcon,
-        
+
         indicators,
         indicatorContainerProps,
         indicatorIconButtonProps,
@@ -316,13 +312,13 @@ export const Carousel = (props: CarouselProps) => {
         IndicatorIcon,
     } = sanitizedProps;
 
-    const {className: buttonsClass, style: buttonsStyle, ...buttonsProps} = navButtonsProps;
-    const {className: buttonsWrapperClass, style: buttonsWrapperStyle, ...buttonsWrapperProps} = navButtonsWrapperProps;
+    const { className: buttonsClass, style: buttonsStyle, ...buttonsProps } = navButtonsProps;
+    const { className: buttonsWrapperClass, style: buttonsWrapperStyle, ...buttonsWrapperProps } = navButtonsWrapperProps;
 
     const buttonVisibilityClassValue = `${navButtonsAlwaysVisible ? classes.buttonVisible : classes.buttonHidden}`;
     const buttonCssClassValue = `${classes.button} ${buttonVisibilityClassValue} ${fullHeightHover ? classes.fullHeightHoverButton : ""} ${buttonsClass}`;
     const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""} ${buttonsWrapperClass}`;
-    
+
     const showButton = (next = true) => {
         if (cycleNavigation) return true;
 
@@ -337,15 +333,15 @@ export const Carousel = (props: CarouselProps) => {
     return (
         <div
             className={`${classes.root} ${className ? className : ""}`}
-            onMouseOver={() => {stopAutoPlayOnHover && setPaused(true)}}
-            onMouseOut={() => {stopAutoPlayOnHover && setPaused(false)}}
+            onMouseOver={() => { stopAutoPlayOnHover && setPaused(true) }}
+            onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
         >
-            <div className={classes.itemWrapper} style={{height: height}}>
-                {   
-                    Array.isArray(children) ? 
-                        children.map( (child, index) => {
+            <div className={classes.itemWrapper} style={{ height: height }}>
+                {
+                    Array.isArray(children) ?
+                        children.map((child, index) => {
                             return (
-                                <CarouselItem 
+                                <CarouselItem
                                     key={`carousel-item${index}`}
                                     state={state}
                                     index={index}
@@ -375,32 +371,32 @@ export const Carousel = (props: CarouselProps) => {
             </div>
 
 
-                {!navButtonsAlwaysInvisible && showButton(true) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
-                        {NavButton !== undefined ?
-                            NavButton({onClick: next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps})
-                            :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
-                                {NextIcon}
-                            </IconButton>
-                        }
-                    </div>
-                }
-
-                {!navButtonsAlwaysInvisible && showButton(false) &&
-                    <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
-                        {NavButton !== undefined ?
-                            NavButton({onClick: prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps})
-                            :
-                            <IconButton className={`${buttonCssClassValue}`} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
-                                {PrevIcon}
-                            </IconButton>
+            {!navButtonsAlwaysInvisible && showButton(true) &&
+                <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                    {NavButton !== undefined ?
+                        NavButton({ onClick: next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
+                        :
+                        <IconButton className={`${buttonCssClassValue}`} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
+                            {NextIcon}
+                        </IconButton>
                     }
-                    </div>
-                }
+                </div>
+            }
 
-                {
-                    indicators ? 
+            {!navButtonsAlwaysInvisible && showButton(false) &&
+                <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                    {NavButton !== undefined ?
+                        NavButton({ onClick: prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
+                        :
+                        <IconButton className={`${buttonCssClassValue}`} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
+                            {PrevIcon}
+                        </IconButton>
+                    }
+                </div>
+            }
+
+            {
+                indicators ?
                     <Indicators
                         length={Array.isArray(children) ? children.length : 0}
                         active={state.active}
@@ -410,7 +406,7 @@ export const Carousel = (props: CarouselProps) => {
                         activeIndicatorIconButtonProps={activeIndicatorIconButtonProps}
                         IndicatorIcon={IndicatorIcon}
                     /> : null
-                }
+            }
         </div>
     )
 }
@@ -432,8 +428,7 @@ interface CarouselItemProps {
     setHeight: Function
 }
 
-const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, setHeight }: CarouselItemProps) =>
-{
+const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, setHeight }: CarouselItemProps) => {
     const classes = styles();
     const slide = animation === 'slide';
     const fade = animation === 'fade';
@@ -452,7 +447,7 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
             event.stopPropagation();
         },
         dragElastic: 0,
-        dragConstraints: {left: 0, right: 0}
+        dragConstraints: { left: 0, right: 0 }
     }
 
     const divRef = useRef<any>(null);
@@ -498,18 +493,16 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
     };
 
     // Handle animation directions and opacity given based on active, prevActive and this item's index
-    const {active, next: isNext, prevActive} = state;
+    const { active, next: isNext, prevActive } = state;
     let animate = 'center';
     if (index === active)
         animate = 'center';
-    else if (index === prevActive)
-    {
+    else if (index === prevActive) {
         animate = isNext ? 'leftwardExit' : 'rightwardExit';
         if (active === maxIndex && index === 0) animate = 'rightwardExit';
         if (active === 0 && index === maxIndex) animate = 'leftwardExit'
     }
-    else
-    {
+    else {
         animate = index < active ? 'leftOut' : 'rightOut';
         if (active === maxIndex && index === 0) animate = 'rightOut';
         if (active === 0 && index === maxIndex) animate = 'leftOut'
@@ -529,7 +522,7 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
                             x: { type: "tween", duration: duration, delay: 0 },
                             opacity: { duration: duration },
                         }}
-                        style={{position: 'relative'}}
+                        style={{ position: 'relative' }}
                     >
                         {child}
                     </motion.div>
@@ -549,53 +542,63 @@ interface IndicatorProps {
     activeIndicatorIconButtonProps: SanitizedCarouselNavProps,
 }
 
-const Indicators = (props: IndicatorProps) =>
-{
+const Indicators = (props: IndicatorProps) => {
     const classes = styles();
-    const IndicatorIcon = props.IndicatorIcon !== undefined ? props.IndicatorIcon :
-        <FiberManualRecordIcon 
-            // size='small'
+    const IndicatorIcon = useMemo(() => props.IndicatorIcon !== undefined ? props.IndicatorIcon :
+        <FiberManualRecordIcon
             className={classes.indicatorIcon}
-        />
-    ;
+        />, [classes.indicatorIcon, props.IndicatorIcon]);
 
-    const {className: indicatorIconButtonClass, style: indicatorIconButtonStyle, ...indicatorIconButtonProps} = props.indicatorIconButtonProps;
-    const {className: activeIndicatorIconButtonClass, style: activeIndicatorIconButtonStyle, ...activeIndicatorIconButtonProps} = props.activeIndicatorIconButtonProps;
+    const completeListIfRequired = useCallback((arrayOfIcons: ReactNodeArray) => {
+        while (arrayOfIcons.length < props.length) {
+            let index = 0;
+            arrayOfIcons.push(arrayOfIcons[index]);
+            index += 1;
+        }
+    }, [props.length])
+
+    const { className: indicatorIconButtonClass, style: indicatorIconButtonStyle, ...indicatorIconButtonProps } = props.indicatorIconButtonProps;
+    const { className: activeIndicatorIconButtonClass, style: activeIndicatorIconButtonStyle, ...activeIndicatorIconButtonProps } = props.activeIndicatorIconButtonProps;
 
     let indicators = [];
-    for (let i = 0; i < props.length; i++)
-    {
-        const className = i === props.active ? 
-        `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}`: 
-        `${classes.indicator} ${indicatorIconButtonClass}`;
+
+    for (let i = 0; i < props.length; i++) {
+        const className = i === props.active ?
+            `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}` :
+            `${classes.indicator} ${indicatorIconButtonClass}`;
 
         const style = i === props.active ?
             Object.assign({}, indicatorIconButtonStyle, activeIndicatorIconButtonStyle) :
             indicatorIconButtonStyle;
 
-        let restProps = i === props.active ? 
-            Object.assign({}, indicatorIconButtonProps, activeIndicatorIconButtonProps) : 
+        let restProps = i === props.active ?
+            Object.assign({}, indicatorIconButtonProps, activeIndicatorIconButtonProps) :
             indicatorIconButtonProps;
 
         if (restProps['aria-label'] === undefined) restProps['aria-label'] = 'carousel indicator';
 
-        const item =    <IconButton 
-                            key={i} 
-                            className={className} 
-                            style={style} 
-                            onClick={() => {props.press(i)}}
-                            size='small'
-                            {...restProps}
-                            // Always add the index to any given aria label
-                            aria-label={`${restProps['aria-label']} ${i+1}`}
-                        >
-                            {IndicatorIcon}
-                        </IconButton>
+        const createIndicator = (IndicatorIcon: ReactNode) => {
+            return (
+                <IconButton
+                    key={i}
+                    className={className}
+                    style={style}
+                    onClick={() => { props.press(i) }}
+                    {...restProps}
+                    aria-label={`${restProps['aria-label']} ${i + 1}`}
+                >
+                    {IndicatorIcon}
+                </IconButton>
+            )
+        }
 
-        indicators.push(item);
+        Array.isArray(IndicatorIcon)
+            ? indicators.push(createIndicator(IndicatorIcon[i])) && completeListIfRequired(IndicatorIcon)
+            : indicators.push(createIndicator(IndicatorIcon))
+
     }
 
-    const {className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps} = props.indicatorContainerProps;
+    const { className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps } = props.indicatorContainerProps;
 
     return (
         <div className={`${classes.indicators} ${indicatorContainerClass}`} style={indicatorContainerStyle} {...indicatorContainerProps}>
@@ -622,7 +625,7 @@ const useInterval = (callback: Function, delay: number) => {
             return () => clearInterval(id);
         }
 
-        return () => {};
+        return () => { };
     }, [delay]);
 }
 
