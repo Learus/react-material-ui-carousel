@@ -1,104 +1,107 @@
-import React, { ReactNode, useState, useEffect, useRef, useMemo, useCallback, ReactNodeArray } from 'react';
-import { CarouselNavProps, CarouselProps } from './types';
+import React, { ReactNode, ReactNodeArray, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CarouselNavProps, CarouselProps } from './types'
 
-import { createStyles, makeStyles } from '@mui/styles';
-import { IconButton } from '@mui/material';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { IconButton, styled } from '@mui/material'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+
+import { SxProps } from '@mui/system'
+import { Theme } from '@mui/material/styles'
 
 import { AnimatePresence, motion, MotionProps, PanInfo } from 'framer-motion'
 
-const styles = makeStyles(() => createStyles({
-    root: {
-        position: "relative",
-        overflow: "hidden",
-        // display: 'flex',
-        // flexDirection: 'column'
-    },
-    item: {
-        position: "absolute",
-        // height: 'inherit',
-        width: '100%',
-        //    flexGrow: 1
-    },
-    itemWrapper: {
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-    },
-    indicators: {
-        width: "100%",
-        marginTop: "10px",
-        textAlign: "center"
-    },
-    indicator: {
-        cursor: "pointer",
-        transition: "200ms",
-        padding: 0,
-        color: "#afafaf",
-        '&:hover': {
-            color: "#1f1f1f"
-        },
-        '&:active': {
-            color: "#1f1f1f"
-        }
-    },
-    indicatorIcon: {
-        fontSize: "15px",
-    },
-    active: {
-        color: "#494949",
-    },
-    buttonWrapper: {
-        position: "absolute",
-        height: "100px",
-        backgroundColor: "transparent",
-        zIndex: 1,
-        top: "calc(50% - 70px)",
-        '&:hover': {
-            '& $button': {
-                backgroundColor: "black",
-                filter: "brightness(120%)",
-                opacity: "0.4"
-            }
-        }
-    },
-    fullHeightHoverWrapper: {
-        height: "100%", // This is 100% - indicator height - indicator margin
-        top: "0"
-    },
-    fullHeightHoverButton: {
+const StyledRoot = styled("div")({
+    position: "relative",
+    overflow: "hidden",
+    // display: 'flex',
+    // flexDirection: 'column'
+});
 
+const StyledItem = styled("div")({
+    position: "absolute",
+    // height: 'inherit',
+    width: '100%',
+    //    flexGrow: 1
+});
+
+const StyledItemWrapper = styled("div")({
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+});
+
+const StyledIndicators = styled("div")({
+    width: "100%",
+    marginTop: "10px",
+    textAlign: "center"
+});
+
+const StyledFiberManualRecordIcon = styled(FiberManualRecordIcon)({
+    fontSize: "15px",
+});
+
+const StyledIndicatorIconButton = styled(
+  IconButton,
+  { shouldForwardProp: (propName: string) => !propName.startsWith('$') }
+)<{ $active: boolean }>(({ $active }) => ({
+    cursor: "pointer",
+    transition: "200ms",
+    padding: 0,
+    color: $active ? "#494949" : "#afafaf",
+    '&:hover': {
+        color: $active ? "#494949" : "#1f1f1f",
     },
-    buttonVisible: {
-        opacity: "1"
-    },
-    buttonHidden: {
-        opacity: "0",
-    },
-    button: {
-        margin: "0 10px",
-        position: "relative",
-        backgroundColor: "#494949",
-        top: "calc(50% - 20px) !important",
-        color: "white",
-        fontSize: "30px",
-        transition: "200ms",
-        cursor: "pointer",
-        '&:hover': {
-            opacity: "0.6 !important"
-        },
-    },
-    next: {
-        right: 0
-    },
-    prev: {
-        left: 0
+    '&:active': {
+        color: $active ? "#494949" : "#1f1f1f",
     }
 }));
 
+const StyledIconButton = styled(
+  IconButton,
+  { shouldForwardProp: (propName: string) => !propName.startsWith('$') }
+)<{ $alwaysVisible: boolean; $fullHeightHover: boolean }>(({ $alwaysVisible }) => ({
+    margin: "0 10px",
+    position: "relative",
+    backgroundColor: "#494949",
+    top: "calc(50% - 20px) !important",
+    color: "white",
+    fontSize: "30px",
+    transition: "200ms",
+    cursor: "pointer",
+    opacity: $alwaysVisible ? '1' : '0',
+    '&:hover': {
+        opacity: "0.6",
+        backgroundColor: "#494949",
+    },
+}));
+
+const StyledButtonWrapper = styled(
+  "div",
+  { shouldForwardProp: (propName: string) => !propName.startsWith('$') }
+)<{ $next: boolean; $prev: boolean; $fullHeightHover: boolean }>(({ $next, $prev, $fullHeightHover }) => ({
+    position: "absolute",
+    height: "100px",
+    backgroundColor: "transparent",
+    zIndex: 1,
+    top: "calc(50% - 70px)",
+    '&:hover': {
+      '& $button': {
+        backgroundColor: "black",
+        filter: "brightness(120%)",
+        opacity: "0.4"
+      }
+    },
+    ...($fullHeightHover ? {
+      height: "100%", // This is 100% - indicator height - indicator margin
+      top: "0"
+    } : undefined),
+    ...($next ? { right: 0 } : undefined),
+    ...($prev ? { left: 0 } : undefined),
+}));
+
 interface SanitizedCarouselProps extends CarouselProps {
+    sx: SxProps<Theme>,
     className: string,
     children: ReactNode,
 
@@ -120,7 +123,7 @@ interface SanitizedCarouselProps extends CarouselProps {
     fullHeightHover: boolean,
     navButtonsWrapperProps: SanitizedCarouselNavProps,
     navButtonsProps: SanitizedCarouselNavProps,
-    NavButton: (({ onClick, next, className, style, prev }: { onClick: Function; className: string; style: React.CSSProperties; next: boolean; prev: boolean; }) => ReactNode) | undefined,
+    NavButton: (({ onClick, next, className, style, prev, fullHeightHover, alwaysVisible }: { onClick: Function; className: string; style: React.CSSProperties; next: boolean; prev: boolean; fullHeightHover: boolean; alwaysVisible: boolean; }) => ReactNode) | undefined,
 
     NextIcon: ReactNode,
     PrevIcon: ReactNode,
@@ -157,6 +160,7 @@ const sanitizeProps = (props: CarouselProps): SanitizedCarouselProps => {
     const duration = props.duration !== undefined ? props.duration : (animation === "fade" ? 500 : 200);
 
     return {
+        sx: props.sx !== undefined ? props.sx : {},
         className: props.className !== undefined ? props.className : "",
         children: props.children ? props.children : [],
 
@@ -207,8 +211,6 @@ export const Carousel = (props: CarouselProps) => {
     });
     const [height, setHeight] = useState<number>(0);
     const [paused, setPaused] = useState<boolean>(false);
-
-    const classes = styles();
 
     const sanitizedProps = sanitizeProps(props);
 
@@ -287,6 +289,7 @@ export const Carousel = (props: CarouselProps) => {
 
     const {
         children,
+        sx,
         className,
 
         stopAutoPlayOnHover,
@@ -315,10 +318,6 @@ export const Carousel = (props: CarouselProps) => {
     const { className: buttonsClass, style: buttonsStyle, ...buttonsProps } = navButtonsProps;
     const { className: buttonsWrapperClass, style: buttonsWrapperStyle, ...buttonsWrapperProps } = navButtonsWrapperProps;
 
-    const buttonVisibilityClassValue = `${navButtonsAlwaysVisible ? classes.buttonVisible : classes.buttonHidden}`;
-    const buttonCssClassValue = `${classes.button} ${buttonVisibilityClassValue} ${fullHeightHover ? classes.fullHeightHoverButton : ""} ${buttonsClass}`;
-    const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""} ${buttonsWrapperClass}`;
-
     const showButton = (next = true) => {
         if (cycleNavigation) return true;
 
@@ -331,12 +330,13 @@ export const Carousel = (props: CarouselProps) => {
     }
 
     return (
-        <div
-            className={`${classes.root} ${className ? className : ""}`}
+        <StyledRoot
+            sx={sx}
+            className={className}
             onMouseOver={() => { stopAutoPlayOnHover && setPaused(true) }}
             onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
         >
-            <div className={classes.itemWrapper} style={{ height: height }}>
+            <StyledItemWrapper style={{ height: height }}>
                 {
                     Array.isArray(children) ?
                         children.map((child, index) => {
@@ -368,31 +368,31 @@ export const Carousel = (props: CarouselProps) => {
                             setHeight={setHeight}
                         />
                 }
-            </div>
+            </StyledItemWrapper>
 
 
             {!navButtonsAlwaysInvisible && showButton(true) &&
-                <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                <StyledButtonWrapper $next $prev={false} $fullHeightHover={fullHeightHover} className={buttonsWrapperClass} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
+                        NavButton({ onClick: next, className: buttonsClass, fullHeightHover, alwaysVisible: navButtonsAlwaysVisible, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
                         :
-                        <IconButton className={`${buttonCssClassValue}`} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
+                        <StyledIconButton $alwaysVisible={navButtonsAlwaysVisible} $fullHeightHover={fullHeightHover} className={buttonsClass} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
                             {NextIcon}
-                        </IconButton>
+                        </StyledIconButton>
                     }
-                </div>
+                </StyledButtonWrapper>
             }
 
             {!navButtonsAlwaysInvisible && showButton(false) &&
-                <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                <StyledButtonWrapper $next={false} $prev $fullHeightHover={fullHeightHover} className={buttonsWrapperClass} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
+                        NavButton({ onClick: prev, className: buttonsClass, fullHeightHover, alwaysVisible: navButtonsAlwaysVisible, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
                         :
-                        <IconButton className={`${buttonCssClassValue}`} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
+                        <StyledIconButton $alwaysVisible={navButtonsAlwaysVisible} $fullHeightHover={fullHeightHover} className={buttonsClass} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
                             {PrevIcon}
-                        </IconButton>
+                        </StyledIconButton>
                     }
-                </div>
+                </StyledButtonWrapper>
             }
 
             {
@@ -407,7 +407,7 @@ export const Carousel = (props: CarouselProps) => {
                         IndicatorIcon={IndicatorIcon}
                     /> : null
             }
-        </div>
+        </StyledRoot>
     )
 }
 
@@ -429,11 +429,8 @@ interface CarouselItemProps {
 }
 
 const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, setHeight }: CarouselItemProps) => {
-    const classes = styles();
     const slide = animation === 'slide';
     const fade = animation === 'fade';
-
-
 
     const dragProps: MotionProps = {
         drag: 'x',
@@ -511,7 +508,7 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
     duration = duration / 1000;
 
     return (
-        <div className={classes.item} ref={divRef}>
+        <StyledItem ref={divRef}>
             <AnimatePresence custom={isNext}>
                 <motion.div {...(swipe && dragProps)}>
                     <motion.div
@@ -528,7 +525,7 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
                     </motion.div>
                 </motion.div>
             </AnimatePresence>
-        </div>
+        </StyledItem>
     )
 }
 
@@ -543,11 +540,7 @@ interface IndicatorProps {
 }
 
 const Indicators = (props: IndicatorProps) => {
-    const classes = styles();
-    const IndicatorIcon = useMemo(() => props.IndicatorIcon !== undefined ? props.IndicatorIcon :
-        <FiberManualRecordIcon
-            className={classes.indicatorIcon}
-        />, [classes.indicatorIcon, props.IndicatorIcon]);
+    const IndicatorIcon = useMemo(() => props.IndicatorIcon !== undefined ? props.IndicatorIcon : <StyledFiberManualRecordIcon />, [props.IndicatorIcon]);
 
     const completeListIfRequired = useCallback((arrayOfIcons: ReactNodeArray) => {
         while (arrayOfIcons.length < props.length) {
@@ -564,8 +557,8 @@ const Indicators = (props: IndicatorProps) => {
 
     for (let i = 0; i < props.length; i++) {
         const className = i === props.active ?
-            `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}` :
-            `${classes.indicator} ${indicatorIconButtonClass}`;
+            `${indicatorIconButtonClass} ${activeIndicatorIconButtonClass}` :
+            `${indicatorIconButtonClass}`;
 
         const style = i === props.active ?
             Object.assign({}, indicatorIconButtonStyle, activeIndicatorIconButtonStyle) :
@@ -579,7 +572,8 @@ const Indicators = (props: IndicatorProps) => {
 
         const createIndicator = (IndicatorIcon: ReactNode) => {
             return (
-                <IconButton
+                <StyledIndicatorIconButton
+                    $active={i === props.active}
                     key={i}
                     className={className}
                     style={style}
@@ -588,7 +582,7 @@ const Indicators = (props: IndicatorProps) => {
                     aria-label={`${restProps['aria-label']} ${i + 1}`}
                 >
                     {IndicatorIcon}
-                </IconButton>
+                </StyledIndicatorIconButton>
             )
         }
 
@@ -601,9 +595,9 @@ const Indicators = (props: IndicatorProps) => {
     const { className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps } = props.indicatorContainerProps;
 
     return (
-        <div className={`${classes.indicators} ${indicatorContainerClass}`} style={indicatorContainerStyle} {...indicatorContainerProps}>
+        <StyledIndicators className={indicatorContainerClass} style={indicatorContainerStyle} {...indicatorContainerProps}>
             {indicators}
-        </div>
+        </StyledIndicators>
     )
 }
 
