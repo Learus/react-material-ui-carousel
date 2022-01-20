@@ -184,7 +184,7 @@ Do directly customize/change the navigation buttons `NavButton` prop, that allow
 import {Button} from '@mui/material';
 
 <Carousel
-    NavButton={({onClick, className, style, next, prev }) => {
+    NavButton={({onClick, className, style, next, prev}) => {
         // Other logic
 
         return (
