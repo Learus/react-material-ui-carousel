@@ -123,7 +123,7 @@ interface SanitizedCarouselProps extends CarouselProps {
     fullHeightHover: boolean,
     navButtonsWrapperProps: SanitizedCarouselNavProps,
     navButtonsProps: SanitizedCarouselNavProps,
-    NavButton: (({ onClick, next, className, style, prev, fullHeightHover, alwaysVisible }: { onClick: Function; className: string; style: React.CSSProperties; next: boolean; prev: boolean; fullHeightHover: boolean; alwaysVisible: boolean; }) => ReactNode) | undefined,
+    NavButton: (({ onClick, next, className, style, prev }: { onClick: Function; className: string; style: React.CSSProperties; next: boolean; prev: boolean; }) => ReactNode) | undefined,
 
     NextIcon: ReactNode,
     PrevIcon: ReactNode,
@@ -374,7 +374,7 @@ export const Carousel = (props: CarouselProps) => {
             {!navButtonsAlwaysInvisible && showButton(true) &&
                 <StyledButtonWrapper $next $prev={false} $fullHeightHover={fullHeightHover} className={buttonsWrapperClass} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: next, className: buttonsClass, fullHeightHover, alwaysVisible: navButtonsAlwaysVisible, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
+                        NavButton({ onClick: next, className: buttonsClass, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
                         :
                         <StyledIconButton $alwaysVisible={navButtonsAlwaysVisible} $fullHeightHover={fullHeightHover} className={buttonsClass} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
                             {NextIcon}
@@ -386,7 +386,7 @@ export const Carousel = (props: CarouselProps) => {
             {!navButtonsAlwaysInvisible && showButton(false) &&
                 <StyledButtonWrapper $next={false} $prev $fullHeightHover={fullHeightHover} className={buttonsWrapperClass} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: prev, className: buttonsClass, fullHeightHover, alwaysVisible: navButtonsAlwaysVisible, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
+                        NavButton({ onClick: prev, className: buttonsClass, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
                         :
                         <StyledIconButton $alwaysVisible={navButtonsAlwaysVisible} $fullHeightHover={fullHeightHover} className={buttonsClass} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
                             {PrevIcon}
