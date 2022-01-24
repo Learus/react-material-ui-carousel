@@ -1,4 +1,4 @@
-# React Material UI Carousel
+# React Material UI Carousel [![npm version](https://img.shields.io/npm/v/react-material-ui-carousel.svg?style=flat)](https://www.npmjs.com/package/react-material-ui-carousel)
 
 ## Description
 
