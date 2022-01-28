@@ -439,8 +439,12 @@ const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, du
         drag: 'x',
         layout: true,
         onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
-            if (!swipe) return;
+            const pX = info.offset.x * info.offset.x;
+            const pY = info.offset.y * info.offset.y;
+
+            if (!swipe || pX < 300 || pX < pY) return;
             console.log(info);
+
             if (info.offset.x > 0) prev && prev();
             else if (info.offset.x < 0) next && next();
 
