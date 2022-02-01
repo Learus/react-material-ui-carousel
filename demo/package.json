@@ -4,11 +4,11 @@
   "private": true,
   "homepage": "https://learus.github.io/react-material-ui-carousel",
   "dependencies": {
+    "@emotion/babel-plugin": "^11.7.2",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
-    "@mui/styles": "^5.0.0",
     "@types/react-dom": "^17.0.10",
     "axios": "^0.24.0",
     "framer-motion": "^4.1.17",

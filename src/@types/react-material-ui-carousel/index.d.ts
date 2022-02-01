@@ -1,14 +1,16 @@
+import React, { AriaAttributes, ReactNode } from 'react';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 
-import React, { ReactNode, AriaAttributes } from 'react';
-import { SxProps } from '@mui/system'
-import { Theme } from '@mui/material/styles'
 
-export interface CarouselNavProps extends AriaAttributes {
+export interface CarouselNavProps extends AriaAttributes
+{
     className?: string,
     style?: React.CSSProperties
 }
 
-export interface CarouselProps {
+export interface CarouselProps
+{
     children?: ReactNode,
 
     /** Defines `sx` props, that will be inserted into Carousel element */
