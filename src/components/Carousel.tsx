@@ -1,204 +1,19 @@
-import React, { ReactNode, useState, useEffect, useRef, useMemo, useCallback, ReactNodeArray } from 'react';
-import { CarouselNavProps, CarouselProps } from './types';
-
-import { createStyles, makeStyles } from '@mui/styles';
-import { IconButton } from '@mui/material';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
-import { AnimatePresence, motion, MotionProps, PanInfo } from 'framer-motion'
-
-const styles = makeStyles(() => createStyles({
-    root: {
-        position: "relative",
-        overflow: "hidden",
-        // display: 'flex',
-        // flexDirection: 'column'
-    },
-    item: {
-        position: "absolute",
-        // height: 'inherit',
-        width: '100%',
-        //    flexGrow: 1
-    },
-    itemWrapper: {
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-    },
-    indicators: {
-        width: "100%",
-        marginTop: "10px",
-        textAlign: "center"
-    },
-    indicator: {
-        cursor: "pointer",
-        transition: "200ms",
-        padding: 0,
-        color: "#afafaf",
-        '&:hover': {
-            color: "#1f1f1f"
-        },
-        '&:active': {
-            color: "#1f1f1f"
-        }
-    },
-    indicatorIcon: {
-        fontSize: "15px",
-    },
-    active: {
-        color: "#494949",
-    },
-    buttonWrapper: {
-        position: "absolute",
-        height: "100px",
-        backgroundColor: "transparent",
-        zIndex: 1,
-        top: "calc(50% - 70px)",
-        '&:hover': {
-            '& $button': {
-                backgroundColor: "black",
-                filter: "brightness(120%)",
-                opacity: "0.4"
-            }
-        }
-    },
-    fullHeightHoverWrapper: {
-        height: "100%", // This is 100% - indicator height - indicator margin
-        top: "0"
-    },
-    fullHeightHoverButton: {
-
-    },
-    buttonVisible: {
-        opacity: "1"
-    },
-    buttonHidden: {
-        opacity: "0",
-    },
-    button: {
-        margin: "0 10px",
-        position: "relative",
-        backgroundColor: "#494949",
-        top: "calc(50% - 20px) !important",
-        color: "white",
-        fontSize: "30px",
-        transition: "200ms",
-        cursor: "pointer",
-        '&:hover': {
-            opacity: "0.6 !important"
-        },
-    },
-    next: {
-        right: 0
-    },
-    prev: {
-        left: 0
-    }
-}));
-
-interface SanitizedCarouselProps extends CarouselProps {
-    className: string,
-    children: ReactNode,
-
-    index: number,
-    strictIndexing: boolean,
-
-    autoPlay: boolean,
-    stopAutoPlayOnHover: boolean,
-    interval: number,
-
-    animation: "fade" | "slide",
-    duration: number,
-
-    swipe: boolean,
-
-    navButtonsAlwaysInvisible: boolean,
-    navButtonsAlwaysVisible: boolean,
-    cycleNavigation: boolean,
-    fullHeightHover: boolean,
-    navButtonsWrapperProps: SanitizedCarouselNavProps,
-    navButtonsProps: SanitizedCarouselNavProps,
-    NavButton: (({ onClick, next, className, style, prev }: { onClick: Function; className: string; style: React.CSSProperties; next: boolean; prev: boolean; }) => ReactNode) | undefined,
-
-    NextIcon: ReactNode,
-    PrevIcon: ReactNode,
-
-    indicators: boolean,
-    indicatorContainerProps: SanitizedCarouselNavProps,
-    indicatorIconButtonProps: SanitizedCarouselNavProps,
-    activeIndicatorIconButtonProps: SanitizedCarouselNavProps,
-    IndicatorIcon: ReactNode,
-
-    onChange: (now?: number, previous?: number) => any,
-    changeOnFirstRender: boolean,
-    next: (now?: number, previous?: number) => any,
-    prev: (now?: number, previous?: number) => any
-}
-
-interface SanitizedCarouselNavProps extends CarouselNavProps {
-    style: React.CSSProperties,
-    className: string
-};
-
-const sanitizeNavProps = (props: CarouselNavProps | undefined): SanitizedCarouselNavProps => {
-    const { className, style, ...rest } = props || {};
-
-    return props !== undefined ? {
-        style: props.style !== undefined ? props.style : {},
-        className: props.className !== undefined ? props.className : "",
-        ...rest
-    } : { style: {}, className: "", ...rest }
-}
-
-const sanitizeProps = (props: CarouselProps): SanitizedCarouselProps => {
-    const animation = props.animation !== undefined ? props.animation : "fade";
-    const duration = props.duration !== undefined ? props.duration : (animation === "fade" ? 500 : 200);
-
-    return {
-        className: props.className !== undefined ? props.className : "",
-        children: props.children ? props.children : [],
-
-        index: props.index !== undefined ? props.index : 0,
-        strictIndexing: props.strictIndexing !== undefined ? props.strictIndexing : true,
-
-        autoPlay: props.autoPlay !== undefined ? props.autoPlay : true,
-        stopAutoPlayOnHover: props.stopAutoPlayOnHover !== undefined ? props.stopAutoPlayOnHover : true,
-        interval: props.interval !== undefined ? props.interval : 4000,
-
-        animation: animation,
-        duration: duration,
-
-        swipe: props.swipe !== undefined ? props.swipe : true,
-
-        navButtonsAlwaysInvisible: props.navButtonsAlwaysInvisible !== undefined ? props.navButtonsAlwaysInvisible : false,
-        navButtonsAlwaysVisible: props.navButtonsAlwaysVisible !== undefined ? props.navButtonsAlwaysVisible : false,
-        cycleNavigation: props.cycleNavigation !== undefined ? props.cycleNavigation : true,
-        fullHeightHover: props.fullHeightHover !== undefined ? props.fullHeightHover : true,
-        navButtonsWrapperProps: sanitizeNavProps(props.navButtonsWrapperProps),
-        navButtonsProps: sanitizeNavProps(props.navButtonsProps),
-        NavButton: props.NavButton,
-
-        NextIcon: props.NextIcon !== undefined ? props.NextIcon : <NavigateNextIcon />,
-        PrevIcon: props.PrevIcon !== undefined ? props.PrevIcon : <NavigateBeforeIcon />,
-
-        indicators: props.indicators !== undefined ? props.indicators : true,
-        indicatorContainerProps: sanitizeNavProps(props.indicatorContainerProps),
-        indicatorIconButtonProps: sanitizeNavProps(props.indicatorIconButtonProps),
-        activeIndicatorIconButtonProps: sanitizeNavProps(props.activeIndicatorIconButtonProps),
-        IndicatorIcon: props.IndicatorIcon,
-
-        onChange: props.onChange !== undefined ? props.onChange : () => { },
-        changeOnFirstRender: props.changeOnFirstRender !== undefined ? props.changeOnFirstRender : false,
-        next: props.next !== undefined ? props.next : () => { },
-        prev: props.prev !== undefined ? props.prev : () => { },
-
-    }
-}
+import { CarouselItem } from './CarouselItem';
+import { CarouselProps } from './types';
+import { Indicators } from './Indicators';
+import { sanitizeProps, useInterval } from './util';
+import
+{
+    StyledButtonWrapper,
+    StyledIconButton,
+    StyledItemWrapper,
+    StyledRoot
+} from './Styled';
+import React, { useEffect, useState } from 'react';
 
 
-export const Carousel = (props: CarouselProps) => {
+export const Carousel = (props: CarouselProps) =>
+{
 
     const [state, setState] = useState({
         active: 0,
@@ -208,30 +23,33 @@ export const Carousel = (props: CarouselProps) => {
     const [height, setHeight] = useState<number>(0);
     const [paused, setPaused] = useState<boolean>(false);
 
-    const classes = styles();
-
     const sanitizedProps = sanitizeProps(props);
 
     // componentDidMount
-    useEffect(() => {
+    useEffect(() =>
+    {
         const { index, changeOnFirstRender } = sanitizedProps;
         setNext(index, true, changeOnFirstRender);
     }, [])
 
-    useInterval(() => {
+    useInterval(() =>
+    {
         const { autoPlay } = sanitizedProps;
 
-        if (autoPlay && !paused) {
+        if (autoPlay && !paused)
+        {
             next(undefined);
         }
 
     }, sanitizedProps.interval)
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         setNext(sanitizedProps.index, true);
     }, [])
 
-    const next = (event: any) => {
+    const next = (event: any) =>
+    {
         const { children, cycleNavigation } = sanitizedProps;
 
         let last = Array.isArray(children) ? children.length - 1 : 0;
@@ -243,7 +61,8 @@ export const Carousel = (props: CarouselProps) => {
             event.stopPropagation();
     }
 
-    const prev = (event: any) => {
+    const prev = (event: any) =>
+    {
         const { children, cycleNavigation } = sanitizedProps;
 
         let last = Array.isArray(children) ? children.length - 1 : 0;
@@ -255,25 +74,30 @@ export const Carousel = (props: CarouselProps) => {
             event.stopPropagation();
     }
 
-    const setNext = (index: number, isNext: boolean, runCallbacks: boolean = true) => {
+    const setNext = (index: number, isNext: boolean, runCallbacks: boolean = true) =>
+    {
         const { onChange, children, strictIndexing } = sanitizedProps;
 
-        if (Array.isArray(children)) {
+        if (Array.isArray(children))
+        {
             if (strictIndexing && index > children.length - 1) index = children.length - 1;
             if (strictIndexing && index < 0) index = 0;
         }
-        else {
+        else
+        {
             index = 0;
         }
 
-        if (runCallbacks) {
+        if (runCallbacks)
+        {
             if (isNext !== undefined)
                 isNext ? sanitizedProps.next(index, state.active) : sanitizedProps.prev(index, state.active);
 
             onChange(index, state.active);
         }
 
-        if (isNext === undefined) {
+        if (isNext === undefined)
+        {
             isNext = index > state.active
         }
 
@@ -284,9 +108,9 @@ export const Carousel = (props: CarouselProps) => {
         })
     }
 
-
     const {
         children,
+        sx,
         className,
 
         stopAutoPlayOnHover,
@@ -312,14 +136,8 @@ export const Carousel = (props: CarouselProps) => {
         IndicatorIcon,
     } = sanitizedProps;
 
-    const { className: buttonsClass, style: buttonsStyle, ...buttonsProps } = navButtonsProps;
-    const { className: buttonsWrapperClass, style: buttonsWrapperStyle, ...buttonsWrapperProps } = navButtonsWrapperProps;
-
-    const buttonVisibilityClassValue = `${navButtonsAlwaysVisible ? classes.buttonVisible : classes.buttonHidden}`;
-    const buttonCssClassValue = `${classes.button} ${buttonVisibilityClassValue} ${fullHeightHover ? classes.fullHeightHoverButton : ""} ${buttonsClass}`;
-    const buttonWrapperCssClassValue = `${classes.buttonWrapper} ${fullHeightHover ? classes.fullHeightHoverWrapper : ""} ${buttonsWrapperClass}`;
-
-    const showButton = (next = true) => {
+    const showButton = (next = true) =>
+    {
         if (cycleNavigation) return true;
 
         const last = Array.isArray(children) ? children.length - 1 : 0;
@@ -331,15 +149,17 @@ export const Carousel = (props: CarouselProps) => {
     }
 
     return (
-        <div
-            className={`${classes.root} ${className ? className : ""}`}
+        <StyledRoot
+            sx={sx}
+            className={className}
             onMouseOver={() => { stopAutoPlayOnHover && setPaused(true) }}
             onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
         >
-            <div className={classes.itemWrapper} style={{ height: height }}>
+            <StyledItemWrapper style={{ height: height }}>
                 {
                     Array.isArray(children) ?
-                        children.map((child, index) => {
+                        children.map((child, index) =>
+                        {
                             return (
                                 <CarouselItem
                                     key={`carousel-item${index}`}
@@ -368,31 +188,43 @@ export const Carousel = (props: CarouselProps) => {
                             setHeight={setHeight}
                         />
                 }
-            </div>
+            </StyledItemWrapper>
 
 
             {!navButtonsAlwaysInvisible && showButton(true) &&
-                <div className={`${buttonWrapperCssClassValue} ${classes.next}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                <StyledButtonWrapper $next $prev={false} $fullHeightHover={fullHeightHover} {...navButtonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: next, className: buttonCssClassValue, style: buttonsStyle, next: true, prev: false, ...buttonsProps })
+                        NavButton({ onClick: next, next: true, prev: false, ...navButtonsProps })
                         :
-                        <IconButton className={`${buttonCssClassValue}`} onClick={next} aria-label="Next" style={buttonsStyle} {...buttonsProps}>
+                        <StyledIconButton
+                            $alwaysVisible={navButtonsAlwaysVisible}
+                            $fullHeightHover={fullHeightHover}
+                            onClick={next}
+                            aria-label="Next"
+                            {...navButtonsProps}
+                        >
                             {NextIcon}
-                        </IconButton>
+                        </StyledIconButton>
                     }
-                </div>
+                </StyledButtonWrapper>
             }
 
             {!navButtonsAlwaysInvisible && showButton(false) &&
-                <div className={`${buttonWrapperCssClassValue} ${classes.prev}`} style={buttonsWrapperStyle} {...buttonsWrapperProps}>
+                <StyledButtonWrapper $next={false} $prev $fullHeightHover={fullHeightHover} {...navButtonsWrapperProps}>
                     {NavButton !== undefined ?
-                        NavButton({ onClick: prev, className: buttonCssClassValue, style: navButtonsProps.style, next: false, prev: true, ...buttonsProps })
+                        NavButton({ onClick: prev, next: false, prev: true, ...navButtonsProps })
                         :
-                        <IconButton className={`${buttonCssClassValue}`} onClick={prev} aria-label="Previous" style={navButtonsProps.style} {...buttonsProps}>
+                        <StyledIconButton
+                            $alwaysVisible={navButtonsAlwaysVisible}
+                            $fullHeightHover={fullHeightHover}
+                            onClick={prev}
+                            aria-label="Previous"
+                            {...navButtonsProps}
+                        >
                             {PrevIcon}
-                        </IconButton>
+                        </StyledIconButton>
                     }
-                </div>
+                </StyledButtonWrapper>
             }
 
             {
@@ -407,226 +239,8 @@ export const Carousel = (props: CarouselProps) => {
                         IndicatorIcon={IndicatorIcon}
                     /> : null
             }
-        </div>
+        </StyledRoot>
     )
-}
-
-interface CarouselItemProps {
-    animation: 'fade' | 'slide',
-    next?: Function,
-    prev?: Function,
-    state: {
-        active: number,
-        prevActive: number,
-        next: boolean
-    }
-    swipe?: boolean,
-    index: number,
-    maxIndex: number,
-    duration: number,
-    child: ReactNode,
-    setHeight: Function
-}
-
-const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, setHeight }: CarouselItemProps) => {
-    const classes = styles();
-    const slide = animation === 'slide';
-    const fade = animation === 'fade';
-
-
-
-    const dragProps: MotionProps = {
-        drag: 'x',
-        layout: true,
-        onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
-            if (!swipe) return;
-            console.log(info);
-            if (info.offset.x > 0) prev && prev();
-            else if (info.offset.x < 0) next && next();
-
-            event.stopPropagation();
-        },
-        dragElastic: 0,
-        dragConstraints: { left: 0, right: 0 }
-    }
-
-    const divRef = useRef<any>(null);
-
-    useEffect(() => {
-        if (divRef.current)
-            setHeight(divRef.current.offsetHeight);
-    }, [divRef])
-
-    const variants = {
-        leftwardExit: {
-            x: slide ? '-100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            zIndex: 0,
-            // position: 'relative'
-        },
-        leftOut: {
-            x: slide ? '-100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            display: 'none',
-            zIndex: 0,
-            // position: 'relative'
-        },
-        rightwardExit: {
-            x: slide ? '100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            zIndex: 0,
-            // position: 'relative'
-        },
-        rightOut: {
-            x: slide ? '100%' : undefined,
-            opacity: fade ? 0 : undefined,
-            display: 'none',
-            zIndex: 0,
-            // position: 'relative'
-        },
-        center: {
-            x: 0,
-            opacity: 1,
-            zIndex: 1,
-            // position: 'relative'
-        },
-    };
-
-    // Handle animation directions and opacity given based on active, prevActive and this item's index
-    const { active, next: isNext, prevActive } = state;
-    let animate = 'center';
-    if (index === active)
-        animate = 'center';
-    else if (index === prevActive) {
-        animate = isNext ? 'leftwardExit' : 'rightwardExit';
-        if (active === maxIndex && index === 0) animate = 'rightwardExit';
-        if (active === 0 && index === maxIndex) animate = 'leftwardExit'
-    }
-    else {
-        animate = index < active ? 'leftOut' : 'rightOut';
-        if (active === maxIndex && index === 0) animate = 'rightOut';
-        if (active === 0 && index === maxIndex) animate = 'leftOut'
-    }
-
-    duration = duration / 1000;
-
-    return (
-        <div className={classes.item} ref={divRef}>
-            <AnimatePresence custom={isNext}>
-                <motion.div {...(swipe && dragProps)}>
-                    <motion.div
-                        custom={isNext}
-                        variants={variants}
-                        animate={animate}
-                        transition={{
-                            x: { type: "tween", duration: duration, delay: 0 },
-                            opacity: { duration: duration },
-                        }}
-                        style={{ position: 'relative' }}
-                    >
-                        {child}
-                    </motion.div>
-                </motion.div>
-            </AnimatePresence>
-        </div>
-    )
-}
-
-interface IndicatorProps {
-    IndicatorIcon?: ReactNode,
-    length: number,
-    active: number,
-    press: Function,
-    indicatorContainerProps: SanitizedCarouselNavProps,
-    indicatorIconButtonProps: SanitizedCarouselNavProps,
-    activeIndicatorIconButtonProps: SanitizedCarouselNavProps,
-}
-
-const Indicators = (props: IndicatorProps) => {
-    const classes = styles();
-    const IndicatorIcon = useMemo(() => props.IndicatorIcon !== undefined ? props.IndicatorIcon :
-        <FiberManualRecordIcon
-            className={classes.indicatorIcon}
-        />, [classes.indicatorIcon, props.IndicatorIcon]);
-
-    const completeListIfRequired = useCallback((arrayOfIcons: ReactNodeArray) => {
-        while (arrayOfIcons.length < props.length) {
-            let index = 0;
-            arrayOfIcons.push(arrayOfIcons[index]);
-            index += 1;
-        }
-    }, [props.length])
-
-    const { className: indicatorIconButtonClass, style: indicatorIconButtonStyle, ...indicatorIconButtonProps } = props.indicatorIconButtonProps;
-    const { className: activeIndicatorIconButtonClass, style: activeIndicatorIconButtonStyle, ...activeIndicatorIconButtonProps } = props.activeIndicatorIconButtonProps;
-
-    let indicators = [];
-
-    for (let i = 0; i < props.length; i++) {
-        const className = i === props.active ?
-            `${classes.indicator} ${indicatorIconButtonClass} ${classes.active} ${activeIndicatorIconButtonClass}` :
-            `${classes.indicator} ${indicatorIconButtonClass}`;
-
-        const style = i === props.active ?
-            Object.assign({}, indicatorIconButtonStyle, activeIndicatorIconButtonStyle) :
-            indicatorIconButtonStyle;
-
-        let restProps = i === props.active ?
-            Object.assign({}, indicatorIconButtonProps, activeIndicatorIconButtonProps) :
-            indicatorIconButtonProps;
-
-        if (restProps['aria-label'] === undefined) restProps['aria-label'] = 'carousel indicator';
-
-        const createIndicator = (IndicatorIcon: ReactNode) => {
-            return (
-                <IconButton
-                    key={i}
-                    className={className}
-                    style={style}
-                    onClick={() => { props.press(i) }}
-                    {...restProps}
-                    aria-label={`${restProps['aria-label']} ${i + 1}`}
-                >
-                    {IndicatorIcon}
-                </IconButton>
-            )
-        }
-
-        Array.isArray(IndicatorIcon)
-            ? indicators.push(createIndicator(IndicatorIcon[i])) && completeListIfRequired(IndicatorIcon)
-            : indicators.push(createIndicator(IndicatorIcon))
-
-    }
-
-    const { className: indicatorContainerClass, style: indicatorContainerStyle, ...indicatorContainerProps } = props.indicatorContainerProps;
-
-    return (
-        <div className={`${classes.indicators} ${indicatorContainerClass}`} style={indicatorContainerStyle} {...indicatorContainerProps}>
-            {indicators}
-        </div>
-    )
-}
-
-const useInterval = (callback: Function, delay: number) => {
-    const savedCallback = useRef<Function>(() => { });
-
-    // Remember the latest callback.
-    useEffect(() => {
-        savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-        function tick() {
-            savedCallback.current();
-        }
-        if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-        }
-
-        return () => { };
-    }, [delay]);
 }
 
 export default Carousel;
