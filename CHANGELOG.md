@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 ### Added
 
 * Added support for sx prop on Carousel container ([@matyas-igor])
+* Now `autoPlay` is paused when carousel is focused using keyboard, hence making the library more accessible. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/137) ([@hajineats])
 * Links to contributor profiles on CHANGELOG.md
 
 ### Changed
@@ -21,6 +22,10 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 ### Removed
 
 * Removed legacy @mui/styles (and thus jss dependency) ([@matyas-igor])
+
+## [3.1.2] - *Jan 22 2021*
+
+This version is unpublished. Its changes are moving to version 3.2.0 among others.
 
 ## [3.0.2] - *Oct 29 2021*
 
@@ -48,8 +53,8 @@ In general, its usage does not change.
 
 ### Fixed
 
-* `findDOMNode is deprecated in StrictMode.` warning has now been fixed. Material UI animations are no longer being used. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/32) ([@Learus])
-* `Can't perform a React state update on an unmounted component.` warning has now been fixed. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/44) ([@Learus])
+* `findDOMNode is deprecated in StrictMode.` warning has now been fixed. Material UI animations are no longer being used. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/32) ([@Learus])
+* `Can't perform a React state update on an unmounted component.` warning has now been fixed. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/44) ([@Learus])
 
 ### Removed
 
@@ -59,11 +64,11 @@ In general, its usage does not change.
 
 ### Fixed
 
-- Added fullHeightHoverButton class to styles, to fix `property does not exist` error. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/110) ([@Learus])
+- Added fullHeightHoverButton class to styles, to fix `property does not exist` error. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/110) ([@Learus])
 
 ### Changed
 
-- Removed unnecessary ternary operators. [Issue](https://github.com/Learus/react-material-ui-carousel/issues/111) ([@Learus])
+- Removed unnecessary ternary operators. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/111) ([@Learus])
 
 ## [2.3.1] - *August 15 2021*
 
@@ -183,3 +188,4 @@ In general, its usage does not change.
 [@matyas-igor]: https://github.com/matyas-igor
 [@8BitAron]: https://github.com/8BitAron
 [@hamidreza-nateghi]: https://github.com/hamidreza-nateghi
+[@hajineats]: https://github.com/hajineats
