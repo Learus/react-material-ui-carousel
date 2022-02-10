@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [2.3.10] - *Feb 10 2022*
+
+- Now `autoPlay` is paused when carousel is focused using keyboard, hence making the library more accessible. [Issue.](https://github.com/Learus/react-material-ui-carousel/issues/137) ([@hajineats])
+
+
 ## [2.3.6] - *Sep 24 2021*
 
 ### Added
