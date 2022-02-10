@@ -1,9 +1,9 @@
 {
     "name": "react-material-ui-carousel",
-    "version": "3.1.0",
+    "version": "3.1.2",
     "license": "MIT",
     "description": "A Generic, extendible Carousel UI component for React using Material UI",
-    "homepage": "https://learus.github.io",
+    "homepage": "https://learus.github.io/react-material-ui-carousel",
     "repository": {
         "type": "git",
         "url": "https://github.com/Learus/react-material-ui-carousel"
@@ -29,7 +29,6 @@
         ]
     },
     "scripts": {
-        "start": "react-scripts start",
         "build": "npx rimraf dist && npm run build:cjs",
         "build:cjs": "tsc --module commonjs --outDir dist",
         "build_old": "NODE_ENV=production && npx rimraf dist && npx mkdirp dist && npx babel ./src --out-dir dist --copy-files"
@@ -66,6 +65,7 @@
         "@emotion/styled": "^11.3.0",
         "@mui/icons-material": "^5.0.0",
         "@mui/material": "^5.0.0",
+        "@mui/system": "^5.0.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1"
     }

@@ -9633,9 +9633,9 @@ react-is@^17.0.1, react-is@^17.0.2:
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
 react-material-ui-carousel@^3.0.1-alpha:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-material-ui-carousel/-/react-material-ui-carousel-3.1.1.tgz#84c97304a4e9eea6e537736367d0102c30b289cf"
-  integrity sha512-MmU0eQ9NXMAfPOoK8mR5qPBdMvrtIPXq+FHRiiT+FDXQARKoLO4G1UJP/iMQHWx+9/w9hF8QfZvxZSSs3ab+nA==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-material-ui-carousel/-/react-material-ui-carousel-3.1.2.tgz#796aa351c2196f61e3de9ede3da595e397b3de60"
+  integrity sha512-OgRI3BrB0EuDpBwq5RWojVMbkTwQlvTJahWAjk8diV9VGr86AsiZX+gz7NPDRpUgmgO4fAT/iqrN38QTEzzirA==
   dependencies:
     framer-motion "^4.1.17"
 

@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
-## [3.1.0] - *Jan 22 2022*
+## [3.2.0] - *Feb 10 2022*
 
 ### Added
 
@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 * Converted makeStyles into using styled helper ([@matyas-igor])
 * Updated the file structure to be more readable ([@Learus])
+* **(Breaking)** Added `@mui/system` as peer dependency.  
+  * *Reason*: The newly added `sx` prop is of type `SxProps` imported from `@mui/system`.
 
 ### Removed
 
