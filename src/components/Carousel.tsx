@@ -154,6 +154,8 @@ export const Carousel = (props: CarouselProps) =>
             className={className}
             onMouseOver={() => { stopAutoPlayOnHover && setPaused(true) }}
             onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
+            onFocus={()=>{stopAutoPlayOnHover && setPaused(true)}}
+            onBlur={()=>{stopAutoPlayOnHover && setPaused(false)}}
         >
             <StyledItemWrapper style={{ height: height }}>
                 {
