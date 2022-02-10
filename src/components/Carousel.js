@@ -356,6 +356,8 @@ class Carousel extends Component
                 className={`${classes.root} ${className ? className : ""}`}
                 onMouseOver={() => {stopAutoPlayOnHover && this.stop()}}
                 onMouseOut={() => {stopAutoPlayOnHover && this.reset()}}
+                onFocus={()=>{stopAutoPlayOnHover && this.stop()}}
+                onBlur={()=>{stopAutoPlayOnHover && this.reset()}}
             >
                 {   
                     Array.isArray(children) ? 
