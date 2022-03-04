@@ -46,7 +46,7 @@ export const Carousel = (props: CarouselProps) =>
     useEffect(() =>
     {
         setNext(sanitizedProps.index, true);
-    }, [])
+    }, [sanitizedProps.index])
 
     const next = (event: any) =>
     {
