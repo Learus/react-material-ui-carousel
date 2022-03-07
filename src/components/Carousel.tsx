@@ -20,7 +20,7 @@ export const Carousel = (props: CarouselProps) =>
         prevActive: 0,
         next: true
     });
-    const [height, setHeight] = useState<number>(0);
+    const [childrenHeight, setChildrenHeight] = useState<number>(0);
     const [paused, setPaused] = useState<boolean>(false);
 
     const sanitizedProps = sanitizeProps(props);
@@ -113,6 +113,8 @@ export const Carousel = (props: CarouselProps) =>
         sx,
         className,
 
+        height,
+
         stopAutoPlayOnHover,
         animation,
         duration,
@@ -146,7 +148,7 @@ export const Carousel = (props: CarouselProps) =>
         if (!next && state.active === 0) return false;
 
         return true;
-    }
+    }   
 
     return (
         <StyledRoot
@@ -156,8 +158,9 @@ export const Carousel = (props: CarouselProps) =>
             onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
             onFocus={()=>{stopAutoPlayOnHover && setPaused(true)}}
             onBlur={()=>{stopAutoPlayOnHover && setPaused(false)}}
+            style={{height: height}} // <-- number | undefined
         >
-            <StyledItemWrapper style={{ height: height }}>
+            <StyledItemWrapper style={{ height: height ? undefined : childrenHeight }}>
                 {
                     Array.isArray(children) ?
                         children.map((child, index) =>
@@ -174,7 +177,8 @@ export const Carousel = (props: CarouselProps) =>
                                     swipe={swipe}
                                     next={next}
                                     prev={prev}
-                                    setHeight={setHeight}
+                                    height={height}
+                                    setHeight={setChildrenHeight}
                                 />
                             )
                         })
@@ -187,7 +191,8 @@ export const Carousel = (props: CarouselProps) =>
                             child={children}
                             animation={animation}
                             duration={duration}
-                            setHeight={setHeight}
+                            height={height}
+                            setHeight={setChildrenHeight}
                         />
                 }
             </StyledItemWrapper>

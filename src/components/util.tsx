@@ -11,6 +11,8 @@ export interface SanitizedCarouselProps extends CarouselProps
     className: string,
     children: ReactNode,
 
+    height: number | string | undefined,
+
     index: number,
     strictIndexing: boolean,
 
@@ -73,6 +75,8 @@ export const sanitizeProps = (props: CarouselProps): SanitizedCarouselProps =>
         sx: props.sx !== undefined ? props.sx : {},
         className: props.className !== undefined ? props.className : "",
         children: props.children ? props.children : [],
+
+        height: props.height,
 
         index: props.index !== undefined ? props.index : 0,
         strictIndexing: props.strictIndexing !== undefined ? props.strictIndexing : true,

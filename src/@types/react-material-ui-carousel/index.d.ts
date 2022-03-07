@@ -19,6 +19,9 @@ export interface CarouselProps
     /** Defines custom class name(s), that will be added to Carousel element */
     className?: string,
 
+    /** Defines the carousel's height in `px`. If this is not set, the carousel's height will be the height of its children. */
+    height?: number | string,
+
     /** Defines which child (assuming there are more than 1 children) will be displayed. Next and Previous Buttons as well as Indicators will work normally after the first render. When this prop is updated the carousel will display the chosen child. Use this prop to programmatically set the active child. If (index > children.length) then if (strictIndexing) index = last element. index */
     index?: number,
 
