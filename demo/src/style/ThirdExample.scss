@@ -1,0 +1,20 @@
+
+@import 'global.scss';
+
+.Example3
+{
+    max-width: 700px;
+    .HeightItem
+    {
+        padding: 100px;
+        color: white;
+        background-color: $dark-red;
+        font-family: $font;
+        
+        h1
+        {
+            font-weight: 100;
+        }
+        
+    }
+}

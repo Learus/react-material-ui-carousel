@@ -20,17 +20,20 @@ export const Carousel = (props: CarouselProps) =>
         prevActive: 0,
         next: true
     });
-    const [childrenHeight, setChildrenHeight] = useState<number>(0);
+
+    /** Used to set carousel's height. It is being set by the CarouselItems */
+    const [childrenHeight, setChildrenHeight] = useState<number>();
     const [paused, setPaused] = useState<boolean>(false);
 
     const sanitizedProps = sanitizeProps(props);
 
-    // componentDidMount
+    // componentDidMount & onIndexChange
     useEffect(() =>
     {
         const { index, changeOnFirstRender } = sanitizedProps;
         setNext(index, true, changeOnFirstRender);
-    }, [])
+    }, [sanitizedProps.index])
+
 
     useInterval(() =>
     {

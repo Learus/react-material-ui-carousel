@@ -38,7 +38,7 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
         onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void =>
         {
             if (!swipe) return;
-            console.log(info);
+
             if (info.offset.x > 0) prev && prev();
             else if (info.offset.x < 0) next && next();
 
@@ -50,11 +50,14 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
 
     const divRef = useRef<any>(null);
 
+    // Set height on every child change
     useEffect(() =>
     {
+        if (index !== state.active) return;
+
         if (divRef.current)
             setHeight(divRef.current.offsetHeight);
-    }, [divRef, setHeight])
+    }, [state.active, index, divRef, setHeight])
 
     const variants = {
         leftwardExit: {
@@ -125,7 +128,7 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
                         }}
                         style={{ position: 'relative', height: '100%' }}
                     >
-                        <div ref={divRef} style={{height: height}}>
+                        <div ref={divRef} style={{ height: height }}>
                             {child}
                         </div>
                     </motion.div>
