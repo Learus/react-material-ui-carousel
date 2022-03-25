@@ -46,10 +46,7 @@ export const Carousel = (props: CarouselProps) =>
 
     }, sanitizedProps.interval)
 
-    useEffect(() =>
-    {
-        setNext(sanitizedProps.index, true);
-    }, [])
+
 
     const next = (event: any) =>
     {
@@ -161,9 +158,9 @@ export const Carousel = (props: CarouselProps) =>
             onMouseOut={() => { stopAutoPlayOnHover && setPaused(false) }}
             onFocus={()=>{stopAutoPlayOnHover && setPaused(true)}}
             onBlur={()=>{stopAutoPlayOnHover && setPaused(false)}}
-            style={{height: height}} // <-- number | undefined
+            // style={{height: height}} // <-- number | undefined
         >
-            <StyledItemWrapper style={{ height: height ? undefined : childrenHeight }}>
+            <StyledItemWrapper style={{ height: height ? height : childrenHeight }}>
                 {
                     Array.isArray(children) ?
                         children.map((child, index) =>
