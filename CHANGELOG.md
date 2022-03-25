@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [3.3.0 - 3.3.3] - *Mar 25 2022*
+
+### Changed
+
+* The carousel now changes its height to be exactly the height of the current active child.
+
+### Added
+
+* Added the `height` prop, to specify an exact height for the carousel. If it is specified, the carousel's height will no longer be the active child's height.
+* Added a section in the demo to demonstrate dynamic height functionality.
+
+### Fixed
+
+* :bug: Fixed the `index` bug, where the carousel wouldn't update when the `index` prop was changed.
+* Removed unnecessary and forgotten console logs
+
 ## [3.2.0] - *Feb 10 2022*
 
 ### Added
