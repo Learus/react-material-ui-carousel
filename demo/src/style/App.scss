@@ -1,43 +1,46 @@
-@import 'global';
+@import "global";
 
-body
-{
-    margin: 0
+body {
+    margin: 0;
 }
 
-.root
-{
+@include mobile_tablet {
+    .root {
+        padding: 40px 40px !important;
+    }
+
+    .installation {
+        width: 90% !important;
+    }
+}
+
+.root {
     padding: 40px 20%;
     background-color: #333333;
     // font-family: roboto,tahoma,sans-serif;
 
-    .react
-    {
+    .react {
         color: rgb(17, 82, 147);
     }
 
-    .description
-    {
+    .description {
         display: flex;
         // justify-content: space-evenly;
         flex-wrap: wrap;
 
-        div
-        {
+        div {
             flex-grow: 1;
         }
     }
 
-    .installation
-    {
+    .installation {
         border-radius: 5px;
         background-color: #252525;
         padding: 10px;
         width: 50%;
     }
 
-    a
-    {
+    a {
         text-decoration: none;
         color: #b71c1c;
         transition: 200ms;
@@ -47,43 +50,22 @@ body
         }
     }
 
-    ul
-    {
+    ul {
         list-style: none;
     }
 
-    .github
-    {
+    .github {
         background-color: rgb(34, 34, 34);
         color: lightgrey;
     }
 
-    .npm
-    {
+    .npm {
         background-color: #bb2026;
         color: lightgrey;
     }
 
-    .coffee
-    {
+    .coffee {
         background-color: #ffdd00;
         color: black;
-    }
-}
-
-/* Portrait Phone */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: portrait) {
-    .root
-    {
-        padding: 40px 10px;
-    }
-
-    .installation
-    {
-        width: 90% !important;
     }
 }

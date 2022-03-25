@@ -7,15 +7,19 @@ import DemoTheme from '../style/Theme';
 import { GitHub, CloudDownload, Star } from '@mui/icons-material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import axios from 'axios';
+import Example3 from './ThirdExample';
 
-const App = () => {
+const App = () =>
+{
     const [stars, setStars] = useState<number>(0);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const url = 'https://api.github.com/repos/learus/react-material-ui-carousel';
         axios.get(url)
             .then(res => res.data)
-            .then(res => {
+            .then(res =>
+            {
                 setStars(res.stargazers_count);
             })
     });
@@ -25,7 +29,7 @@ const App = () => {
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={DemoTheme}>
                 <div className="root">
-                    
+
                     <Typography variant='h2'>
                         <Typography component='span' variant='h2' color='primary'>React </Typography>
                         Material UI Carousel
@@ -36,24 +40,24 @@ const App = () => {
                         flexWrap: 'wrap',
                     }}
                     >
-                        <Star style={{fill: 'orange'}}/>
+                        <Star style={{ fill: 'orange' }} />
                         <Typography variant='subtitle1'>
-                            &nbsp;{stars} 
+                            &nbsp;{stars}
                         </Typography>
-                        
+
                     </div>
-                    
+
                     <Typography variant='subtitle1' align='left'>
                         Made by &nbsp;
                         <a href='https://github.com/learus' target='_blank' rel='noreferrer'>
                             Learus
                         </a>
                     </Typography>
-                    
-                    <br/>
+
+                    <br />
                     <div className="buttonContainer">
-                        <Button 
-                            startIcon={<GitHub/>} 
+                        <Button
+                            startIcon={<GitHub />}
                             variant='contained'
                             className='github'
                             component='a'
@@ -64,8 +68,8 @@ const App = () => {
                             Github
                         </Button>
                         &nbsp;
-                        <Button 
-                            startIcon={<CloudDownload/>} 
+                        <Button
+                            startIcon={<CloudDownload />}
                             variant='contained'
                             className='npm'
                             component='a'
@@ -77,16 +81,16 @@ const App = () => {
                         </Button>
                     </div>
 
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <div className="description">
                         <div>
                             <Typography variant='h4'>
                                 {"<Carousel/>"}
                             </Typography>
                             <Typography>
-                                A Generic, extendible Carousel UI component for React using Material UI.<br/>
-                                It switches between given children using a smooth animation.<br/>
+                                A Generic, extendible Carousel UI component for React using Material UI.<br />
+                                It switches between given children using a smooth animation.<br />
                                 Provides next and previous buttons. Also provides interactible bullet indicators.
                             </Typography>
                         </div>
@@ -108,33 +112,34 @@ const App = () => {
                         </div>
                     </div>
 
-                    <br/>
+                    <br />
 
                     <div className='installation'>
-                        <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                        <Typography style={{ fontFamily: 'monospace', color: DemoTheme.palette.primary.main }}>
                             # Latest Release (Version 3 using MUI 5 and framer-motion)
                         </Typography>
-                        <Typography style={{fontFamily: 'monospace'}}>
+                        <Typography style={{ fontFamily: 'monospace' }}>
                             npm install react-material-ui-carousel
                         </Typography>
-                        <br/>
-                        <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                        <br />
+                        <Typography style={{ fontFamily: 'monospace', color: DemoTheme.palette.primary.main }}>
                             # Version 2 (Using explicitly MUI 4)
                         </Typography>
-                        <Typography style={{fontFamily: 'monospace'}}>
+                        <Typography style={{ fontFamily: 'monospace' }}>
                             npm install react-material-ui-carousel@v2
                         </Typography>
-                        <br/>
-                        <Typography style={{fontFamily: 'monospace', color: DemoTheme.palette.primary.main}}>
+                        <br />
+                        <Typography style={{ fontFamily: 'monospace', color: DemoTheme.palette.primary.main }}>
                             # Version 2 (Using explicitly MUI 5)
                         </Typography>
-                        <Typography style={{fontFamily: 'monospace'}}>
+                        <Typography style={{ fontFamily: 'monospace' }}>
                             npm install react-material-ui-carousel@v2mui5
                         </Typography>
                     </div>
 
                     <Example />
                     <SecondExample />
+                    <Example3 />
                 </div>
             </ThemeProvider>
         </StyledEngineProvider>

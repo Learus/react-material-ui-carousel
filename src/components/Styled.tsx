@@ -4,13 +4,11 @@ import { IconButton, styled } from '@mui/material';
 export const StyledRoot = styled("div")({
     position: "relative",
     overflow: "hidden",
-    // display: 'flex',
-    // flexDirection: 'column'
 });
 
 export const StyledItem = styled("div")({
     position: "absolute",
-    // height: 'inherit',
+    height: "100%",
     width: '100%',
     //    flexGrow: 1
 });

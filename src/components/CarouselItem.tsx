@@ -23,10 +23,11 @@ export interface CarouselItemProps
     maxIndex: number,
     duration: number,
     child: ReactNode,
+    height?: number | string,
     setHeight: Function
 }
 
-export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, setHeight }: CarouselItemProps) =>
+export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIndex, duration, child, height, setHeight }: CarouselItemProps) =>
 {
     const slide = animation === 'slide';
     const fade = animation === 'fade';
@@ -37,7 +38,7 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
         onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void =>
         {
             if (!swipe) return;
-            console.log(info);
+
             if (info.offset.x > 0) prev && prev();
             else if (info.offset.x < 0) next && next();
 
@@ -49,11 +50,14 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
 
     const divRef = useRef<any>(null);
 
+    // Set height on every child change
     useEffect(() =>
     {
+        if (index !== state.active) return;
+
         if (divRef.current)
             setHeight(divRef.current.offsetHeight);
-    }, [divRef])
+    }, [state.active, index, divRef, setHeight])
 
     const variants = {
         leftwardExit: {
@@ -111,9 +115,9 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
     duration = duration / 1000;
 
     return (
-        <StyledItem ref={divRef}>
+        <StyledItem>
             <AnimatePresence custom={isNext}>
-                <motion.div {...(swipe && dragProps)}>
+                <motion.div {...(swipe && dragProps)} style={{ height: '100%' }}>
                     <motion.div
                         custom={isNext}
                         variants={variants}
@@ -122,9 +126,11 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
                             x: { type: "tween", duration: duration, delay: 0 },
                             opacity: { duration: duration },
                         }}
-                        style={{ position: 'relative' }}
+                        style={{ position: 'relative', height: '100%' }}
                     >
-                        {child}
+                        <div ref={divRef} style={{ height: height }}>
+                            {child}
+                        </div>
                     </motion.div>
                 </motion.div>
             </AnimatePresence>
