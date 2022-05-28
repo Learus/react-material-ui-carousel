@@ -9,12 +9,13 @@
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
+    "@mui/system": "^5.8.1",
     "@types/react-dom": "^17.0.10",
     "axios": "^0.24.0",
     "framer-motion": "^4.1.17",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-material-ui-carousel": "^3.3.2",
+    "react-material-ui-carousel": "^3.4.1",
     "react-scripts": "^4.0.3"
   },
   "resolutions": {

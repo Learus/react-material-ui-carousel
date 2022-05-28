@@ -18,7 +18,7 @@ export default function Test3()
             <Carousel animation="fade" navButtonsAlwaysVisible autoPlay={false}>
                 {
                     heights.map((item, i) => (
-                        <Paper elevation={10} style={{ height: item }} className="HeightItem">
+                        <Paper key={`test3-item-${i}`} elevation={10} style={{ height: item }} className="HeightItem">
                             <h1>{i + 1}. This item is <span style={{ color: 'cyan' }}>{item}px</span> high!</h1>
                         </Paper>
                     ))

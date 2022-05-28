@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
+## [3.4.0 - 3.4.1] - *May 28 2022*
+
+### Fixed
+
+* Fixes [#issue 173](https://github.com/Learus/react-material-ui-carousel/issues/173). Problem was caused by framer-motion enter animation div having 0 `height`, and hence making the carousel have 0 `height`, when the animation took a long time to start, or the user was spamming the next button. Now, the library checks for 0 `height`, and retries to set `height` after a few ms until the div's `offsetHeight` isn't 0 anymore. ([@learus])
+
+### Added
+
+* The carousel now supports React 18 as well as React 17. ([@aveloso4], [@learus] )
+
 ## [3.3.0 - 3.3.3] - *Mar 25 2022*
 
 ### Changed
@@ -205,3 +215,4 @@ In general, its usage does not change.
 [@8BitAron]: https://github.com/8BitAron
 [@hamidreza-nateghi]: https://github.com/hamidreza-nateghi
 [@hajineats]: https://github.com/hajineats
+[@aveloso4]: https://github.com/aveloso4
