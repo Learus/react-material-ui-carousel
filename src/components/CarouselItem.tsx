@@ -54,7 +54,6 @@ export const CarouselItem = ({ animation, next, prev, swipe, state, index, maxIn
         if (index !== state.active) return;
         if (!divRef.current) return;
 
-        console.log(divRef.current.offsetHeight);
         if (divRef.current.offsetHeight === 0)
         {
             setTimeout(() => checkAndSetHeight(), 100);
